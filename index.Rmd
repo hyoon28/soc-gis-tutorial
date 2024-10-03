@@ -1,9 +1,25 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAME HERE"
-date: "`r Sys.Date()`"
+title: "Spatial Data and Mapping for Sociologists"
+author: "Hesu Yoon"
+date: "Last updated: `r Sys.Date()`"
 site: bookdown::bookdown_site
+description: "This is a website with tutorials for Advanced Quantitative Methods in Contemporary Sociology's Spatial Data and Mapping module."
+
 ---
 
-# Down the rabbit-hole
+# About
+
+The social life is embedded in space. The advent of digital technology, once believed to jeopardize the significance of space, mediates and reconfigures how people experience and navigate places. From pandemic to climate change to globalizing gentrification and migration, there are abundant sociological inquiries that require the understanding of how social groups, institutions, and resources are spatially organized. This module is designed to equip students with tools that will help them explore these topics.
+
+The following is a series of tutorials prepared for the Spatial Data and Mapping module from Advanced Quantitative Methods in Contemporary Sociology course. This module specifically aims to teach students how to gather, process, and visualize spatial data for sociological research. Some prior experience or familiarity with quantitative data and statistical software (R) is necessary to follow the tutorials. However, no prior experience in *spatial* data and/or software is assumed.
+
+Each tutorial is a chapter in this website. You can navigate through the chapters using the sidebar. 
+
+
+## Table of Contents
+
+1. Different types of spatial data
+2. Geocoding, spatial join, mapping
+3. Mapping (continued)
+
 

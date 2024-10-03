@@ -1,0 +1,24 @@
+# Insfratructure and Institutions: Point of interest data
+
+Google Places API
+
+## Geocoding
+
+## Spatial join
+
+# Mapping
+
+1. is it qualitative or quantitative (average make sense?)
+  1.1 if qualitative, use different colors or shapes (nominal or ordinal variables) --> typology map
+    e.g., gentrifying vs. non-gentrifying tracts
+2. does the sum make sense?
+  2.1 absolute - size (e.g., total population, total number of museums) --> proportional symbol
+  2.2. relative - color gradiation (e.g., % white; diversity index/segregation index) --> chorolpeth map
+
+
+# Explore further: Other types of spatial data
+
+1. Mobility data
+2. Crime rates
+3. Voting behaviors
+

@@ -1,0 +1,181 @@
+---
+title: "1_manip_data"
+author: "YHS"
+date: '2024-09-20'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Set up and explore 
+```{r}
+#install.packages("sf")
+library(sf)
+library(dplyr)
+
+rm(list = ls())
+```
+
+```{r}
+# import neighborhood - polygons - data
+sfnh <- st_read("data/sfnh.geojson")
+```
+
+```{r}
+#overview of vars
+head(sfnh, 3)
+
+#overview of vars - visual
+plot(sfnh)
+
+#displaying geometry only
+plot(st_geometry(sfnh), col = "ivory4", border = "ivory")
+
+```
+```{r}
+#use map sf 
+install.packages("mapsf")
+library(mapsf)
+
+mf_map(sfnh, col = "ivory4", border = "ivory")
+
+```
+
+## Join attributes
+
+We can join one data.frame to one object sf using the function merge() and relying on identifiers common to both objects. Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two objects sf.
+
+```{r}
+# import demographic attributes
+sfdem <- read.csv("data/sfdem.csv")
+
+# check common identifier
+names(sfdem)
+  # Yes, in both datasets, "nhood" exists.
+```
+
+```{r}
+names(sfnh)
+```
+
+```{r}
+# join attributes to geometry
+sf_joined <- merge(
+  x = sfnh,            # sf object
+  y = sfdem,           # data frame
+  by.x = "nhood",      # x identifier
+  by.y = "nhood",      # y identifier
+  all.x = TRUE         # keep all lines
+)
+
+# check the joined data
+head(sf_joined, 3)
+
+```
+
+## Describe
+```{r}
+# select rows
+sf_joined[1:2,]
+```
+
+```{r}
+# select columns
+sf_joined[, "tpop"]
+```
+
+```{r}
+# filter
+sf_joined[sf_joined$nhood == "Mission", ]
+```
+
+```{r}
+# filter and select
+sf_joined[sf_joined$nhood == "Mission", "phisp17"]
+```
+
+## Display
+```{r}
+
+#single var
+plot(sf_joined["pwhite"])
+
+```
+
+## Transform to sf objects 1: data with lat and lon to points
+```{r}
+# import airbnb data
+sfbnb <- read.csv("data/sfbnb.csv")
+
+# transform lat/long data into sf object
+sf_sfbnb <- st_as_sf(sfbnb, 
+                     coords = c("longitude", "latitude"), 
+                     crs = 4326)
+```
+
+## Explore
+```{r}
+# check vars
+head(sf_sfbnb, n=3)
+
+# display
+plot(sf_sfbnb)
+```
+
+## Convert to sf objects 2: data without lat and lon (geocoding)
+```{r}
+# set up
+# install.packages("tidygeocoder")
+library(tidygeocoder)
+
+# import business data
+sfbiz <- read.csv("data/sfbiz_clean.csv") 
+
+# check if lat and lon exists
+head(sfbiz, 3)
+
+# create a full address field (street address, city, state, zipcode)
+sfbiz <- sfbiz %>%
+  mutate(full_add = paste(address_line_1, city, state, zipcode, sep = ", "))
+
+# geocode the full address
+geocoded_sfbiz <- sfbiz %>%
+  sample(20) %>%
+  geocode(address = full_add, method = 'osm')
+
+# omit rows where lat or long is missing (NA)
+geocoded_sfbiz_clean <- geocoded_sfbiz %>%
+  filter(!is.na(lat) & !is.na(long))
+
+sfbiz_clean <- geocoded_sfbiz_clean %>%
+  select(!c(lat, long))
+
+# export the clean file
+write.csv(geocoded_sfbiz_clean, "gecoded_sfbiz_clean.csv", row.names = FALSE)
+write.csv(geocoded_sfbiz_clean, "sfbiz_clean.csv", row.names = FALSE)
+
+# transform lat/long data into sf oject
+sf_sfbiz <- st_as_sf(geocoded_sfbiz_clean, 
+                     coords = c("long", "lat"), 
+                     crs = 4326)
+
+```
+
+## Export files as 
+```{r}
+
+# import neighborhoods with demographic attributes
+st_write(sf_joined, "sf_layers.gpkg", layer = "neighborhoods", append = FALSE)
+
+# import restaurants
+st_write(sf_sfbiz, "sf_layers.gpkg", layer = "restaurants", append = TRUE)
+
+# import airbnbs
+st_write(sf_sfbnb, "sf_layers.gpkg", layer = "airbnbs", append = TRUE)
+
+
+```
+
+

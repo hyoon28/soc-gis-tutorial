@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Emplacing demographic data | Spatial Data and Mapping for Sociologists</title>
+  <meta name="description" content="This is a website with tutorials for Advanced Quantitative Methods in Contemporary Sociology’s Spatial Data and Mapping module." />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Emplacing demographic data | Spatial Data and Mapping for Sociologists" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a website with tutorials for Advanced Quantitative Methods in Contemporary Sociology’s Spatial Data and Mapping module." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Emplacing demographic data | Spatial Data and Mapping for Sociologists" />
+  
+  <meta name="twitter:description" content="This is a website with tutorials for Advanced Quantitative Methods in Contemporary Sociology’s Spatial Data and Mapping module." />
+  
+
+<meta name="author" content="Hesu Yoon" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="insfratructure-and-institutions-point-of-interest-data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SHORT TITLE HERE</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i><b>1.1</b> Table of Contents</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html"><i class="fa fa-check"></i><b>2</b> Emplacing demographic data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#defining-a-geographic-unit-boundaries"><i class="fa fa-check"></i><b>2.1</b> Defining a geographic unit (boundaries)</a></li>
+<li class="chapter" data-level="2.2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#think-and-share"><i class="fa fa-check"></i><b>2.2</b> Think and share</a></li>
+<li class="chapter" data-level="2.3" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#joining-attributes"><i class="fa fa-check"></i><b>2.3</b> Joining attributes</a></li>
+<li class="chapter" data-level="2.4" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#creating-demographic-measures"><i class="fa fa-check"></i><b>2.4</b> Creating demographic measures</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="insfratructure-and-institutions-point-of-interest-data.html"><a href="insfratructure-and-institutions-point-of-interest-data.html"><i class="fa fa-check"></i><b>3</b> Insfratructure and Institutions: Point of interest data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="insfratructure-and-institutions-point-of-interest-data.html"><a href="insfratructure-and-institutions-point-of-interest-data.html#geocoding"><i class="fa fa-check"></i><b>3.1</b> Geocoding</a></li>
+<li class="chapter" data-level="3.2" data-path="insfratructure-and-institutions-point-of-interest-data.html"><a href="insfratructure-and-institutions-point-of-interest-data.html#spatial-join"><i class="fa fa-check"></i><b>3.2</b> Spatial join</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mapping.html"><a href="mapping.html"><i class="fa fa-check"></i><b>4</b> Mapping</a></li>
+<li class="chapter" data-level="5" data-path="explore-further-other-types-of-spatial-data.html"><a href="explore-further-other-types-of-spatial-data.html"><i class="fa fa-check"></i><b>5</b> Explore further: Other types of spatial data</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatial Data and Mapping for Sociologists</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="emplacing-demographic-data" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Emplacing demographic data<a href="emplacing-demographic-data.html#emplacing-demographic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter, we will discuss demographic data nested in places, which is often used in sociological research. Sociologists often study where people live and move to. Topics like migration, segregation, gentrification, integration/assimilation, and diversity/fractionalization can be studied using aggregated demographic data for a given geographic unit. To conduct such analysis, defining a geographic unit and boundary suitable for your research question is critical.</p>
+<div id="defining-a-geographic-unit-boundaries" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Defining a geographic unit (boundaries)<a href="emplacing-demographic-data.html#defining-a-geographic-unit-boundaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Geographic units can be defined and drawn at various levels, from nations to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Urban sociologists, for instance, tend to focus on studying neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as “community areas” that are more meaningful to its residents.</p>
+<p><strong>THE CASE OF SAN FRANCISCO</strong></p>
+<p>Let’s demonstrate the importance of defining a geographic unit using the case of San Francisco. San Francisco’s neighborhood names and boundaries have changed over time [1] and the current names and boundaries are often inconsistently perceived and administered [2].</p>
+<div class="figure">
+<img src="images/sf-name-change.png" alt="" />
+<p class="caption">Source: SFGATE</p>
+</div>
+<p>In this tutorial, I visualize San Francisco neighborhoods based on census tracts as well as the “Analysis Neighborhood” created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco’s [DataSF] (<a href="https://datasf.org/opendata/" class="uri">https://datasf.org/opendata/</a>). You want to look for “Geographic Locations &amp; Boundaries” tab.</p>
+<div class="figure">
+<img src="images/sf-open-data.png" alt="" />
+<p class="caption">DataSF is an open data website provided by the city government of San Francisco</p>
+</div>
+<p>Here, you will find the 2010 census tract and “Analysis Neighborhood” boundaries, among many other geographic data.</p>
+<ul>
+<li>Geographic boundaries data can come in various formats, like geojson, shapefiles, etc.</li>
+<li>In this tutorial, we use geojson files. You can download all the data used in this class here.</li>
+<li>Geographic boundaries are “polygons”</li>
+<li>We use <strong>sf package</strong> in R to handle spatial data.</li>
+</ul>
+<p>Set up and import geojson files.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="emplacing-demographic-data.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, you will have to set up by installing and calling the sf package.</span></span>
+<span id="cb1-2"><a href="emplacing-demographic-data.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>) <span class="co">#install the package if you haven&#39;t.</span></span>
+<span id="cb1-3"><a href="emplacing-demographic-data.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="emplacing-demographic-data.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import neighborhood boundaries data (polygons)</span></span>
+<span id="cb2-2"><a href="emplacing-demographic-data.html#cb2-2" aria-hidden="true" tabindex="-1"></a>sfnh <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;tutorial/data/sfnh.geojson&quot;</span>) <span class="co"># for &quot;Analysis Neighborhood&quot; boundaries</span></span>
+<span id="cb2-3"><a href="emplacing-demographic-data.html#cb2-3" aria-hidden="true" tabindex="-1"></a>sftrt <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;tutorial/data/sftrt_clean.geojson&quot;</span>) <span class="co"># for census tracts</span></span></code></pre></div>
+<p>You can treat these sf objects as if they are data frames.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="emplacing-demographic-data.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overview of variables</span></span>
+<span id="cb3-2"><a href="emplacing-demographic-data.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfnh, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 3 features and 1 field
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4761 ymin: 37.70833 xmax: -122.3983 ymax: 37.79037
+## Geodetic CRS:  WGS 84
+##                nhood                       geometry
+## 1   Western Addition MULTIPOLYGON (((-122.4214 3...
+## 2 West of Twin Peaks MULTIPOLYGON (((-122.461 37...
+## 3  Visitacion Valley MULTIPOLYGON (((-122.4039 3...</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="emplacing-demographic-data.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform an sf object into a simple one data frame (without geometries)</span></span>
+<span id="cb5-2"><a href="emplacing-demographic-data.html#cb5-2" aria-hidden="true" tabindex="-1"></a>sfnh_wo_geo <span class="ot">&lt;-</span> <span class="fu">st_drop_geometry</span>(sfnh)</span>
+<span id="cb5-3"><a href="emplacing-demographic-data.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="emplacing-demographic-data.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfnh_wo_geo, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                nhood
+## 1   Western Addition
+## 2 West of Twin Peaks
+## 3  Visitacion Valley</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="emplacing-demographic-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying geometry only - compare how boundaries differ!</span></span>
+<span id="cb7-2"><a href="emplacing-demographic-data.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="emplacing-demographic-data.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf) <span class="co"># we will learn more about mapping in detail in the following tutorials.</span></span>
+<span id="cb7-4"><a href="emplacing-demographic-data.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="emplacing-demographic-data.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(sfnh, <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb7-6"><a href="emplacing-demographic-data.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_label</span>(</span>
+<span id="cb7-7"><a href="emplacing-demographic-data.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sfnh,</span>
+<span id="cb7-8"><a href="emplacing-demographic-data.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">var =</span> <span class="st">&quot;nhood&quot;</span>,</span>
+<span id="cb7-9"><a href="emplacing-demographic-data.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb7-10"><a href="emplacing-demographic-data.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">halo =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-11"><a href="emplacing-demographic-data.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">overlap =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb7-12"><a href="emplacing-demographic-data.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">lines =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-13"><a href="emplacing-demographic-data.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex =</span> <span class="fl">0.5</span></span>
+<span id="cb7-14"><a href="emplacing-demographic-data.html#cb7-14" aria-hidden="true" tabindex="-1"></a>) <span class="co"># display neighborhood names</span></span>
+<span id="cb7-15"><a href="emplacing-demographic-data.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="at">txt =</span> <span class="st">&quot;Analysis Neighborhood&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="emplacing-demographic-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(sftrt, <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb8-2"><a href="emplacing-demographic-data.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="at">txt =</span> <span class="st">&quot;2010 Census&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p>In my research, for example, I ask: How do Airbnb hosts use neighborhood names to market their properties? To answer this question, using census tract boundaries doesn’t really make sense because they don’t carry meanings. Rather, it would be more suitable to use boundaries such as Analysis Neighborhood.</p>
+</div>
+<div id="think-and-share" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Think and share<a href="emplacing-demographic-data.html#think-and-share" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Are you interested in nations, cities, regions, or neighborhoods? What spatial question do you have about them? How will you define their boundaries? Think about a geographic unit that you are interested in exploring. Define and justify your boundary. Test!</p>
+<p><em>Want to learn more?</em></p>
+<ol style="list-style-type: decimal">
+<li><a href="https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php" class="uri">https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php</a></li>
+<li><a href="https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/" class="uri">https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/</a></li>
+<li><a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html" class="uri">https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html</a></li>
+</ol>
+
+</div>
+<div id="joining-attributes" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Joining attributes<a href="emplacing-demographic-data.html#joining-attributes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Geographic boundaries alone don’t tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in <strong>people</strong> in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.</p>
+<p>We can merge a sf object with a data frame containing demographic attributes using the function merge(). Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two sf objects.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="emplacing-demographic-data.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes</span></span>
+<span id="cb9-2"><a href="emplacing-demographic-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a>sfdem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;tutorial/data/sfdem.csv&quot;</span>)</span>
+<span id="cb9-3"><a href="emplacing-demographic-data.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="emplacing-demographic-data.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check common identifier</span></span>
+<span id="cb9-5"><a href="emplacing-demographic-data.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sfdem)</span></code></pre></div>
+<pre><code>##  [1] &quot;nhood&quot;    &quot;tpop&quot;     &quot;pyoung&quot;   &quot;pcol&quot;     &quot;minc&quot;     &quot;mhval&quot;   
+##  [7] &quot;mrent&quot;    &quot;pwhite&quot;   &quot;pblack&quot;   &quot;pasian&quot;   &quot;phisp&quot;    &quot;tpop17&quot;  
+## [13] &quot;pyoung17&quot; &quot;pcol17&quot;   &quot;minc17&quot;   &quot;mhval17&quot;  &quot;mrent17&quot;  &quot;gentcat&quot; 
+## [19] &quot;pwhite17&quot; &quot;pblack17&quot; &quot;pasian17&quot; &quot;phisp17&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="emplacing-demographic-data.html#cb11-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Yes, in both data sets, &quot;nhood&quot; exists.</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="emplacing-demographic-data.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join attributes to geometry</span></span>
+<span id="cb12-2"><a href="emplacing-demographic-data.html#cb12-2" aria-hidden="true" tabindex="-1"></a>sf_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb12-3"><a href="emplacing-demographic-data.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sfnh,            <span class="co"># sf object</span></span>
+<span id="cb12-4"><a href="emplacing-demographic-data.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sfdem,           <span class="co"># data frame</span></span>
+<span id="cb12-5"><a href="emplacing-demographic-data.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;nhood&quot;</span>,      <span class="co"># x identifier</span></span>
+<span id="cb12-6"><a href="emplacing-demographic-data.html#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;nhood&quot;</span>,      <span class="co"># y identifier</span></span>
+<span id="cb12-7"><a href="emplacing-demographic-data.html#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>         <span class="co"># keep all lines</span></span>
+<span id="cb12-8"><a href="emplacing-demographic-data.html#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="emplacing-demographic-data.html#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="emplacing-demographic-data.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the joined data</span></span>
+<span id="cb12-11"><a href="emplacing-demographic-data.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sf_joined, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 3 features and 22 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4479 ymin: 37.70835 xmax: -122.357 ymax: 37.7696
+## Geodetic CRS:  WGS 84
+##                   nhood     tpop   pyoung     pcol      minc    mhval     mrent
+## 1 Bayview Hunters Point 34834.88 25.11909 13.09727  68944.42 383179.6  948.6696
+## 2        Bernal Heights 24952.09 29.74500 39.13500  95689.95 537924.0 1449.2704
+## 3   Castro/Upper Market 20037.68 35.27500 63.81000 109990.94 872713.1 1613.5698
+##      pwhite    pblack   pasian     phisp tpop17 pyoung17   pcol17   minc17
+## 1  5.657989 45.322281 26.27249 16.296813  37917 24.14091 29.18273  63772.3
+## 2 38.517951  6.560709 16.87636 33.360004  25167 21.51000 58.98167 139612.5
+## 3 77.062002  2.860599  7.25898  9.031316  22502 30.88167 78.36000 159149.2
+##   mhval17  mrent17               gentcat  pwhite17  pblack17 pasian17   phisp17
+## 1  737920 1402.455       non-gentrifying  7.962128 25.289448 38.64493 23.443310
+## 2 1184217 1877.667 nongentable-ascending 47.709302  4.072794 17.05805 26.276473
+## 3 1323100 2225.833 nongentable-ascending 68.896098  3.146387 14.38983  8.030397
+##                         geometry
+## 1 MULTIPOLYGON (((-122.3816 3...
+## 2 MULTIPOLYGON (((-122.4036 3...
+## 3 MULTIPOLYGON (((-122.4266 3...</code></pre>
+<p>Now, we are able to explore neighborhood-level characteristics.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="emplacing-demographic-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows</span></span>
+<span id="cb14-2"><a href="emplacing-demographic-data.html#cb14-2" aria-hidden="true" tabindex="-1"></a>sf_joined[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]</span></code></pre></div>
+<pre><code>## Simple feature collection with 2 features and 22 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4286 ymin: 37.70835 xmax: -122.357 ymax: 37.75319
+## Geodetic CRS:  WGS 84
+##                   nhood     tpop   pyoung     pcol     minc    mhval     mrent
+## 1 Bayview Hunters Point 34834.88 25.11909 13.09727 68944.42 383179.6  948.6696
+## 2        Bernal Heights 24952.09 29.74500 39.13500 95689.95 537924.0 1449.2704
+##      pwhite    pblack   pasian    phisp tpop17 pyoung17   pcol17   minc17
+## 1  5.657989 45.322281 26.27249 16.29681  37917 24.14091 29.18273  63772.3
+## 2 38.517951  6.560709 16.87636 33.36000  25167 21.51000 58.98167 139612.5
+##   mhval17  mrent17               gentcat  pwhite17  pblack17 pasian17  phisp17
+## 1  737920 1402.455       non-gentrifying  7.962128 25.289448 38.64493 23.44331
+## 2 1184217 1877.667 nongentable-ascending 47.709302  4.072794 17.05805 26.27647
+##                         geometry
+## 1 MULTIPOLYGON (((-122.3816 3...
+## 2 MULTIPOLYGON (((-122.4036 3...</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="emplacing-demographic-data.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select columns</span></span>
+<span id="cb16-2"><a href="emplacing-demographic-data.html#cb16-2" aria-hidden="true" tabindex="-1"></a>sf_joined[, <span class="st">&quot;tpop&quot;</span>]</span></code></pre></div>
+<pre><code>## Simple feature collection with 41 features and 1 field
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.5149 ymin: 37.70813 xmax: -122.357 ymax: 37.8333
+## Geodetic CRS:  WGS 84
+## First 10 features:
+##        tpop                       geometry
+## 1  34834.88 MULTIPOLYGON (((-122.3816 3...
+## 2  24952.09 MULTIPOLYGON (((-122.4036 3...
+## 3  20037.68 MULTIPOLYGON (((-122.4266 3...
+## 4  14360.00 MULTIPOLYGON (((-122.4062 3...
+## 5  37063.83 MULTIPOLYGON (((-122.424 37...
+## 6   9929.22 MULTIPOLYGON (((-122.3875 3...
+## 7   8053.00 MULTIPOLYGON (((-122.4474 3...
+## 8    137.00 MULTIPOLYGON (((-122.4409 3...
+## 9  17009.00 MULTIPOLYGON (((-122.432 37...
+## 10 16915.00 MULTIPOLYGON (((-122.4208 3...</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="emplacing-demographic-data.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter</span></span>
+<span id="cb18-2"><a href="emplacing-demographic-data.html#cb18-2" aria-hidden="true" tabindex="-1"></a>sf_joined[sf_joined<span class="sc">$</span>nhood <span class="sc">==</span> <span class="st">&quot;Mission&quot;</span>, ]</span></code></pre></div>
+<pre><code>## Simple feature collection with 1 feature and 22 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77564
+## Geodetic CRS:  WGS 84
+##      nhood     tpop   pyoung     pcol     minc    mhval   mrent  pwhite
+## 19 Mission 60202.03 39.93308 33.86769 76201.05 634583.3 1267.62 32.5255
+##      pblack   pasian    phisp tpop17 pyoung17   pcol17   minc17 mhval17
+## 19 2.973325 11.01126 50.07308  58770 34.39923 57.20385 125000.2 1106315
+##     mrent17     gentcat pwhite17 pblack17 pasian17  phisp17
+## 19 1870.846 gentrifying 41.09069 3.660031 14.46827 35.66786
+##                          geometry
+## 19 MULTIPOLYGON (((-122.411 37...</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="emplacing-demographic-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter and select</span></span>
+<span id="cb20-2"><a href="emplacing-demographic-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>sf_joined[sf_joined<span class="sc">$</span>nhood <span class="sc">==</span> <span class="st">&quot;Mission&quot;</span>, <span class="st">&quot;phisp17&quot;</span>]</span></code></pre></div>
+<pre><code>## Simple feature collection with 1 feature and 1 field
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77564
+## Geodetic CRS:  WGS 84
+##     phisp17                       geometry
+## 19 35.66786 MULTIPOLYGON (((-122.411 37...</code></pre>
+<ul>
+<li><p>Exercise
+Below, you see two maps displaying Chicago ans Seattle.
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/Teaching/ENSAE-Mapping/images/figure1.png" alt="Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823" /></p></li>
+<li><p>What are the boundaries?</p></li>
+<li><p>What attribute is displayed in the map?</p></li>
+<li><p>Is this attribute quantitative or qualitative?</p></li>
+</ul>
+</div>
+<div id="creating-demographic-measures" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Creating demographic measures<a href="emplacing-demographic-data.html#creating-demographic-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With spatial data merged with demographic attributes, we can create demographic measures of interest. Here, I introduce three key measures used in urban scholarship: gentrification and diversity.</p>
+<ol style="list-style-type: decimal">
+<li><p>Gentrification - qualitative, typology</p></li>
+<li><p>Diversity - quantitative, chereology</p></li>
+</ol>
+<ul>
+<li>Data sources
+Aggregated demographic data and spatial boundaries are collected and disseminated by national and municipal government, as well as international organizations (e.g., United Nations).</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="insfratructure-and-institutions-point-of-interest-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/02-gis-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/02-gis-data.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

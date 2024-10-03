@@ -1,0 +1,70 @@
+## Joining attributes
+
+Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.
+
+We can merge a sf object with a data frame containing demographic attributes using the function merge(). Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two sf objects.
+
+
+```{r}
+# Import demographic attributes
+sfdem <- read.csv("tutorial/data/sfdem.csv")
+
+# Check common identifier
+names(sfdem)
+  # Yes, in both data sets, "nhood" exists.
+```
+
+```{r}
+# Join attributes to geometry
+sf_joined <- merge(
+  x = sfnh,            # sf object
+  y = sfdem,           # data frame
+  by.x = "nhood",      # x identifier
+  by.y = "nhood",      # y identifier
+  all.x = TRUE         # keep all lines
+)
+
+# Check the joined data
+head(sf_joined, 3)
+```
+
+Now, we are able to explore neighborhood-level characteristics.
+
+```{r}
+# Select rows
+sf_joined[1:2,]
+```
+
+```{r}
+# Select columns
+sf_joined[, "tpop"]
+```
+
+```{r}
+# Filter
+sf_joined[sf_joined$nhood == "Mission", ]
+```
+
+```{r}
+# Filter and select
+sf_joined[sf_joined$nhood == "Mission", "phisp17"]
+```
+
+- Exercise
+Below, you see two maps displaying Chicago ans Seattle.
+![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/Teaching/ENSAE-Mapping/images/figure1.png)
+
+- What are the boundaries?
+- What attribute is displayed in the map?
+- Is this attribute quantitative or qualitative?
+
+## Creating demographic measures
+
+With spatial data merged with demographic attributes, we can create demographic measures of interest. Here, I introduce three key measures used in urban scholarship: gentrification and diversity. 
+
+1. Gentrification - qualitative, typology
+
+2. Diversity - quantitative, chereology
+
+- Data sources
+Aggregated demographic data and spatial boundaries are collected and disseminated by national and municipal government, as well as international organizations (e.g., United Nations).

@@ -1,0 +1,103 @@
+# Emplacing Demographic Data
+
+
+In this chapter, we will discuss demographic data nested in places, which is often used in sociological research. Sociologists often study where people live and move to. Topics like migration, segregation, gentrification, integration/assimilation, and diversity/fractionalization can be studied using aggregated demographic data for a given geographic unit. To conduct such analysis, defining a geographic unit and boundary suitable for your research question is critical.
+
+## Defining a geographic unit (boundaries)
+
+Geographic units can be defined and drawn at various levels, from nations to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Urban sociologists, for instance, tend to focus on studying neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as "community areas" that are more meaningful to its residents.
+
+**THE CASE OF SAN FRANCISCO**
+
+Let's demonstrate the importance of defining a geographic unit using the case of San Francisco. San Francisco's neighborhood names and boundaries have changed over time [1] and the current names and boundaries are often inconsistently perceived and administered [2]. 
+
+
+![Source: SFGATE](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial-updated/images/sf-name-change.png)
+
+
+
+In this tutorial, I visualize San Francisco neighborhoods based on census tracts as well as the "Analysis Neighborhood" created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco's [DataSF] (https://datasf.org/opendata/). You want to look for "Geographic Locations & Boundaries" tab. 
+
+
+
+![DataSF is an open data website provided by the city government of San Francisco](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial-updated/images/sf-open-data.png)
+
+
+
+Here, you will find the 2010 census tract and "Analysis Neighborhood" boundaries, among many other geographic data.
+
+ - Geographic boundaries data can come in various formats, like geojson, shapefiles, etc.
+ - In this tutorial, we use geojson files. You can download all the data used in this class here.
+ - Geographic boundaries are "polygons"
+ - We use **sf package** in R to handle spatial data.
+
+
+```{r setup, include=FALSE}
+# Set CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+```
+
+Set up and import geojson files.
+
+```{r, results='hide', warning=FALSE, message=FALSE}
+# First, you will have to set up by installing and calling the sf package.
+install.packages("sf") #install the package if you haven't.
+library(sf)
+```
+
+```{r, results='hide'}
+# Import neighborhood boundaries data (polygons)
+sfnh <- st_read("tutorial/data/sfnh.geojson") # for "Analysis Neighborhood" boundaries
+sftrt <- st_read("tutorial/data/sftrt_clean.geojson") # for census tracts
+
+```
+
+You can treat these sf objects as if they are data frames.
+
+```{r}
+# Overview of variables
+head(sfnh, 3)
+```
+
+```{r}
+# Transform an sf object into a simple one data frame (without geometries)
+sfnh_wo_geo <- st_drop_geometry(sfnh)
+
+head(sfnh_wo_geo, 3)
+```
+
+```{r}
+# Displaying geometry only - compare how boundaries differ!
+
+library(mapsf) # we will learn more about mapping in detail in the following tutorials.
+
+mf_map(sfnh, col = "ivory4", border = "ivory")
+mf_label(
+  x = sfnh,
+  var = "nhood",
+  col= "black",
+  halo = TRUE,
+  overlap = FALSE, 
+  lines = FALSE,
+  cex = 0.5
+) # display neighborhood names
+mf_title(txt = "Analysis Neighborhood")
+
+mf_map(sftrt, col = "ivory4", border = "ivory")
+mf_title(txt = "2010 Census")
+
+```
+
+In my research, for example, I ask: How do Airbnb hosts use neighborhood names to market their properties? To answer this question, using census tract boundaries doesn't really make sense because they don't carry meanings. Rather, it would be more suitable to use boundaries such as Analysis Neighborhood.
+
+**THINK AND SHARE**
+
+ - Are you interested in conducting spatial analysis on nations, cities, regions, or neighborhoods? 
+ - What spatial questions do you have about them?
+ - How will you define their boundaries?
+
+*Want to learn more?*
+
+ 1. https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php
+ 2. https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/
+ 3. https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html
