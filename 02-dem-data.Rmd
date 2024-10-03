@@ -12,7 +12,7 @@ Geographic units can be defined and drawn at various levels, from nations to cit
 Let's demonstrate the importance of defining a geographic unit using the case of San Francisco. San Francisco's neighborhood names and boundaries have changed over time [1] and the current names and boundaries are often inconsistently perceived and administered [2]. 
 
 
-![Source: SFGATE](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial-updated/images/sf-name-change.png)
+![Source: SFGATE](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial/images/sf-name-change.png)
 
 
 
@@ -20,7 +20,7 @@ In this tutorial, I visualize San Francisco neighborhoods based on census tracts
 
 
 
-![DataSF is an open data website provided by the city government of San Francisco](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial-updated/images/sf-open-data.png)
+![DataSF is an open data website provided by the city government of San Francisco](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial/images/sf-open-data.png)
 
 
 

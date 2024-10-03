@@ -2,11 +2,12 @@ about
 table-of-contents
 emplacing-demographic-data
 defining-a-geographic-unit-boundaries
-think-and-share
 joining-attributes
+data-visualization
 creating-demographic-measures
-insfratructure-and-institutions-point-of-interest-data
+mapping-gentrification
+mapping-diversity
+from-people-to-built-environment
 geocoding
 spatial-join
-mapping
 explore-further-other-types-of-spatial-data

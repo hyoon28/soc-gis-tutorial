@@ -1,4 +1,5 @@
-## Joining attributes
+## Joining Attributes
+
 
 Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.
 
@@ -50,21 +51,12 @@ sf_joined[sf_joined$nhood == "Mission", ]
 sf_joined[sf_joined$nhood == "Mission", "phisp17"]
 ```
 
-- Exercise
+**THINK AND SHARE**
+
 Below, you see two maps displaying Chicago ans Seattle.
-![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/Teaching/ENSAE-Mapping/images/figure1.png)
+![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial/images/figure1.png)
 
-- What are the boundaries?
-- What attribute is displayed in the map?
-- Is this attribute quantitative or qualitative?
+ - What are the geographic boundaries used in this figure?
+ - What attribute is displayed in the map?
+ - Is this attribute quantitative or qualitative?
 
-## Creating demographic measures
-
-With spatial data merged with demographic attributes, we can create demographic measures of interest. Here, I introduce three key measures used in urban scholarship: gentrification and diversity. 
-
-1. Gentrification - qualitative, typology
-
-2. Diversity - quantitative, chereology
-
-- Data sources
-Aggregated demographic data and spatial boundaries are collected and disseminated by national and municipal government, as well as international organizations (e.g., United Nations).

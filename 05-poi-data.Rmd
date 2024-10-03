@@ -1,12 +1,10 @@
-# Insfratructure and Institutions: Point of interest data
+# From People to Built Environment
 
-Google Places API
+So far, we have focused on embedding demographic data into places. However, sociologists' inquiries go beyond people to institutions. People don't just exist in places but they interact with the built environment, including local businesses, public institutions like schools, libraries, and museums, green areas like parks and trees, infrastructures like roads and bridges. In this tutorial, we will explore 1) local businesses and 2) Airbnbs.
 
 ## Geocoding
 
 ## Spatial join
-
-# Mapping
 
 1. is it qualitative or quantitative (average make sense?)
   1.1 if qualitative, use different colors or shapes (nominal or ordinal variables) --> typology map
