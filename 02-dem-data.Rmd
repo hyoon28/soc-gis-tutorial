@@ -16,7 +16,7 @@ Let's demonstrate the importance of defining a geographic unit using the case of
 
 
 
-In this tutorial, I visualize San Francisco neighborhoods based on census tracts as well as the "Analysis Neighborhood" created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco's [DataSF] (https://datasf.org/opendata/). You want to look for "Geographic Locations & Boundaries" tab. 
+In this tutorial, I visualize San Francisco neighborhoods based on census tracts as well as the "Analysis Neighborhood" created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco's [DataSF](https://datasf.org/opendata/). You want to look for "Geographic Locations & Boundaries" tab. 
 
 
 
@@ -66,29 +66,33 @@ sfnh_wo_geo <- st_drop_geometry(sfnh)
 head(sfnh_wo_geo, 3)
 ```
 
+We can compare how these boundaries differ by mapping them next to each other. In this tutorial, we will use ggplot for mapping.
+
 ```{r}
-# Displaying geometry only - compare how boundaries differ!
+library(ggplot2)
 
-library(mapsf) # we will learn more about mapping in detail in the following tutorials.
+# Displaying geometry only
+sfnh_geo <- ggplot() + 
+  geom_sf(data = sfnh, # add a layer to the plot using spatial data
+          fill = "grey", # set the fill color of the spatial features
+          color = "white", # set the color of boundaries
+          size = 0.5) +  # set the thickness of the boundary lines
+  theme_void()  # apply no background
 
-mf_map(sfnh, col = "ivory4", border = "ivory")
-mf_label(
-  x = sfnh,
-  var = "nhood",
-  col= "black",
-  halo = TRUE,
-  overlap = FALSE, 
-  lines = FALSE,
-  cex = 0.5
-) # display neighborhood names
-mf_title(txt = "Analysis Neighborhood")
+sftrt_geo <- ggplot() +
+  geom_sf(data = sftrt, fill = "grey", color = "white", size = 0.5) +  
+  theme_void()  
 
-mf_map(sftrt, col = "ivory4", border = "ivory")
-mf_title(txt = "2010 Census")
+# combining maps
+ggpubr::ggarrange(sfnh_geo, sftrt_geo, ncol=2,
+                  labels = c("Analysis Neighborhood",
+                             "2010 Census Tract")
+                  ) 
 
 ```
 
 In my research, for example, I ask: How do Airbnb hosts use neighborhood names to market their properties? To answer this question, using census tract boundaries doesn't really make sense because they don't carry meanings. Rather, it would be more suitable to use boundaries such as Analysis Neighborhood.
+
 
 **THINK AND SHARE**
 
@@ -98,6 +102,7 @@ In my research, for example, I ask: How do Airbnb hosts use neighborhood names t
 
 *Want to learn more?*
 
- 1. https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php
- 2. https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/
- 3. https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html
+ 1. [San Francisco neighborhood name changes over time](https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php) 
+ 2. [San Francisco neighborhood boundaries are inconsistent](https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/) 
+ 3. [New York residents' perceptions of neighborhoods](https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html)
+ 

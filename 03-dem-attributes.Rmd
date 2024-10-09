@@ -3,7 +3,7 @@
 
 Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.
 
-We can merge a sf object with a data frame containing demographic attributes using the function merge(). Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two sf objects.
+We can merge a sf object with a data frame containing demographic attributes using the merge() function. Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two sf objects.
 
 
 ```{r}
@@ -25,38 +25,41 @@ sf_joined <- merge(
   all.x = TRUE         # keep all lines
 )
 
-# Check the joined data
-head(sf_joined, 3)
+# Validate geometries
+sf_joined <- st_make_valid(sf_joined)
 ```
 
 Now, we are able to explore neighborhood-level characteristics.
 
-```{r}
-# Select rows
-sf_joined[1:2,]
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+
+# Display population of neighborhoods
+sf_joined %>%
+  select(nhood, tpop)
 ```
 
 ```{r}
-# Select columns
-sf_joined[, "tpop"]
+# Display the neighborhood named "Mission"
+sf_joined %>% 
+  filter(nhood == "Mission")
 ```
 
 ```{r}
-# Filter
-sf_joined[sf_joined$nhood == "Mission", ]
+# Display the population of "Mission"
+sf_joined %>%
+  filter(nhood == "Mission") %>%
+  select(tpop)
 ```
 
-```{r}
-# Filter and select
-sf_joined[sf_joined$nhood == "Mission", "phisp17"]
-```
 
 **THINK AND SHARE**
 
-Below, you see two maps displaying Chicago ans Seattle.
+Below, you see two maps, each representing Chicago ans Seattle.
 ![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial/images/figure1.png)
 
  - What are the geographic boundaries used in this figure?
  - What attribute is displayed in the map?
  - Is this attribute quantitative or qualitative?
+
 

@@ -4,10 +4,10 @@ emplacing-demographic-data
 defining-a-geographic-unit-boundaries
 joining-attributes
 data-visualization
-creating-demographic-measures
-mapping-gentrification
-mapping-diversity
+choroleth-map
+typology-map
 from-people-to-built-environment
 geocoding
 spatial-join
+mapping-businesses
 explore-further-other-types-of-spatial-data

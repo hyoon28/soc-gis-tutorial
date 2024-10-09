@@ -18,8 +18,8 @@ library(sf)
 # clean nh-level demo
 ########################
 
-# import data
-sfdem <- read.csv("unclean data/nh_gent.csv")
+# import data - nh analysis level
+sfdem <- read.csv("sample data/nh_gent.csv")
 
 # check column names
 names(sfdem)
@@ -31,10 +31,33 @@ sfdem_filter <- sfdem %>%
          "pwhite", "pblack", "pasian","phisp",
          "tpop17", "pyoung17", 
          "pcol17",  "minc17", "mhval17", "mrent17",
-         "gentcat",
-         "pwhite17", "pblack17", "pasian17", "phisp17")
+         "pwhite17", "pblack17", "pasian17", "phisp17",
+         "gentcat")
 
-write.csv(sfdem_filter, "sfdem.csv", row.names = FALSE)
+write.csv(sfdem_filter, "sfnh_dem.csv", row.names = FALSE)
+
+# import data - census tract level
+trtdem <- read.csv("sample data/gentmeasure0017.csv")
+
+# checkc columns
+names(trtdem)
+
+# select vars of interest
+trtdem_filter <- trtdem %>%
+  select("trt10", "tpop", "pyoung",
+         "pcol", "minc", "mhval", "mrent", 
+         "pwht", "pblk", "pasian","phisp",
+         "tpop17", "pyoung17", 
+         "pcol17",  "minc17", "mhval17", "mrent17",
+         "pwht17", "pblk17", "pasian17", "phisp17",
+         "gent2")
+
+trtdem_filter <- trtdem_filter %>%
+  rename(gentcat = gent2) %>%
+  filter(tpop17 != 0)
+
+write.csv(trtdem_filter, "sftrt_dem.csv", row.names = FALSE)
+
 
 ####################  
 # listings data
@@ -75,12 +98,26 @@ sftrt <- st_read("data/sfnh_trt.geojson")
 head(sftrt, 3)
 
 # find places outside nh analysis
-unique(sftrt$neighborhoods_analysis_boundaries)
+unique(sftrt$nhood)
+
+# columns check
+names(sftrt)
+
+# select variables of interest
+sftrt_clean <- sftrt %>%
+  select("nhood",
+         "tractce10",
+         "geometry")
+
+# export
+st_write(sftrt_clean, "sftrt_clean.geojson", driver = "GeoJSON")
+
+## for 2020 census tract geo
 
 # filter islands
 sftrt_clean <- sftrt %>%
   filter(neighborhoods_analysis_boundaries != "The Farallones")
 
-# export
-st_write(sftrt_clean, "sftrt_clean.geojson", driver = "GeoJSON")
-
+# rename
+sftrt_clean <- sftrt_clean %>%
+  rename("nhood" = "neighborhoods_analysis_boundaries")

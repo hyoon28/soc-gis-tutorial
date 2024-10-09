@@ -14,6 +14,11 @@ So far, we have focused on embedding demographic data into places. However, soci
   2.2. relative - color gradiation (e.g., % white; diversity index/segregation index) --> chorolpeth map
 
 
+## Mapping businesses
+```{r}
+```
+
+
 # Explore further: Other types of spatial data
 
 1. Mobility data

@@ -149,15 +149,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#joining-attributes"><i class="fa fa-check"></i><b>2.2</b> Joining Attributes</a></li>
 <li class="chapter" data-level="2.3" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#data-visualization"><i class="fa fa-check"></i><b>2.3</b> Data Visualization</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#creating-demographic-measures"><i class="fa fa-check"></i><b>2.3.1</b> Creating demographic measures</a></li>
-<li class="chapter" data-level="2.3.2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#mapping-gentrification"><i class="fa fa-check"></i><b>2.3.2</b> Mapping gentrification</a></li>
-<li class="chapter" data-level="2.3.3" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#mapping-diversity"><i class="fa fa-check"></i><b>2.3.3</b> Mapping diversity</a></li>
+<li class="chapter" data-level="2.3.1" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#choroleth-map"><i class="fa fa-check"></i><b>2.3.1</b> Choroleth map</a></li>
+<li class="chapter" data-level="2.3.2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html#typology-map"><i class="fa fa-check"></i><b>2.3.2</b> Typology map</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html"><i class="fa fa-check"></i><b>3</b> From People to Built Environment</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#geocoding"><i class="fa fa-check"></i><b>3.1</b> Geocoding</a></li>
 <li class="chapter" data-level="3.2" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.2</b> Spatial join</a></li>
+<li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#mapping-businesses"><i class="fa fa-check"></i><b>3.3</b> Mapping businesses</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="explore-further-other-types-of-spatial-data.html"><a href="explore-further-other-types-of-spatial-data.html"><i class="fa fa-check"></i><b>4</b> Explore further: Other types of spatial data</a></li>
 <li class="divider"></li>
@@ -182,19 +182,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Spatial Data and Mapping for Sociologists</h1>
 <p class="author"><em>Hesu Yoon</em></p>
-<p class="date"><em>Last updated: 2024-10-03</em></p>
+<p class="date"><em>Last updated: 2024-10-08</em></p>
 </div>
 <div id="about" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> About<a href="index.html#about" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The social life is embedded in space. The advent of digital technology, once believed to jeopardize the significance of space, mediates and reconfigures how people experience and navigate places. From pandemic to climate change to globalizing gentrification and migration, there are abundant sociological inquiries that require the understanding of how social groups, institutions, and resources are spatially organized. This module is designed to equip students with tools that will help them explore these topics.</p>
-<p>The following is a series of tutorials prepared for the Spatial Data and Mapping module from Advanced Quantitative Methods in Contemporary Sociology course. This module specifically aims to teach students how to gather, process, and visualize spatial data for sociological research. Some prior experience or familiarity with quantitative data and statistical software (R) is necessary to follow the tutorials. However, no prior experience in <em>spatial</em> data and/or software is assumed.</p>
+<p>The social life is embedded in space. The advent of digital technology, once believed to jeopardize the significance of space, mediates and reconfigures how people experience and navigate places. From pandemic to climate change to globalizing gentrification and migration, there are abundant sociological inquiries that require the understanding of how social groups, institutions, and resources are spatially organized. This module is designed to equip students with tools that help them explore these topics.</p>
+<p>The following is a series of tutorials prepared for the Spatial Data and Mapping module from Advanced Quantitative Methods in Contemporary Sociology course taught at ENSAE Paris. This module specifically aims to teach students how to gather, process, and visualize spatial data for sociological research. Some prior experience or familiarity with quantitative data and statistical software is necessary to follow the tutorials. However, no prior experience in <em>spatial</em> data and/or software is assumed.</p>
 <p>Each tutorial is a chapter in this website. You can navigate through the chapters using the sidebar.</p>
 <div id="table-of-contents" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Table of Contents<a href="index.html#table-of-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
-<li>Different types of spatial data</li>
-<li>Geocoding, spatial join, mapping</li>
-<li>Mapping (continued)</li>
+<li>About</li>
+<li>Emplacing Demographic Data</li>
+<li>From People to Institutions</li>
+<li>Additional Topics</li>
 </ol>
 
 </div>
@@ -259,6 +260,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
