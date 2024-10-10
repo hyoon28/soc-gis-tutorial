@@ -26,13 +26,7 @@ names(sfdem)
 
 # select vars of interest
 sfdem_filter <- sfdem %>%
-  select("nhood", "tpop", "pyoung",
-         "pcol", "minc", "mhval", "mrent", 
-         "pwhite", "pblack", "pasian","phisp",
-         "tpop17", "pyoung17", 
-         "pcol17",  "minc17", "mhval17", "mrent17",
-         "pwhite17", "pblack17", "pasian17", "phisp17",
-         "gentcat")
+  select("nhood","pwhite17", "pblack17", "pasian17", "phisp17")
 
 write.csv(sfdem_filter, "sfnh_dem.csv", row.names = FALSE)
 
@@ -78,14 +72,31 @@ write.csv(sfbnb_merge, "sfbnb.csv", row.names = FALSE)
 # biz data
 #################### 
 
-sfbiz <- read.csv("unclean data/sf_merged_retail.csv") %>% 
+sfbiz <- read.csv("sample data/sf_merged_retail.csv") %>% 
   filter (archive_version_year == 2019 
           & restaurant == 1) %>%
   select("company", "address_line_1", "city", "zipcode",
-         "naics8_descriptions", "employee_size_location", "sales_volume_location")  %>%
-  mutate(state = "CA")
+         "naics8_descriptions")  %>%
+  mutate(state = "CA") %>%
+  mutate(full_add = paste(address_line_1, city, state, zipcode, sep = ", "))
 
-write.csv(sfbiz, "sfbiz.csv", row.names = FALSE)
+library(tidygeocoder)
+
+# geocode the full address
+geocoded_sfbiz <- sfbiz %>%
+  geocode(address = full_add, method = 'osm')
+
+# omit rows where lat or long is missing (NA)
+geocoded_sfbiz_clean <- geocoded_sfbiz %>%
+  filter(!is.na(lat) & !is.na(long))
+
+sfbiz_clean <- geocoded_sfbiz_clean %>%
+  select(!c(lat, long, full_add))
+
+# export the clean file
+write.csv(geocoded_sfbiz_clean, "geocoded_sfbiz_clean.csv", row.names = FALSE)
+write.csv(sfbiz_clean, "sfbiz_clean.csv", row.names = FALSE)
+
 
 #################### 
 # boundary data

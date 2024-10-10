@@ -1,4 +1,4 @@
-## Joining Attributes
+## Joining attributes
 
 
 Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.
@@ -8,7 +8,7 @@ We can merge a sf object with a data frame containing demographic attributes usi
 
 ```{r}
 # Import demographic attributes
-sfdem <- read.csv("tutorial/data/sfdem.csv")
+sfdem <- read.csv("tutorial/data/sfnh_dem.csv")
 
 # Check common identifier
 names(sfdem)
@@ -34,9 +34,9 @@ Now, we are able to explore neighborhood-level characteristics.
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 
-# Display population of neighborhoods
+# Display the share of white population of neighborhoods
 sf_joined %>%
-  select(nhood, tpop)
+  select(nhood, pwhite)
 ```
 
 ```{r}
@@ -46,12 +46,16 @@ sf_joined %>%
 ```
 
 ```{r}
-# Display the population of "Mission"
+# Display the share of white population of "Mission"
 sf_joined %>%
   filter(nhood == "Mission") %>%
-  select(tpop)
+  select(pwhite)
 ```
 
+```{r}
+# Export your joined sf object as a geojson file
+st_write(sf_joined, "tutorial/data/sfnh_dem_joined.geojson", driver = "GeoJSON")
+```
 
 **THINK AND SHARE**
 

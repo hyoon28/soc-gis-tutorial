@@ -23,29 +23,6 @@ bnbs <- st_read("data/sf_layers.gpkg", layer = "airbnbs", quiet = TRUE)
 
 ```
 
-## mapping gentrification using typology map
-```{r}
-
-head(nhoods, 5)
-
-## measuring gentrification
-
-nhoods <- nhoods %>%
-  mutate(gentable = 1 if minc < median(minc), else 0)
-  
-
-mf_map(
-  x = nhoods,
-  var="gentcat",
-  type = "typo",
-  pal = c("pink", "red", "grey", "black"),
-  lwd = .7,
-  leg_title = "gent cat"
-)
-mf_title("Statut administratif des communes")
-
-```
-
 ## mapping
 ```{r}
 

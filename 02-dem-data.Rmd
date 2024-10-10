@@ -83,7 +83,7 @@ sftrt_geo <- ggplot() +
   geom_sf(data = sftrt, fill = "grey", color = "white", size = 0.5) +  
   theme_void()  
 
-# combining maps
+# Combining maps
 ggpubr::ggarrange(sfnh_geo, sftrt_geo, ncol=2,
                   labels = c("Analysis Neighborhood",
                              "2010 Census Tract")

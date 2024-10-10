@@ -1,4 +1,4 @@
-## Data Visualization
+## Data visualization
 
 By merging demographic data with spatial boundaries, we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display.
 
@@ -54,8 +54,7 @@ ggplot(data = sf_joined) + # specify the source of spatial data
           size = 0.2,
           color = "white") + # add a layer to use "diversity" to fill colors
   scale_fill_distiller(type="seq", # fill in sequential colors 
-                       palette = "Greys", 
-                       breaks = quantile(sf_joined$diversity), # set breaks at the quantile
+                       palette = "Greys",
                        direction = -1, # 1 for low (light) to high (dark), -1 for reverse
                        ) +
   geom_sf_label(aes(label = nhood),  # add labels using the nhood variable
