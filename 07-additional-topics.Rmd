@@ -1,0 +1,12 @@
+# Additional Topics
+
+While we have focused on aggregated demographic data and POI data in this tutorial, the use case of spatial data and mapping is by no means limited to these topics. Sociologists leverage spatial data to study numerous topics, especially with the expansion of open access GIS data sources. Some topics include but are not limited to:
+
+ - Crime patterns
+ - Voting behaviors
+ - Environmental and climate issues
+ - Local zoning and urban policies
+
+Moreover, digital trace data with geotags are also emerging sources of spatial data, enabling researchers to study texts and images associated with particular geographies. Think about all the reviews on Google Maps, images with location information on Instagram, and geotagged posts on X (ex-Twitter). It is fascinating to think about how the new technologies mediate the ways in which people imagine and experience places. With all the tools you learned from this class, you will now be able to start tackling some of these questions yourself!
+
+

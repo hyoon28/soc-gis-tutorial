@@ -1,63 +1,71 @@
 # From People to Built Environment
 
 
-So far, we have focused on embedding demographic data into places. However, sociologists' inquiries go beyond people. People don't just exist in places but they interact with the built environment. In this tutorial, we will use Airbnbs and local businesses
+So far, we have focused on embedding demographic data into places. However, sociological questions beyond people. People don't just exist in places but they interact with the built environment, such as schools, local businesses, landmarks, and so forth. In GIS terms, this type of data can be called point-of-interest (POI), meaning a specific point location or useful site, defined by geographical coordinates (latitude and longitude). In this tutorial, we will use Airbnb and local business data as an example of point-of-interest data.
 
-## Airbnbs
+## Transforming Airbnbs
 
-When the data contains the latitude and longitude, we can simply transform it to sf object by using "st_as_sf" command. We use the Airbnb data in San Francisco to illustrate this case. Unlike neighborhood boundaries of which geometries were polygons, these geometries will be **points**.
+When the data contains the latitude and longitude, we can simply transform it to sf object by using "st_as_sf" command. We will use the San Francisco Airbnb data to illustrate this case. Unlike neighborhood boundaries of which geometries were polygons, these geometries will be **points**.
 
-```{r}
+```{r import-bnb}
 # Import the Airbnb data
-sfbnb <- read.csv("tutorial/data/sfbnb.csv")
+sfbnb <- read.csv("data/sfbnb.csv")
 
 # Transform lat/long data into sf object
 sf_sfbnb <- st_as_sf(sfbnb, 
                      coords = c("longitude", "latitude"), 
-                     crs = 4326 # specify the projection; WGS 84 is a standard projection for global mapping. 
+                     crs = 4326 # specify the projection; WGS84 is a standard projection for global mapping. 
                      )
 ```
 
-## Explore
-```{r}
+```{r explore-bnb}
 # Check variables
 head(sf_sfbnb, n=3)
-
-# Display the points in the map
-plot(sf_sfbnb)
 ```
 
-## Restaurants
+You can see that geometry is points, rather than polygons. Each point represents an Airbnb property (id- unique identifier). It also indicates the census tract (trt10) and neighborhood name (analysis) in which the Airbnb  property is located. The data also contains attributes of the Airbnb property, such as property type, review score ratings, and the number of reviews.
 
-When the data contains street addresses, we have to perform **geocoding** which converts formatted addresses into latitude and longitude. Below, we use the restaurant data in San Francisco to demonstrate this.
+```{r export-bnb, results='hide', warning=FALSE, message=FALSE}
+# Export the Airbnb data as a geojson file
+st_write(sf_sfbnb, "processed-data/airbnbs.geojson", driver = "GeoJSON", delete_dsn = TRUE)
+```
 
-```{r}
-# Set up
-library(tidygeocoder)
 
+## Geocoding Restaurants
+
+Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform **geocoding** which converts formatted addresses into latitude and longitude. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.
+
+```{r import-biz}
 # Import restaurant data
-sfbiz <- read.csv("tutorial/data/sfbiz_clean.csv") 
+sfbiz <- read.csv("data/sfbiz_clean.csv") 
 
 # Check if lat and lon exists
 head(sfbiz, 3)
 ```
 
-In this data, we can see that latitude and longitude does not exist. However, it contains street address, city, state, and zip code. We have to create a field that displays the full address. Using this full address, we can perform geocoding using open street map (osm). Once the data is geocoded, we can transform this data frame to sf object for mapping.
+In this data, we can see that latitude and longitude does not exist. However, it contains street address, city, state, and zip code. To carry out geocoding, first, we have to create a field that displays a full address. Based on the full address, we can get the latitude and longitude via open street map (osm). Once the data is geocoded, we can transform this data frame to sf object for mapping.
 
-```{r}
+```{r geocode, warning=FALSE, message=FALSE}
+# Set up
+library(tidygeocoder)
+
 # Create a full address field (street address, city, state, zipcode)
 sfbiz <- sfbiz %>%
   mutate(full_add = paste(address_line_1, city, state, zipcode, sep = ", "))
 
 # Geocode the full address
 geocoded_sfbiz <- sfbiz %>%
-  sample_n(20) %>% # the full data can take a while, so let's try on a smaller sample
+  sample_n(5) %>% # the full data can take a while, so let's try on a smaller sample
   geocode(address = full_add, method = 'osm')
+
+# Check the geocoded data
+geocoded_sfbiz %>%
+  select(lat, long)
 ```
 
-```{r}
-# For the purpose of this tutorial, we can use the prepared geocoded data
-prep_sfbiz <- read.csv("tutorial/data/geocoded_sfbiz_clean.csv") 
+```{r import-geocoded}
+# For the purpose of this tutorial, we can use the prepared, full geocoded data
+prep_sfbiz <- read.csv("data/geocoded_sfbiz_clean.csv") 
 
 # Transform lat/long data into sf oject
 sf_sfbiz <- st_as_sf(prep_sfbiz, 
@@ -65,22 +73,9 @@ sf_sfbiz <- st_as_sf(prep_sfbiz,
                      crs = 4326)
 ```
 
-## Explore
-```{r}
-# Check variables
-head(sf_sfbiz, n=3)
-
-# Display the points in the map
-plot(sf_sfbiz)
-```
-
-## Export data 
-```{r}
-# export restaurants
-st_write(sf_sfbiz, "restaurants.geojson", driver = "GeoJSON")
-
-# export airbnbs
-st_write(sf_sfbnb, "airbnbs.geojson", driver = "GeoJSON")
+```{r export-biz, results='hide', warning=FALSE, message=FALSE}
+# Export the restaurant data as a geojson file
+st_write(sf_sfbiz, "processed-data/restaurants.geojson", driver = "GeoJSON", delete_dsn = TRUE)
 ```
 
 

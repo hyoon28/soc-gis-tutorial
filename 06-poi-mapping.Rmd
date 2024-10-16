@@ -1,46 +1,39 @@
 ## Spatial join
 
-```{r, include = False}
-rm(list=ls())
-```
-
-```{r, results='hide', warning=FALSE, message=FALSE}
-## Import all layers
-nhoods <- st_read("tutorial/data/sfnh_dem_joined.geojson")
-restrnt <- st_read("tutorial/data/restaurants.geojson")
-```
-
 Spatial join allows you to combine two sf objects based on the spatial relationship between their geometries. For example, we can think of the relationship between neighborhoods (polygons) and restaurants (points).
 
  * Neighborhoods (x) contain restaurants (y), or
  * restaurants (x) are within neighborhoods (y).
 
-```{r}
+```{r spatial-join}
 # Before joining, check if they have the same projections
-st_crs(restrnt) == st_crs(nhoods)
+st_crs(sfnh) == st_crs(sf_sfbiz)
 
 # Perform spatial join
-nh_joined <- st_join(x = nhoods, # join
-                     y = restrnt, # target
-                     join = st_contains, # does x(sfnh/polygon) contains y(sfbnb/point)?
-                     left = TRUE) # keep all neighborhoods 
+nh_joined <- st_join(x = sfnh, # join
+                     y = sf_sfbiz, # target
+                     join = st_contains, # does x(polygon) contains y(point)?
+                     left = TRUE) # keep all neighborhoods
+
+# Explore
+head(nh_joined, 3)
 ```
 
 ## Data visualization
 
 To start, you can simply overlay the restaurant locations on top of the neighborhood map.
 
-```{r}
+```{r point-map}
 # Plot the restaurant locations
 ggplot() +
   # display neighborhood boundaries
-  geom_sf(data = nhoods,
+  geom_sf(data = sf_joined,
           fill = "lightgray",
           size = 0.02,
           color = "white"
           ) +
   # display restaurants
-  geom_sf(data = restrnt, 
+  geom_sf(data = sf_sfbiz, 
           color = "red", 
           size = 0.5, alpha = 0.8
           ) +  # Plot restaurants
@@ -50,59 +43,119 @@ ggplot() +
 
 Taking a step further, we can create a choropleth map by counting the number of restaurants in each neighborhood.
 
-```{r}
-# Step 1: Count restaurants per neighborhood
+```{r aggregate-map}
+# Count restaurants per neighborhood
 restaurant_counts <- nh_joined %>%
   group_by(nhood) %>% 
-  summarize(n_rst = sum(!is.na(company)), .groups = 'drop')
+  summarize(n_rst = sum(!is.na(company)), # don't count NA as 1 
+            .groups = 'drop') # avoid the nested structure of data
 
-# Step 2: Create the choropleth map
-default_map <- ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), # add a layer to use the restaurant count to fill colors
+# Create the choropleth map
+ggplot(data = restaurant_counts) +
+  geom_sf(aes(fill = n_rst), # fill based on the restaurant count 
           size = 0.2,
-          color = "white") +  # Fill based on restaurant count
-  scale_fill_distiller(type="seq", # fill in sequential colors 
+          color = "white") +
+  scale_fill_distiller(type="seq", 
                        palette = "Greys",
-                       direction = 1, # 1 for low (light) to high (dark), -1 for reverse
+                       direction = 1,
                        ) +
   theme_void() +
   labs(fill = "Restaurant Count")
-
-print(default_map)
 ```
 
-### Determine breaks
-```{r}
+When creating a choropleth map, it's crucial to check the statistical distribution of the variable. 
+
+```{r histogram}
 hist(restaurant_counts$n_rst)
 ```
 
-```{r}
+There are various methods to determine how you classify colors. The most common methods are quantile binning, natural breaks (jenks), standard deviation, and custom breaks (defined by the researcher). Below, I use the custom breaks.
+
+```{r custom-map}
 # Custom breaks
 ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), # add a layer to use the restaurant count to fill colors
+  geom_sf(aes(fill = n_rst), 
           size = 0.2,
           color = "white") +  
-  scale_fill_distiller(type="seq", # fill in sequential colors 
+  scale_fill_distiller(type="seq", 
                        palette = "Greys",
-                       breaks = c(50, 150, 250), # or you can use quantile binning, natural breaks, etc.
-                       direction = 1, # 1 for low (light) to high (dark), -1 for reverse
+                       breaks = c(50, 150, 250), # specify breaks
+                       direction = 1,
                        ) +
   theme_void() +
   labs(fill = "Restaurant Count")
 ```
 
 
-## Handling missing data
+## Export Maps
+
+Now, let's say you are ready export your maps for publication. We will publish a figure of two maps side by side, displaying two ways of visualizing the distribution of restaurant by neighborhood in San Francisco.
+
 ```{r}
-# Check neighborhoods that did not get matched with any restaurants
-missing_nh <- nh_joined %>%
-  filter(is.na(nh_joined$company))
+# Create and store maps
+map1 <- ggplot() +
+  # display neighborhood boundaries
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  # display restaurants
+  geom_sf(data = sf_sfbiz, 
+          color = "red", 
+          size = 0.5, alpha = 0.8
+          ) +  # Plot restaurants
+  theme_void()
 
-print(missing_nh)
+map2 <- ggplot(data = restaurant_counts) +
+  geom_sf(aes(fill = n_rst), 
+          size = 0.2,
+          color = "white") +  
+  scale_fill_distiller(type="seq", 
+                       palette = "Greys",
+                       breaks = c(50, 150, 250), # specify breaks
+                       direction = 1,
+                       ) +
+  theme_void() +
+  theme(legend.position = "none")
 
-#Check restaurants that did not get matched to neighborhoods
-missing_rst <- rst_joined %>%
-  filter(is.na(rst_joined$tpop))
+combined <- ggpubr::ggarrange(map1, map2, ncol=2,
+                  labels = c("Point Map", "Choropleth Map"))
 
-print(missing_rst)
+print(combined)
+
+# Export the combined map
+ggsave("sf_restaurant_maps.png", plot = combined, 
+       width = 9, height = 6, 
+       dpi = 300 # resolution
+       )
 ```
+
+While it is not strictly expected in sociology papers, you can also add a north arrow and a scale bar to a map using the ggspatial package.
+
+```{r annotate-map, warning=FALSE, message=FALSE}
+library(ggspatial)
+```
+
+```{r add-arrow-scale}
+# Adding a scale bar and a north arrow 
+ggplot(data = restaurant_counts) +
+  geom_sf(aes(fill = n_rst), 
+          size = 0.2,
+          color = "white") +  
+  scale_fill_distiller(type = "seq", 
+                       palette = "Greys",
+                       breaks = c(50, 150, 250),
+                       direction = 1) +
+  theme_void() +
+  labs(fill = "Restaurant Count") +
+  # Add a scale bar
+  annotation_scale(location = "bl",  # "br" is for bottom right, adjust as needed
+                   pad_y = unit(0.01, "cm") # place the scale bar close to the bottom
+                   ) + 
+  # Add a north arrow
+  annotation_north_arrow(location = "tl",  # "tl" is for top left, adjust as needed
+                         style = north_arrow_fancy_orienteering)  
+```
+
+

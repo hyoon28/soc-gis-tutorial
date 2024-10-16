@@ -1,22 +1,19 @@
 ## Data visualization
 
-By merging demographic data with spatial boundaries, we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display.
+By joining attributes with spatial boundaries, we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. In this tutorial, we will cover two different types of maps: *Choropleth map* for quantitative variables and *Typology map* for qualitative variables.
 
- 1. Choropleth map
- 2. Typology map
+### Choropleth map
 
-We can use or construct demographic variables of interest for mapping. Here, we will create two commonly used variables in urban research: diversity and gentrification.
+A choropleth map is useful for visualizing quantitative variables. This type of map displays color corresponding with an aggregated variable for a given geographic unit, such as population density or per-capital income. Below, this tutorial will walk you through how to create a demographic variable of interest, and visualize it using a choropleth map.
 
-### Choroleth map
-
-In social science research, scholars often use the Herfindahl-Hirschman Index (HHI) as a measure for diversity. It is an economic index to measure the size of firms in relation to the industry they are in, but the formula is the same as the Simpson diversity index used in ecology, and can be applied to demographic contexts as well. The formula is:
+In social science research, scholars often use *the Herfindahl-Hirschman Index (HHI)* as a measure for *diversity*. It is an economic index measuring the level of market competition/monopolization, but the formula is also used in ecology (called the Simpson diversity index), as well as in demographic contexts. The formula is:
 
 $$
 HHI = \sum_{i=1}^{N} (MS_i)^2
 $$
-Where $MS_i$ is the market share of firm $i$ in the market, and $N$ is the number of firms.
+Where $MS_i$ is the market share of firm $i$ in the market, and $N$ is the number of firms. The lower the HHI, the more competition in the market (many firms with relatively equal market shares). Reversely, the higher the HHI, the less competition in the market, suggesting monopoly.
 
-In demographic research, sociologists use the HHI to measure racial diversity of neighborhoods. Instead of market share of firms in a market, we use the shares of racial groups in a neighborhood. 
+In demographic research, sociologists commonly use the HHI to measure racial diversity of neighborhoods. Instead of market share of firms in a market, we use the shares of racial groups in a neighborhood.
 
 For example, in a neighborhood with 4 racial groups each representing 25%, the HHI would be:
 
@@ -24,17 +21,17 @@ $$
 0.25^2 + 0.25^2 + 0.25^2 + 0.25^2 = 0.25
 $$
 
-or, more generally:
+Compared this to another neighborhood with 2 racial groups -- one representing 80% and the other representing 20%. The HHI would be:
 
 $$
-HHI = \sum_{i=1}^{4} (0.25)^2 = 0.25
+0.80^2 + 0.20^2 = 0.68 
 $$
 
-The HHI of 25% means that there is a moderate level of diversity. However, as the HHI goes up, it means the market is more monopolized with less competition, or the neighborhood is predominantly represented by one group.
+The first neighborhood with the HHI of 25% is more diverse compared to the second neighborhood with the HHI of 68%.
 
 We can create this diversity measure using the variables we have.
 
-```{r}
+```{r make-hhi}
 # Create the HHI 
 sf_joined <- sf_joined %>% 
   mutate(diversity = (pwhite^2 + pblack^2 + phisp^2 + pasian^2)/100)
@@ -44,11 +41,10 @@ sf_joined %>%
   select(diversity)
 ```
 
+Next, we can create a map displaying how diverse/homogeneous San Francisco neighborhoods are. 
 
-Next, we can create a map displaying how diverse/homogeneous San Francisco neighborhoods are. For relative quantitative variables like the HHI, choroleth maps are useful.
-
-
-```{r, warning=FALSE, message=FALSE}
+```{r choro-map, warning=FALSE, message=FALSE}
+# Create a choropleth map visualizing the diversity variable
 ggplot(data = sf_joined) + # specify the source of spatial data
   geom_sf(aes(fill = diversity), 
           size = 0.2,
@@ -66,7 +62,9 @@ ggplot(data = sf_joined) + # specify the source of spatial data
                  alpha = 0.5,             # set transparency of the background
                  check_overlap = TRUE) + # suppress overlaping texts
   theme_void() +
-  labs(fill = "HHI") # add a label for legend
+  labs(fill = "HHI", # add a label for legend
+       title = "Gentrification in San Francisco" # figure title
+       ) 
 ```
 
 
@@ -76,7 +74,7 @@ ggplot(data = sf_joined) + # specify the source of spatial data
 
 ### Typology map
 
-We've discussed maps suitable for quantitative variables so far. What about for qualitative variables? We use a typology map. We will create a gentrification measure to demonstrate a use case for typology map. Gentrification is a phenomenon that we measure over space and time. While there are multiple ways to define and measure gentrification, for the purposes of this tutorial, we will conceptualize gentrification as a neighborhood-level socioeconomic transformation comprised of both an influx of middle-and upper-class residents and an increase in housing prices in previously low-income, urban neighborhoods.
+A typology map is suitable for qualitative variables that consist distinct and meaningful categories. We will create a gentrification measure to demonstrate a use case for typology map. Gentrification is a phenomenon that we measure over space and time. While there are multiple ways to define and measure gentrification, for the purposes of this tutorial, we will conceptualize gentrification as a neighborhood-level socioeconomic transformation comprised of both an influx of middle-and upper-class residents and an increase in housing prices in previously low-income, urban neighborhoods.
 
 Our measure of gentrification is calculated at the census tract level from 2000 to 2020, so that we can examine how the socioeconomic composition of neighborhoods in San Francisco changes over time. The four variables listed below are used in our categorical measure of gentrification: 
 
@@ -99,12 +97,9 @@ Next, among the census tracts that were Gentrifiable, we must determine if they 
 
 This measurement strategy results in a three-category gentrification measure - Not Gentrifiable, Gentrifying, and Not Gentrifying. With these three categories we can make a typology map of census tracts in San Francisco.
 
-```{r}
-# In-class assignment
-# 1. Determine the boundaries: Should we use census tract or analysis neighborhood boundaries?
-#   - Use census tracts.
-
-sftrt_dem <- read.csv("tutorial/data/sftrt_dem.csv")
+```{r import-trt}
+# Import demographic attributes for census tracts
+sftrt_dem <- read.csv("data/sftrt_dem.csv")
 
 # Check if it has a common identifier with sftrt
 head(sftrt_dem$trt10)
@@ -117,20 +112,18 @@ class(sftrt$tractce10)
 sftrt_dem <- sftrt_dem %>%
   mutate(tractce10 = as.character(sprintf("%06d", trt10)))
 
-# 2. Join demographic data to geometric boundaries
-# use either "sfdem.csv" (analysis) or "sftrt_dem.csv" (census tract)
-
+# Join demographic data with geometric boundaries
 sftrt_joined <- merge(
-  x = sftrt,            # sf object
+  x = sftrt,               # sf object
   y = sftrt_dem,           # data frame
   by.x = "tractce10",      # x identifier
   by.y = "tractce10",      # y identifier
-  all.x = TRUE,         # keep all lines
+  all.x = TRUE,            # keep all lines
 )
 
 ```
 
-```{r}
+```{r typo-map}
 # Create a typology map
 ggplot(data = sftrt_joined) + 
   geom_sf(aes(fill = gentcat), 
@@ -139,17 +132,12 @@ ggplot(data = sftrt_joined) +
   scale_fill_manual(values = c("non-gentrifiable" = "light grey", 
                                "gentrifying" = "pink", 
                                "non-gentrifying" = "black")) +
-  theme_void() + # minimalist theme, but keeping the legend
-  # customize the legend title and position
-  labs(fill = "Gentrification Category", 
-       title = "Gentrification in San Francisco") + 
+  theme_void() + # minimalist theme
+  labs(fill = "Gentrification Category", # legend label
+       title = "Gentrification in San Francisco" # figure title
+       ) + 
   # customize legend position and map layout (optional)
   theme(legend.position = "right")  # You can also use "bottom" or "left")
 ```
-
-
-*Additional Sources for Spatial Data*
-
-Aggregated demographic data and spatial boundaries are collected and disseminated by national and municipal government, as well as international organizations (e.g., United Nations). Additionally, researchers have generated [spatial packages](https://rcarto.github.io/geomatique_avec_r/2001_donnees.html).
 
 

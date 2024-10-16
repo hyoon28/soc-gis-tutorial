@@ -1,24 +1,23 @@
 ## Joining attributes
 
 
-Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step.
+Geographic boundaries alone don't tell us much about what is social about them. Sociologists, and social scientists more broadly, often are interested in **people** in these places. Therefore, matching aggregated demographic data with the geographic boundaries is a crucial next step. 
 
-We can merge a sf object with a data frame containing demographic attributes using the merge() function. Be careful with the order of the arguments, the returned object will be of the same type as x. It is not possible to do an attribute join using two sf objects.
+We can merge a sf object with a data frame containing demographic attributes using the merge() function. 
 
-
-```{r}
+```{r import-dem}
 # Import demographic attributes
-sfdem <- read.csv("tutorial/data/sfnh_dem.csv")
+sfdem <- read.csv("data/sfnh_dem.csv")
 
 # Check common identifier
 names(sfdem)
   # Yes, in both data sets, "nhood" exists.
 ```
 
-```{r}
+```{r join-att}
 # Join attributes to geometry
 sf_joined <- merge(
-  x = sfnh,            # sf object
+  x = sfnh,            # sf object; the returned object will be of the same type as x.
   y = sfdem,           # data frame
   by.x = "nhood",      # x identifier
   by.y = "nhood",      # y identifier
@@ -29,38 +28,38 @@ sf_joined <- merge(
 sf_joined <- st_make_valid(sf_joined)
 ```
 
-Now, we are able to explore neighborhood-level characteristics.
+Now, we can explore neighborhood-level characteristics.
 
-```{r, warning=FALSE, message=FALSE}
+```{r explore-joined, warning=FALSE, message=FALSE}
 library(dplyr)
 
 # Display the share of white population of neighborhoods
 sf_joined %>%
   select(nhood, pwhite)
-```
 
-```{r}
 # Display the neighborhood named "Mission"
 sf_joined %>% 
   filter(nhood == "Mission")
-```
 
-```{r}
 # Display the share of white population of "Mission"
 sf_joined %>%
   filter(nhood == "Mission") %>%
   select(pwhite)
 ```
 
-```{r}
+```{r export-joined}
 # Export your joined sf object as a geojson file
-st_write(sf_joined, "tutorial/data/sfnh_dem_joined.geojson", driver = "GeoJSON")
+st_write(sf_joined, "processed-data/sfnh_dem_joined.geojson", 
+         driver = "GeoJSON",
+         delete_dsn = TRUE # overwrite the existing file
+         )
 ```
+
 
 **THINK AND SHARE**
 
 Below, you see two maps, each representing Chicago ans Seattle.
-![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/soc-gis-tutorial/images/figure1.png)
+![Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png)
 
  - What are the geographic boundaries used in this figure?
  - What attribute is displayed in the map?
