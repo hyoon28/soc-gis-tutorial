@@ -33,7 +33,7 @@ st_write(sf_sfbnb, "processed-data/airbnbs.geojson", driver = "GeoJSON", delete_
 
 ## Geocoding Restaurants
 
-Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform **geocoding** which converts formatted addresses into latitude and longitude. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.
+Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform **geocoding** which converts formatted addresses into latitude and longitude, so that we can displayed as a point on a map. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.
 
 ```{r import-biz}
 # Import restaurant data

@@ -41,36 +41,64 @@ sf_joined %>%
   select(diversity)
 ```
 
-Next, we can create a map displaying how diverse/homogeneous San Francisco neighborhoods are. 
+To create a choropleth map, we first have to check the statistical distribution of the variable. 
+
+```{r histogram}
+hist(sf_joined$diversity)
+```
+
+There are various methods to determine how you classify colors. The most common methods are quantile binning, natural breaks (jenks), standard deviation, and custom breaks (defined by the researcher). Below, I use the quantile binning and create a map displaying how diverse/homogeneous San Francisco neighborhoods are. 
 
 ```{r choro-map, warning=FALSE, message=FALSE}
 # Create a choropleth map visualizing the diversity variable
-ggplot(data = sf_joined) + # specify the source of spatial data
-  geom_sf(aes(fill = diversity), 
+ggplot() + 
+  geom_sf(data = sf_joined,                # specify the source of spatial data
+          aes(fill = diversity),           # add a layer to use "diversity" to fill colors
           size = 0.2,
-          color = "white") + # add a layer to use "diversity" to fill colors
-  scale_fill_distiller(type="seq", # fill in sequential colors 
+          color = "white") + 
+  scale_fill_distiller(type="seq",         # fill in sequential colors 
                        palette = "Greys",
-                       direction = -1, # 1 for low (light) to high (dark), -1 for reverse
+                       breaks = quantile(sf_joined$diversity),
+                       direction = -1,     # 1 for low (light) to high (dark), -1 for reverse
                        ) +
-  geom_sf_label(aes(label = nhood),  # add labels using the nhood variable
-                 size = 1.5, # size of the label text
-                 color = "black",         # color of the text
-                 fill = "white",          # background fill color
+  theme_void() +
+  labs(fill = "HHI", # add a label for legend
+       title = "Racial Diversity in San Francisco" # figure title
+       ) 
+```
+
+ - What are the least diverse neighborhoods?
+ - What are the most diverse neighborhoods?
+ 
+For those who are not familair with San Francisco neighborhoods, we can add labels displaying neighborhood names corresponding to neighborhood boundaries.
+
+```{r add-labels}
+# Add labels to the map
+ggplot() + 
+  geom_sf(data = sf_joined, 
+          aes(fill = diversity),  
+          size = 0.2,
+          color = "white") + 
+  scale_fill_distiller(type="seq",
+                       palette = "Greys",
+                       breaks = quantile(sf_joined$diversity),
+                       direction = -1, 
+                       ) +
+  geom_sf_label(data = sf_joined,
+                aes(label = nhood),         # add a layer of labels using the nhood variable
+                 size = 1.5,                # size of the label text
+                 color = "black",           # color of the text
+                 fill = "white",            # background fill color
                  label.padding = unit(0.1, "lines"),  # padding around the text
-                 label.size = 0,        # thickness of the border around the label
-                 alpha = 0.5,             # set transparency of the background
-                 check_overlap = TRUE) + # suppress overlaping texts
+                 label.size = 0,            # thickness of the border around the label
+                 alpha = 0.5,               # set transparency of the background
+                 check_overlap = TRUE) +    # suppress overlapping texts
   theme_void() +
   labs(fill = "HHI", # add a label for legend
        title = "Gentrification in San Francisco" # figure title
        ) 
 ```
 
-
- - What are the least diverse neighborhoods? Which is the dominant racial group? 
- - What are the most diverse neighborhoods?
- 
 
 ### Typology map
 
@@ -131,13 +159,15 @@ ggplot(data = sftrt_joined) +
           color = "white") +
   scale_fill_manual(values = c("non-gentrifiable" = "light grey", 
                                "gentrifying" = "pink", 
-                               "non-gentrifying" = "black")) +
-  theme_void() + # minimalist theme
-  labs(fill = "Gentrification Category", # legend label
-       title = "Gentrification in San Francisco" # figure title
-       ) + 
-  # customize legend position and map layout (optional)
-  theme(legend.position = "right")  # You can also use "bottom" or "left")
+                               "non-gentrifying" = "black")) +    # specify color corresponding to each category
+  theme_void() +
+  labs(fill = "Gentrification Category", 
+       title = "Gentrification in San Francisco"
+       )
 ```
+
+ - Name two or more neighborhoods that are gentrifying neighborhoods.
+ - Name two or more neighborhoods that are not gentrifying.
+ - Is there a relationship between gentrification and racial diversity in San Francisco?
 
 

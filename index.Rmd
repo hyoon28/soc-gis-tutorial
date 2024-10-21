@@ -16,14 +16,33 @@ The following is a series of tutorials prepared for the Spatial Data and Mapping
  * Before the class, make sure you have R/R studio installed.
  * You can download all the data used in the tutorials [here](https://github.com/hyoon28/soc-gis-tutorial/tree/main/tutorial/data).
 
-
 Each tutorial is a chapter in this website. You can navigate through the chapters using the sidebar. 
 
-## Table of Contents
 
-1. About
-2. Emplacing Demographic Data
-3. From People to Institutions
-4. Additional Topics
+## Spatial Data and Analysis
+
+Spatial data refers to data representing features or objects on the Earth’s surface. Whether it’s man-made or natural, if it has to do with a specific location on the surface of the Earth, it is spatial. Spatial data is typically classified into two types: Vector data and raster data. Vector data consists of coordinate information, while raster data is all about layers of images extracted from camera sensors. 
+
+![Types of Spatial Data](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/types-of-data.png)
+
+
+In this series of tutorials, we focus on the vector data type.
+
+There are three forms of vector data.
+ - Points: A single dot, expressed as a coordinate (e.g., landmarks).
+ - Lines: A line defined by two coordinates, with a definite length (e.g., roads, rivers)
+ - Polygons: A closed shape is defined using three or more coordinates, representing areas (neighborhood boundaries).
+
+Spatial data contains more information than just a location on the surface of the Earth represented by vector data. Any additional information, or non-spatial data, that describes a feature is referred to as an *attribute*. Sociologists utilize a variety of non-spatial data, such as demographic and socioeconomic data linked to particular locales.
+
+In addition to locational and attribute information, spatial data inherently contains geometric and topological properties, which help to gain deeper insights. Geometric properties include position and measurements, such as length, direction, area, and volume. Topological properties represent spatial relationships such as connectivity, inclusion, and adjacency.
+
+Spatial data analytics involves collecting, processing, and analyzing various types of spatial data with insights to go beyond what occurs to determine not only where and when something occurs but also why it occurs at that specific place and/or time. It can be further viewed as descriptive analytics, which involves summarizing and visualizing spatial data to identify patterns and trends. 
+
+GIS (Geographic Information Systems) connects data to a map, integrating location data with all types of descriptive information. It helps us understand patterns, relationships, and geographic context.
+
+While there are multiple tools to carry out spatial analysis, we will use R in this tutorial. R provides sufficient spatial packages prepared for data manipulation, visualization, and analysis for social scientists. It can also be readily linked with more traditional statistical analysis. Last but not least, using R is helpful for open science and replication, which is increasingly important in social science research. 
+
+![Tools for Spatial Analysis](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/spatial-analysis.png)
 
 

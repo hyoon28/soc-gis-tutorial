@@ -1,3 +1,25 @@
+Now that we have restaurant locations as points, we can simply overlay the restaurant locations on top of the neighborhood boundaries layer.
+
+```{r point-map}
+# Plot the restaurant locations
+ggplot() +
+  # display neighborhood boundaries as a layer
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  # add restaurants as another layer
+  geom_sf(data = sf_sfbiz, 
+          color = "red", 
+          size = 0.5, alpha = 0.8
+          ) +  # Plot restaurants
+  theme_void() +
+  labs(title = "Restaurants in San Francisco")
+```
+
+In this map, we can see the distribution of restaurants in San Francisco. However, because restaurants are both in and outside of neighborhood boundaries, it is hard to discern spatial patterns of restaurants by neighborhoods. Spatial join, which we will discuss in the next section, allows us to spatially link restaurants to neighborhoods, so that we can reduce points data to the level of neighborhoods.
+
 ## Spatial join
 
 Spatial join allows you to combine two sf objects based on the spatial relationship between their geometries. For example, we can think of the relationship between neighborhoods (polygons) and restaurants (points).
@@ -19,71 +41,95 @@ nh_joined <- st_join(x = sfnh, # join
 head(nh_joined, 3)
 ```
 
-## Data visualization
+In the joined data, we can see that restaurants (company) are nested within neighborhoods (nhood). We can aggregate this data to the neighborhood level and get the number of restaurants per neighborhood. Some neighborhoods may not any have restaurants, so you want to preserve that as 0 and not count as 1.
 
-To start, you can simply overlay the restaurant locations on top of the neighborhood map.
-
-```{r point-map}
-# Plot the restaurant locations
-ggplot() +
-  # display neighborhood boundaries
-  geom_sf(data = sf_joined,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  # display restaurants
-  geom_sf(data = sf_sfbiz, 
-          color = "red", 
-          size = 0.5, alpha = 0.8
-          ) +  # Plot restaurants
-  theme_void() +
-  labs(title = "Restaurants in San Francisco")
-```
-
-Taking a step further, we can create a choropleth map by counting the number of restaurants in each neighborhood.
-
-```{r aggregate-map}
+```{r count-biz}
 # Count restaurants per neighborhood
 restaurant_counts <- nh_joined %>%
+  st_drop_geometry() %>%
   group_by(nhood) %>% 
-  summarize(n_rst = sum(!is.na(company)), # don't count NA as 1 
-            .groups = 'drop') # avoid the nested structure of data
-
-# Create the choropleth map
-ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), # fill based on the restaurant count 
-          size = 0.2,
-          color = "white") +
-  scale_fill_distiller(type="seq", 
-                       palette = "Greys",
-                       direction = 1,
-                       ) +
-  theme_void() +
-  labs(fill = "Restaurant Count")
+  summarize(n_rst = sum(!is.na(company)), # don't count NA as 1
+            )
 ```
 
-When creating a choropleth map, it's crucial to check the statistical distribution of the variable. 
+As the count of restaurants is a quantitative variable, we can visualize it using the choropleth map. I first join the restaurant counts data with neighborhood boundaries to get the neighborhood-level spatial data. Then, I create the map using custom breaks based on the distribution of the number of restaurants within a neighborhood. 
 
-```{r histogram}
-hist(restaurant_counts$n_rst)
-```
+```{r aggregate-map}
+# Join the restaurant count to neighborhood boundaries
+biz_colors <-
+  sfnh %>%
+  left_join(restaurant_counts,
+            by = "nhood") %>%
+  arrange(desc(n_rst)) 
 
-There are various methods to determine how you classify colors. The most common methods are quantile binning, natural breaks (jenks), standard deviation, and custom breaks (defined by the researcher). Below, I use the custom breaks.
-
-```{r custom-map}
-# Custom breaks
-ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), 
+# Create the map using Custom breaks
+ggplot() +
+  geom_sf(data = biz_colors,
+          aes(fill = n_rst), 
           size = 0.2,
           color = "white") +  
   scale_fill_distiller(type="seq", 
                        palette = "Greys",
-                       breaks = c(50, 150, 250), # specify breaks
+                       breaks = c(50, 150, 250), # specify custom breaks
                        direction = 1,
                        ) +
   theme_void() +
   labs(fill = "Restaurant Count")
+```
+
+Another way of visualizing a quantitative variable is a *proportional symbol map*. Proportional symbol maps are particularly useful for absolute quantitative variables (e.g., raw counts, measurements) while choropleth maps are more suitable for relative quantitative variables (e.g., ratios, percentages, proportions).
+
+```{r proportional-symbol-map}
+# Create neighborhood centroids
+nh_cent <- st_centroid(sfnh, of_largest_polygon = TRUE)
+
+# Join the restaurant counts to neighborhood centroids
+biz_symbols <-
+  nh_cent %>%
+  left_join(restaurant_counts,
+            by = "nhood") %>%
+  arrange(desc(n_rst)) # sort to ensure small points would be plotted in front of big points
+
+# Create the proportional symbol map
+ggplot() +
+  geom_sf(data = sfnh,           # add a base map layer of boundaries
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  geom_sf(data = biz_symbols,
+          aes(size = n_rst),      # add a layer of symbols sized based on the restaurant counts 
+          shape = 21,             # specify a circle shape for symbols
+          fill = "red",           # set a color to fill the shape 
+          alpha = 0.6,            # set a level of transparency
+          color = "lightgray") +  # set a color for edges of the shape
+  scale_size(range = c(3, 13)) +  # set min and max for the size of the symbols
+  theme_void() +
+  labs(size = "Restaurant Count") # legend title 
+
+# Create the proportional symbol map (size) combined with the choropleth map (fill color)
+ggplot() +
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  geom_sf(data = biz_symbols,
+          aes(size = n_rst, fill = n_rst), 
+          shape = 21, 
+          color = "lightgray") +
+  scale_size(range = c(3, 10)) +
+  # add colors to the symbols
+  scale_fill_gradientn(colors = hcl.colors(4,                   # fill the shape with four different colors
+                                           "RdBu",              # red-blue color scheme
+                                           rev = TRUE,          # reverse the color scheme so that smaller values are blue
+                                           alpha = 0.9)) +      # transparency
+  theme_void() +
+  labs(fill = "Restaurant Count", size = "Restaurant Count") +  # combined legend title
+  guides(fill = guide_legend(title = "Restaurant Count", 
+                             order = 1),                        # title for the legend
+         size = guide_legend(title = "Restaurant Count", 
+                             order = 1))                        # same title for size
 ```
 
 
@@ -91,42 +137,80 @@ ggplot(data = restaurant_counts) +
 
 Now, let's say you are ready export your maps for publication. We will publish a figure of two maps side by side, displaying two ways of visualizing the distribution of restaurant by neighborhood in San Francisco.
 
-```{r}
-# Create and store maps
+```{r store-and-export-maps}
+# Store and combine maps
 map1 <- ggplot() +
-  # display neighborhood boundaries
   geom_sf(data = sfnh,
           fill = "lightgray",
           size = 0.02,
           color = "white"
           ) +
-  # display restaurants
   geom_sf(data = sf_sfbiz, 
           color = "red", 
           size = 0.5, alpha = 0.8
-          ) +  # Plot restaurants
+          ) + 
   theme_void()
 
-map2 <- ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), 
+map2 <- ggplot() +
+  geom_sf(data = biz_colors,
+          aes(fill = n_rst), 
           size = 0.2,
           color = "white") +  
   scale_fill_distiller(type="seq", 
                        palette = "Greys",
-                       breaks = c(50, 150, 250), # specify breaks
+                       breaks = c(50, 150, 250), 
                        direction = 1,
                        ) +
   theme_void() +
   theme(legend.position = "none")
 
-combined <- ggpubr::ggarrange(map1, map2, ncol=2,
-                  labels = c("Point Map", "Choropleth Map"))
+map3 <- ggplot() +
+  geom_sf(data = sfnh,          
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  geom_sf(data = biz_symbols,
+          aes(size = n_rst),      
+          shape = 21,           
+          fill = "red",           
+          alpha = 0.6,           
+          color = "lightgray") + 
+  scale_size(range = c(3, 13)) +  
+  theme_void() +
+  labs(size = "Restaurant Count") 
+
+map4 <- ggplot() +
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  geom_sf(data = biz_symbols,
+          aes(size = n_rst, fill = n_rst), 
+          shape = 21, 
+          color = "lightgray") +
+  scale_size(range = c(3, 10)) +
+  # add colors to the symbols
+  scale_fill_gradientn(colors = hcl.colors(4,                  
+                                           "RdBu",              
+                                           rev = TRUE,          
+                                           alpha = 0.9)) +     
+  theme_void() +
+  labs(fill = "Restaurant Count", size = "Restaurant Count") +  
+  guides(fill = guide_legend(title = "Restaurant Count", 
+                             order = 1),  
+         size = guide_legend(title = "Restaurant Count", 
+                             order = 1))  
+
+combined <- ggpubr::ggarrange(map1, map2, map3, map4, nrow=2, ncol=2,
+                  labels = c("Point Map", "Choropleth Map", "PropSymbol Map", "PSxC Map"))
 
 print(combined)
 
 # Export the combined map
 ggsave("sf_restaurant_maps.png", plot = combined, 
-       width = 9, height = 6, 
+       width = 9, height = 9, 
        dpi = 300 # resolution
        )
 ```
@@ -139,8 +223,9 @@ library(ggspatial)
 
 ```{r add-arrow-scale}
 # Adding a scale bar and a north arrow 
-ggplot(data = restaurant_counts) +
-  geom_sf(aes(fill = n_rst), 
+ggplot() +
+  geom_sf(data = biz_colors,
+          aes(fill = n_rst), 
           size = 0.2,
           color = "white") +  
   scale_fill_distiller(type = "seq", 
@@ -149,11 +234,11 @@ ggplot(data = restaurant_counts) +
                        direction = 1) +
   theme_void() +
   labs(fill = "Restaurant Count") +
-  # Add a scale bar
+  # add a scale bar
   annotation_scale(location = "bl",  # "br" is for bottom right, adjust as needed
                    pad_y = unit(0.01, "cm") # place the scale bar close to the bottom
                    ) + 
-  # Add a north arrow
+  # add a north arrow
   annotation_north_arrow(location = "tl",  # "tl" is for top left, adjust as needed
                          style = north_arrow_fancy_orienteering)  
 ```

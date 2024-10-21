@@ -1,5 +1,5 @@
 about
-table-of-contents
+spatial-data-and-analysis
 emplacing-demographic-data
 defining-boundaries
 joining-attributes
@@ -10,6 +10,5 @@ from-people-to-built-environment
 transforming-airbnbs
 geocoding-restaurants
 spatial-join
-data-visualization-1
 export-maps
 additional-topics

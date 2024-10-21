@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i><b>1.1</b> Table of Contents</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#spatial-data-and-analysis"><i class="fa fa-check"></i><b>1.1</b> Spatial Data and Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html"><i class="fa fa-check"></i><b>2</b> Emplacing Demographic Data</a>
 <ul>
@@ -158,8 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#transforming-airbnbs"><i class="fa fa-check"></i><b>3.1</b> Transforming Airbnbs</a></li>
 <li class="chapter" data-level="3.2" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#geocoding-restaurants"><i class="fa fa-check"></i><b>3.2</b> Geocoding Restaurants</a></li>
 <li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.3</b> Spatial join</a></li>
-<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#data-visualization-1"><i class="fa fa-check"></i><b>3.4</b> Data visualization</a></li>
-<li class="chapter" data-level="3.5" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.5</b> Export Maps</a></li>
+<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.4</b> Export Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>4</b> Additional Topics</a></li>
 <li class="divider"></li>
@@ -398,33 +397,60 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 ## 8   48.51617 MULTIPOLYGON (((-122.4426 3...
 ## 9   57.51691 MULTIPOLYGON (((-122.4321 3...
 ## 10  39.00489 MULTIPOLYGON (((-122.4207 3...</code></pre>
-<p>Next, we can create a map displaying how diverse/homogeneous San Francisco neighborhoods are.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="emplacing-demographic-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a choropleth map visualizing the diversity variable</span></span>
-<span id="cb22-2"><a href="emplacing-demographic-data.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sf_joined) <span class="sc">+</span> <span class="co"># specify the source of spatial data</span></span>
-<span id="cb22-3"><a href="emplacing-demographic-data.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> diversity), </span>
-<span id="cb22-4"><a href="emplacing-demographic-data.html#cb22-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb22-5"><a href="emplacing-demographic-data.html#cb22-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span> <span class="co"># add a layer to use &quot;diversity&quot; to fill colors</span></span>
-<span id="cb22-6"><a href="emplacing-demographic-data.html#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, <span class="co"># fill in sequential colors </span></span>
-<span id="cb22-7"><a href="emplacing-demographic-data.html#cb22-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
-<span id="cb22-8"><a href="emplacing-demographic-data.html#cb22-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="co"># 1 for low (light) to high (dark), -1 for reverse</span></span>
-<span id="cb22-9"><a href="emplacing-demographic-data.html#cb22-9" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
-<span id="cb22-10"><a href="emplacing-demographic-data.html#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> nhood),  <span class="co"># add labels using the nhood variable</span></span>
-<span id="cb22-11"><a href="emplacing-demographic-data.html#cb22-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="fl">1.5</span>, <span class="co"># size of the label text</span></span>
-<span id="cb22-12"><a href="emplacing-demographic-data.html#cb22-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,         <span class="co"># color of the text</span></span>
-<span id="cb22-13"><a href="emplacing-demographic-data.html#cb22-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>,          <span class="co"># background fill color</span></span>
-<span id="cb22-14"><a href="emplacing-demographic-data.html#cb22-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;lines&quot;</span>),  <span class="co"># padding around the text</span></span>
-<span id="cb22-15"><a href="emplacing-demographic-data.html#cb22-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label.size =</span> <span class="dv">0</span>,        <span class="co"># thickness of the border around the label</span></span>
-<span id="cb22-16"><a href="emplacing-demographic-data.html#cb22-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.5</span>,             <span class="co"># set transparency of the background</span></span>
-<span id="cb22-17"><a href="emplacing-demographic-data.html#cb22-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">check_overlap =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="co"># suppress overlaping texts</span></span>
-<span id="cb22-18"><a href="emplacing-demographic-data.html#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb22-19"><a href="emplacing-demographic-data.html#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;HHI&quot;</span>, <span class="co"># add a label for legend</span></span>
-<span id="cb22-20"><a href="emplacing-demographic-data.html#cb22-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span> <span class="co"># figure title</span></span>
-<span id="cb22-21"><a href="emplacing-demographic-data.html#cb22-21" aria-hidden="true" tabindex="-1"></a>       ) </span></code></pre></div>
+<p>To create a choropleth map, we first have to check the statistical distribution of the variable.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="emplacing-demographic-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sf_joined<span class="sc">$</span>diversity)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/histogram-1.png" width="672" /></p>
+<p>There are various methods to determine how you classify colors. The most common methods are quantile binning, natural breaks (jenks), standard deviation, and custom breaks (defined by the researcher). Below, I use the quantile binning and create a map displaying how diverse/homogeneous San Francisco neighborhoods are.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="emplacing-demographic-data.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a choropleth map visualizing the diversity variable</span></span>
+<span id="cb23-2"><a href="emplacing-demographic-data.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb23-3"><a href="emplacing-demographic-data.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_joined,                <span class="co"># specify the source of spatial data</span></span>
+<span id="cb23-4"><a href="emplacing-demographic-data.html#cb23-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> diversity),           <span class="co"># add a layer to use &quot;diversity&quot; to fill colors</span></span>
+<span id="cb23-5"><a href="emplacing-demographic-data.html#cb23-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb23-6"><a href="emplacing-demographic-data.html#cb23-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb23-7"><a href="emplacing-demographic-data.html#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>,         <span class="co"># fill in sequential colors </span></span>
+<span id="cb23-8"><a href="emplacing-demographic-data.html#cb23-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
+<span id="cb23-9"><a href="emplacing-demographic-data.html#cb23-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">quantile</span>(sf_joined<span class="sc">$</span>diversity),</span>
+<span id="cb23-10"><a href="emplacing-demographic-data.html#cb23-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>,     <span class="co"># 1 for low (light) to high (dark), -1 for reverse</span></span>
+<span id="cb23-11"><a href="emplacing-demographic-data.html#cb23-11" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="emplacing-demographic-data.html#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb23-13"><a href="emplacing-demographic-data.html#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;HHI&quot;</span>, <span class="co"># add a label for legend</span></span>
+<span id="cb23-14"><a href="emplacing-demographic-data.html#cb23-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Racial Diversity in San Francisco&quot;</span> <span class="co"># figure title</span></span>
+<span id="cb23-15"><a href="emplacing-demographic-data.html#cb23-15" aria-hidden="true" tabindex="-1"></a>       ) </span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/choro-map-1.png" width="672" /></p>
 <ul>
-<li>What are the least diverse neighborhoods? Which is the dominant racial group?</li>
+<li>What are the least diverse neighborhoods?</li>
 <li>What are the most diverse neighborhoods?</li>
 </ul>
+<p>For those who are not familair with San Francisco neighborhoods, we can add labels displaying neighborhood names corresponding to neighborhood boundaries.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="emplacing-demographic-data.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels to the map</span></span>
+<span id="cb24-2"><a href="emplacing-demographic-data.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb24-3"><a href="emplacing-demographic-data.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_joined, </span>
+<span id="cb24-4"><a href="emplacing-demographic-data.html#cb24-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> diversity),  </span>
+<span id="cb24-5"><a href="emplacing-demographic-data.html#cb24-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb24-6"><a href="emplacing-demographic-data.html#cb24-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb24-7"><a href="emplacing-demographic-data.html#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>,</span>
+<span id="cb24-8"><a href="emplacing-demographic-data.html#cb24-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
+<span id="cb24-9"><a href="emplacing-demographic-data.html#cb24-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">quantile</span>(sf_joined<span class="sc">$</span>diversity),</span>
+<span id="cb24-10"><a href="emplacing-demographic-data.html#cb24-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb24-11"><a href="emplacing-demographic-data.html#cb24-11" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="emplacing-demographic-data.html#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(<span class="at">data =</span> sf_joined,</span>
+<span id="cb24-13"><a href="emplacing-demographic-data.html#cb24-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">label =</span> nhood),         <span class="co"># add a layer of labels using the nhood variable</span></span>
+<span id="cb24-14"><a href="emplacing-demographic-data.html#cb24-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="fl">1.5</span>,                <span class="co"># size of the label text</span></span>
+<span id="cb24-15"><a href="emplacing-demographic-data.html#cb24-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,           <span class="co"># color of the text</span></span>
+<span id="cb24-16"><a href="emplacing-demographic-data.html#cb24-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>,            <span class="co"># background fill color</span></span>
+<span id="cb24-17"><a href="emplacing-demographic-data.html#cb24-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;lines&quot;</span>),  <span class="co"># padding around the text</span></span>
+<span id="cb24-18"><a href="emplacing-demographic-data.html#cb24-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label.size =</span> <span class="dv">0</span>,            <span class="co"># thickness of the border around the label</span></span>
+<span id="cb24-19"><a href="emplacing-demographic-data.html#cb24-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.5</span>,               <span class="co"># set transparency of the background</span></span>
+<span id="cb24-20"><a href="emplacing-demographic-data.html#cb24-20" aria-hidden="true" tabindex="-1"></a>                 <span class="at">check_overlap =</span> <span class="cn">TRUE</span>) <span class="sc">+</span>    <span class="co"># suppress overlapping texts</span></span>
+<span id="cb24-21"><a href="emplacing-demographic-data.html#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb24-22"><a href="emplacing-demographic-data.html#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;HHI&quot;</span>, <span class="co"># add a label for legend</span></span>
+<span id="cb24-23"><a href="emplacing-demographic-data.html#cb24-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span> <span class="co"># figure title</span></span>
+<span id="cb24-24"><a href="emplacing-demographic-data.html#cb24-24" aria-hidden="true" tabindex="-1"></a>       ) </span></code></pre></div>
+<pre><code>## Warning in layer_sf(data = data, mapping = mapping, stat = stat, geom =
+## GeomLabel, : Ignoring unknown parameters: `check_overlap`</code></pre>
+<pre><code>## Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+## give correct results for longitude/latitude data</code></pre>
+<p><img src="bookdownproj_files/figure-html/add-labels-1.png" width="672" /></p>
 </div>
 <div id="typology-map" class="section level3 hasAnchor" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Typology map<a href="emplacing-demographic-data.html#typology-map" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -451,45 +477,48 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 <p><strong>Not Gentrifying</strong>: Gentrifiable census tracts that did NOT experience growth in the socioeconomic status of their residents <em>AND</em> their home values at a rate higher than the city-wide median values over the decade period.</p>
 </blockquote>
 <p>This measurement strategy results in a three-category gentrification measure - Not Gentrifiable, Gentrifying, and Not Gentrifying. With these three categories we can make a typology map of census tracts in San Francisco.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="emplacing-demographic-data.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes for census tracts</span></span>
-<span id="cb23-2"><a href="emplacing-demographic-data.html#cb23-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sftrt_dem.csv&quot;</span>)</span>
-<span id="cb23-3"><a href="emplacing-demographic-data.html#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="emplacing-demographic-data.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
-<span id="cb23-5"><a href="emplacing-demographic-data.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emplacing-demographic-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes for census tracts</span></span>
+<span id="cb27-2"><a href="emplacing-demographic-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sftrt_dem.csv&quot;</span>)</span>
+<span id="cb27-3"><a href="emplacing-demographic-data.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="emplacing-demographic-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
+<span id="cb27-5"><a href="emplacing-demographic-data.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] 10100 10200 10300 10400 10500 10600</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="emplacing-demographic-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emplacing-demographic-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;016400&quot; &quot;016100&quot; &quot;015900&quot; &quot;015500&quot; &quot;015300&quot; &quot;015100&quot;</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="emplacing-demographic-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
-<span id="cb31-2"><a href="emplacing-demographic-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="emplacing-demographic-data.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
-<span id="cb31-4"><a href="emplacing-demographic-data.html#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="emplacing-demographic-data.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
-<span id="cb31-6"><a href="emplacing-demographic-data.html#cb31-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
-<span id="cb31-7"><a href="emplacing-demographic-data.html#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
-<span id="cb31-8"><a href="emplacing-demographic-data.html#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
-<span id="cb31-9"><a href="emplacing-demographic-data.html#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
-<span id="cb31-10"><a href="emplacing-demographic-data.html#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
-<span id="cb31-11"><a href="emplacing-demographic-data.html#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
-<span id="cb31-12"><a href="emplacing-demographic-data.html#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="emplacing-demographic-data.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
-<span id="cb32-2"><a href="emplacing-demographic-data.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
-<span id="cb32-3"><a href="emplacing-demographic-data.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
-<span id="cb32-4"><a href="emplacing-demographic-data.html#cb32-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb32-5"><a href="emplacing-demographic-data.html#cb32-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb32-6"><a href="emplacing-demographic-data.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
-<span id="cb32-7"><a href="emplacing-demographic-data.html#cb32-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
-<span id="cb32-8"><a href="emplacing-demographic-data.html#cb32-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb32-9"><a href="emplacing-demographic-data.html#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span> <span class="co"># minimalist theme</span></span>
-<span id="cb32-10"><a href="emplacing-demographic-data.html#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, <span class="co"># legend label</span></span>
-<span id="cb32-11"><a href="emplacing-demographic-data.html#cb32-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span> <span class="co"># figure title</span></span>
-<span id="cb32-12"><a href="emplacing-demographic-data.html#cb32-12" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
-<span id="cb32-13"><a href="emplacing-demographic-data.html#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customize legend position and map layout (optional)</span></span>
-<span id="cb32-14"><a href="emplacing-demographic-data.html#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)  <span class="co"># You can also use &quot;bottom&quot; or &quot;left&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="emplacing-demographic-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
+<span id="cb35-2"><a href="emplacing-demographic-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="emplacing-demographic-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
+<span id="cb35-4"><a href="emplacing-demographic-data.html#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="emplacing-demographic-data.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
+<span id="cb35-6"><a href="emplacing-demographic-data.html#cb35-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb35-7"><a href="emplacing-demographic-data.html#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
+<span id="cb35-8"><a href="emplacing-demographic-data.html#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
+<span id="cb35-9"><a href="emplacing-demographic-data.html#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
+<span id="cb35-10"><a href="emplacing-demographic-data.html#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
+<span id="cb35-11"><a href="emplacing-demographic-data.html#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
+<span id="cb35-12"><a href="emplacing-demographic-data.html#cb35-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="emplacing-demographic-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
+<span id="cb36-2"><a href="emplacing-demographic-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
+<span id="cb36-3"><a href="emplacing-demographic-data.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
+<span id="cb36-4"><a href="emplacing-demographic-data.html#cb36-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb36-5"><a href="emplacing-demographic-data.html#cb36-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="emplacing-demographic-data.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
+<span id="cb36-7"><a href="emplacing-demographic-data.html#cb36-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
+<span id="cb36-8"><a href="emplacing-demographic-data.html#cb36-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify color corresponding to each category</span></span>
+<span id="cb36-9"><a href="emplacing-demographic-data.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb36-10"><a href="emplacing-demographic-data.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
+<span id="cb36-11"><a href="emplacing-demographic-data.html#cb36-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
+<span id="cb36-12"><a href="emplacing-demographic-data.html#cb36-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/typo-map-1.png" width="672" /></p>
+<ul>
+<li>Name two or more neighborhoods that are gentrifying neighborhoods.</li>
+<li>Name two or more neighborhoods that are not gentrifying.</li>
+<li>Is there a relationship between gentrification and racial diversity in San Francisco?</li>
+</ul>
 
 </div>
 </div>

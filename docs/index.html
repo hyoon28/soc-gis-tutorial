@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i><b>1.1</b> Table of Contents</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#spatial-data-and-analysis"><i class="fa fa-check"></i><b>1.1</b> Spatial Data and Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html"><i class="fa fa-check"></i><b>2</b> Emplacing Demographic Data</a>
 <ul>
@@ -158,8 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#transforming-airbnbs"><i class="fa fa-check"></i><b>3.1</b> Transforming Airbnbs</a></li>
 <li class="chapter" data-level="3.2" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#geocoding-restaurants"><i class="fa fa-check"></i><b>3.2</b> Geocoding Restaurants</a></li>
 <li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.3</b> Spatial join</a></li>
-<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#data-visualization-1"><i class="fa fa-check"></i><b>3.4</b> Data visualization</a></li>
-<li class="chapter" data-level="3.5" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.5</b> Export Maps</a></li>
+<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.4</b> Export Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>4</b> Additional Topics</a></li>
 <li class="divider"></li>
@@ -184,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Spatial Data and Mapping for Sociologists</h1>
 <p class="author"><em>Hesu Yoon</em></p>
-<p class="date"><em>Last updated: 2024-10-16</em></p>
+<p class="date"><em>Last updated: 2024-10-21</em></p>
 </div>
 <div id="about" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> About<a href="index.html#about" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -195,14 +194,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>You can download all the data used in the tutorials <a href="https://github.com/hyoon28/soc-gis-tutorial/tree/main/tutorial/data">here</a>.</li>
 </ul>
 <p>Each tutorial is a chapter in this website. You can navigate through the chapters using the sidebar.</p>
-<div id="table-of-contents" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Table of Contents<a href="index.html#table-of-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ol style="list-style-type: decimal">
-<li>About</li>
-<li>Emplacing Demographic Data</li>
-<li>From People to Institutions</li>
-<li>Additional Topics</li>
-</ol>
+<div id="spatial-data-and-analysis" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Spatial Data and Analysis<a href="index.html#spatial-data-and-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Spatial data refers to data representing features or objects on the Earth’s surface. Whether it’s man-made or natural, if it has to do with a specific location on the surface of the Earth, it is spatial. Spatial data is typically classified into two types: Vector data and raster data. Vector data consists of coordinate information, while raster data is all about layers of images extracted from camera sensors.</p>
+<div class="figure">
+<img src="images/types-of-data.png" alt="" />
+<p class="caption">Types of Spatial Data</p>
+</div>
+<p>In this series of tutorials, we focus on the vector data type.</p>
+<p>There are three forms of vector data.
+- Points: A single dot, expressed as a coordinate (e.g., landmarks).
+- Lines: A line defined by two coordinates, with a definite length (e.g., roads, rivers)
+- Polygons: A closed shape is defined using three or more coordinates, representing areas (neighborhood boundaries).</p>
+<p>Spatial data contains more information than just a location on the surface of the Earth represented by vector data. Any additional information, or non-spatial data, that describes a feature is referred to as an <em>attribute</em>. Sociologists utilize a variety of non-spatial data, such as demographic and socioeconomic data linked to particular locales.</p>
+<p>In addition to locational and attribute information, spatial data inherently contains geometric and topological properties, which help to gain deeper insights. Geometric properties include position and measurements, such as length, direction, area, and volume. Topological properties represent spatial relationships such as connectivity, inclusion, and adjacency.</p>
+<p>Spatial data analytics involves collecting, processing, and analyzing various types of spatial data with insights to go beyond what occurs to determine not only where and when something occurs but also why it occurs at that specific place and/or time. It can be further viewed as descriptive analytics, which involves summarizing and visualizing spatial data to identify patterns and trends.</p>
+<p>GIS (Geographic Information Systems) connects data to a map, integrating location data with all types of descriptive information. It helps us understand patterns, relationships, and geographic context.</p>
+<p>While there are multiple tools to carry out spatial analysis, we will use R in this tutorial. R provides sufficient spatial packages prepared for data manipulation, visualization, and analysis for social scientists. It can also be readily linked with more traditional statistical analysis. Last but not least, using R is helpful for open science and replication, which is increasingly important in social science research.</p>
+<div class="figure">
+<img src="images/spatial-analysis.png" alt="" />
+<p class="caption">Tools for Spatial Analysis</p>
+</div>
 
 </div>
 </div>

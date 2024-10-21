@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#table-of-contents"><i class="fa fa-check"></i><b>1.1</b> Table of Contents</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#spatial-data-and-analysis"><i class="fa fa-check"></i><b>1.1</b> Spatial Data and Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="emplacing-demographic-data.html"><a href="emplacing-demographic-data.html"><i class="fa fa-check"></i><b>2</b> Emplacing Demographic Data</a>
 <ul>
@@ -158,8 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#transforming-airbnbs"><i class="fa fa-check"></i><b>3.1</b> Transforming Airbnbs</a></li>
 <li class="chapter" data-level="3.2" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#geocoding-restaurants"><i class="fa fa-check"></i><b>3.2</b> Geocoding Restaurants</a></li>
 <li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.3</b> Spatial join</a></li>
-<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#data-visualization-1"><i class="fa fa-check"></i><b>3.4</b> Data visualization</a></li>
-<li class="chapter" data-level="3.5" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.5</b> Export Maps</a></li>
+<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.4</b> Export Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>4</b> Additional Topics</a></li>
 <li class="divider"></li>
@@ -187,16 +186,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="transforming-airbnbs" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Transforming Airbnbs<a href="from-people-to-built-environment.html#transforming-airbnbs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When the data contains the latitude and longitude, we can simply transform it to sf object by using “st_as_sf” command. We will use the San Francisco Airbnb data to illustrate this case. Unlike neighborhood boundaries of which geometries were polygons, these geometries will be <strong>points</strong>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="from-people-to-built-environment.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the Airbnb data</span></span>
-<span id="cb33-2"><a href="from-people-to-built-environment.html#cb33-2" aria-hidden="true" tabindex="-1"></a>sfbnb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sfbnb.csv&quot;</span>)</span>
-<span id="cb33-3"><a href="from-people-to-built-environment.html#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="from-people-to-built-environment.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform lat/long data into sf object</span></span>
-<span id="cb33-5"><a href="from-people-to-built-environment.html#cb33-5" aria-hidden="true" tabindex="-1"></a>sf_sfbnb <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(sfbnb, </span>
-<span id="cb33-6"><a href="from-people-to-built-environment.html#cb33-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), </span>
-<span id="cb33-7"><a href="from-people-to-built-environment.html#cb33-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">crs =</span> <span class="dv">4326</span> <span class="co"># specify the projection; WGS84 is a standard projection for global mapping. </span></span>
-<span id="cb33-8"><a href="from-people-to-built-environment.html#cb33-8" aria-hidden="true" tabindex="-1"></a>                     )</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="from-people-to-built-environment.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check variables</span></span>
-<span id="cb34-2"><a href="from-people-to-built-environment.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sf_sfbnb, <span class="at">n=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="from-people-to-built-environment.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the Airbnb data</span></span>
+<span id="cb37-2"><a href="from-people-to-built-environment.html#cb37-2" aria-hidden="true" tabindex="-1"></a>sfbnb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sfbnb.csv&quot;</span>)</span>
+<span id="cb37-3"><a href="from-people-to-built-environment.html#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="from-people-to-built-environment.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform lat/long data into sf object</span></span>
+<span id="cb37-5"><a href="from-people-to-built-environment.html#cb37-5" aria-hidden="true" tabindex="-1"></a>sf_sfbnb <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(sfbnb, </span>
+<span id="cb37-6"><a href="from-people-to-built-environment.html#cb37-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), </span>
+<span id="cb37-7"><a href="from-people-to-built-environment.html#cb37-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">crs =</span> <span class="dv">4326</span> <span class="co"># specify the projection; WGS84 is a standard projection for global mapping. </span></span>
+<span id="cb37-8"><a href="from-people-to-built-environment.html#cb37-8" aria-hidden="true" tabindex="-1"></a>                     )</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="from-people-to-built-environment.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check variables</span></span>
+<span id="cb38-2"><a href="from-people-to-built-environment.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sf_sfbnb, <span class="at">n=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Simple feature collection with 3 features and 7 fields
 ## Geometry type: POINT
 ## Dimension:     XY
@@ -211,17 +210,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2                     10               111  POINT (-122.421 37.74511)
 ## 3                      9                17 POINT (-122.4525 37.76669)</code></pre>
 <p>You can see that geometry is points, rather than polygons. Each point represents an Airbnb property (id- unique identifier). It also indicates the census tract (trt10) and neighborhood name (analysis) in which the Airbnb property is located. The data also contains attributes of the Airbnb property, such as property type, review score ratings, and the number of reviews.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="from-people-to-built-environment.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the Airbnb data as a geojson file</span></span>
-<span id="cb36-2"><a href="from-people-to-built-environment.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(sf_sfbnb, <span class="st">&quot;processed-data/airbnbs.geojson&quot;</span>, <span class="at">driver =</span> <span class="st">&quot;GeoJSON&quot;</span>, <span class="at">delete_dsn =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="from-people-to-built-environment.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the Airbnb data as a geojson file</span></span>
+<span id="cb40-2"><a href="from-people-to-built-environment.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(sf_sfbnb, <span class="st">&quot;processed-data/airbnbs.geojson&quot;</span>, <span class="at">driver =</span> <span class="st">&quot;GeoJSON&quot;</span>, <span class="at">delete_dsn =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="geocoding-restaurants" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Geocoding Restaurants<a href="from-people-to-built-environment.html#geocoding-restaurants" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform <strong>geocoding</strong> which converts formatted addresses into latitude and longitude. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="from-people-to-built-environment.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import restaurant data</span></span>
-<span id="cb37-2"><a href="from-people-to-built-environment.html#cb37-2" aria-hidden="true" tabindex="-1"></a>sfbiz <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sfbiz_clean.csv&quot;</span>) </span>
-<span id="cb37-3"><a href="from-people-to-built-environment.html#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="from-people-to-built-environment.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if lat and lon exists</span></span>
-<span id="cb37-5"><a href="from-people-to-built-environment.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfbiz, <span class="dv">3</span>)</span></code></pre></div>
+<p>Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform <strong>geocoding</strong> which converts formatted addresses into latitude and longitude, so that we can displayed as a point on a map. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="from-people-to-built-environment.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import restaurant data</span></span>
+<span id="cb41-2"><a href="from-people-to-built-environment.html#cb41-2" aria-hidden="true" tabindex="-1"></a>sfbiz <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sfbiz_clean.csv&quot;</span>) </span>
+<span id="cb41-3"><a href="from-people-to-built-environment.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="from-people-to-built-environment.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if lat and lon exists</span></span>
+<span id="cb41-5"><a href="from-people-to-built-environment.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfbiz, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                         company address_line_1          city zipcode
 ## 1                  JOHN&#39;S GRILL    63 ELLIS ST SAN FRANCISCO   94102
 ## 2              TAD&#39;S STEAKHOUSE  120 POWELL ST SAN FRANCISCO   94102
@@ -231,39 +230,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 FULL-SERVICE RESTAURANTS                     19                  1353    CA
 ## 3 FULL-SERVICE RESTAURANTS                     35                  2491    CA</code></pre>
 <p>In this data, we can see that latitude and longitude does not exist. However, it contains street address, city, state, and zip code. To carry out geocoding, first, we have to create a field that displays a full address. Based on the full address, we can get the latitude and longitude via open street map (osm). Once the data is geocoded, we can transform this data frame to sf object for mapping.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="from-people-to-built-environment.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up</span></span>
-<span id="cb39-2"><a href="from-people-to-built-environment.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygeocoder)</span>
-<span id="cb39-3"><a href="from-people-to-built-environment.html#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="from-people-to-built-environment.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a full address field (street address, city, state, zipcode)</span></span>
-<span id="cb39-5"><a href="from-people-to-built-environment.html#cb39-5" aria-hidden="true" tabindex="-1"></a>sfbiz <span class="ot">&lt;-</span> sfbiz <span class="sc">%&gt;%</span></span>
-<span id="cb39-6"><a href="from-people-to-built-environment.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_add =</span> <span class="fu">paste</span>(address_line_1, city, state, zipcode, <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>))</span>
-<span id="cb39-7"><a href="from-people-to-built-environment.html#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="from-people-to-built-environment.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Geocode the full address</span></span>
-<span id="cb39-9"><a href="from-people-to-built-environment.html#cb39-9" aria-hidden="true" tabindex="-1"></a>geocoded_sfbiz <span class="ot">&lt;-</span> sfbiz <span class="sc">%&gt;%</span></span>
-<span id="cb39-10"><a href="from-people-to-built-environment.html#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="co"># the full data can take a while, so let&#39;s try on a smaller sample</span></span>
-<span id="cb39-11"><a href="from-people-to-built-environment.html#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geocode</span>(<span class="at">address =</span> full_add, <span class="at">method =</span> <span class="st">&#39;osm&#39;</span>)</span>
-<span id="cb39-12"><a href="from-people-to-built-environment.html#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-13"><a href="from-people-to-built-environment.html#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the geocoded data</span></span>
-<span id="cb39-14"><a href="from-people-to-built-environment.html#cb39-14" aria-hidden="true" tabindex="-1"></a>geocoded_sfbiz <span class="sc">%&gt;%</span></span>
-<span id="cb39-15"><a href="from-people-to-built-environment.html#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(lat, long)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="from-people-to-built-environment.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up</span></span>
+<span id="cb43-2"><a href="from-people-to-built-environment.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygeocoder)</span>
+<span id="cb43-3"><a href="from-people-to-built-environment.html#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="from-people-to-built-environment.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a full address field (street address, city, state, zipcode)</span></span>
+<span id="cb43-5"><a href="from-people-to-built-environment.html#cb43-5" aria-hidden="true" tabindex="-1"></a>sfbiz <span class="ot">&lt;-</span> sfbiz <span class="sc">%&gt;%</span></span>
+<span id="cb43-6"><a href="from-people-to-built-environment.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">full_add =</span> <span class="fu">paste</span>(address_line_1, city, state, zipcode, <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb43-7"><a href="from-people-to-built-environment.html#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="from-people-to-built-environment.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Geocode the full address</span></span>
+<span id="cb43-9"><a href="from-people-to-built-environment.html#cb43-9" aria-hidden="true" tabindex="-1"></a>geocoded_sfbiz <span class="ot">&lt;-</span> sfbiz <span class="sc">%&gt;%</span></span>
+<span id="cb43-10"><a href="from-people-to-built-environment.html#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="co"># the full data can take a while, so let&#39;s try on a smaller sample</span></span>
+<span id="cb43-11"><a href="from-people-to-built-environment.html#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geocode</span>(<span class="at">address =</span> full_add, <span class="at">method =</span> <span class="st">&#39;osm&#39;</span>)</span>
+<span id="cb43-12"><a href="from-people-to-built-environment.html#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-13"><a href="from-people-to-built-environment.html#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the geocoded data</span></span>
+<span id="cb43-14"><a href="from-people-to-built-environment.html#cb43-14" aria-hidden="true" tabindex="-1"></a>geocoded_sfbiz <span class="sc">%&gt;%</span></span>
+<span id="cb43-15"><a href="from-people-to-built-environment.html#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(lat, long)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##     lat  long
 ##   &lt;dbl&gt; &lt;dbl&gt;
 ## 1  37.8 -122.
 ## 2  37.8 -122.
 ## 3  37.8 -122.
-## 4  37.8 -122.
+## 4  37.7 -122.
 ## 5  37.8 -122.</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="from-people-to-built-environment.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For the purpose of this tutorial, we can use the prepared, full geocoded data</span></span>
-<span id="cb41-2"><a href="from-people-to-built-environment.html#cb41-2" aria-hidden="true" tabindex="-1"></a>prep_sfbiz <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/geocoded_sfbiz_clean.csv&quot;</span>) </span>
-<span id="cb41-3"><a href="from-people-to-built-environment.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="from-people-to-built-environment.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform lat/long data into sf oject</span></span>
-<span id="cb41-5"><a href="from-people-to-built-environment.html#cb41-5" aria-hidden="true" tabindex="-1"></a>sf_sfbiz <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(prep_sfbiz, </span>
-<span id="cb41-6"><a href="from-people-to-built-environment.html#cb41-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>), </span>
-<span id="cb41-7"><a href="from-people-to-built-environment.html#cb41-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="from-people-to-built-environment.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the restaurant data as a geojson file</span></span>
-<span id="cb42-2"><a href="from-people-to-built-environment.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(sf_sfbiz, <span class="st">&quot;processed-data/restaurants.geojson&quot;</span>, <span class="at">driver =</span> <span class="st">&quot;GeoJSON&quot;</span>, <span class="at">delete_dsn =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="from-people-to-built-environment.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For the purpose of this tutorial, we can use the prepared, full geocoded data</span></span>
+<span id="cb45-2"><a href="from-people-to-built-environment.html#cb45-2" aria-hidden="true" tabindex="-1"></a>prep_sfbiz <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/geocoded_sfbiz_clean.csv&quot;</span>) </span>
+<span id="cb45-3"><a href="from-people-to-built-environment.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="from-people-to-built-environment.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform lat/long data into sf oject</span></span>
+<span id="cb45-5"><a href="from-people-to-built-environment.html#cb45-5" aria-hidden="true" tabindex="-1"></a>sf_sfbiz <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(prep_sfbiz, </span>
+<span id="cb45-6"><a href="from-people-to-built-environment.html#cb45-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>), </span>
+<span id="cb45-7"><a href="from-people-to-built-environment.html#cb45-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="from-people-to-built-environment.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the restaurant data as a geojson file</span></span>
+<span id="cb46-2"><a href="from-people-to-built-environment.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(sf_sfbiz, <span class="st">&quot;processed-data/restaurants.geojson&quot;</span>, <span class="at">driver =</span> <span class="st">&quot;GeoJSON&quot;</span>, <span class="at">delete_dsn =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 
+<p>Now that we have restaurant locations as points, we can simply overlay the restaurant locations on top of the neighborhood boundaries layer.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="from-people-to-built-environment.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the restaurant locations</span></span>
+<span id="cb47-2"><a href="from-people-to-built-environment.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb47-3"><a href="from-people-to-built-environment.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># display neighborhood boundaries as a layer</span></span>
+<span id="cb47-4"><a href="from-people-to-built-environment.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,</span>
+<span id="cb47-5"><a href="from-people-to-built-environment.html#cb47-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb47-6"><a href="from-people-to-built-environment.html#cb47-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb47-7"><a href="from-people-to-built-environment.html#cb47-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb47-8"><a href="from-people-to-built-environment.html#cb47-8" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb47-9"><a href="from-people-to-built-environment.html#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add restaurants as another layer</span></span>
+<span id="cb47-10"><a href="from-people-to-built-environment.html#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_sfbiz, </span>
+<span id="cb47-11"><a href="from-people-to-built-environment.html#cb47-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb47-12"><a href="from-people-to-built-environment.html#cb47-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb47-13"><a href="from-people-to-built-environment.html#cb47-13" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span>  <span class="co"># Plot restaurants</span></span>
+<span id="cb47-14"><a href="from-people-to-built-environment.html#cb47-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb47-15"><a href="from-people-to-built-environment.html#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Restaurants in San Francisco&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/point-map-1.png" width="672" /></p>
+<p>In this map, we can see the distribution of restaurants in San Francisco. However, because restaurants are both in and outside of neighborhood boundaries, it is hard to discern spatial patterns of restaurants by neighborhoods. Spatial join, which we will discuss in the next section, allows us to spatially link restaurants to neighborhoods, so that we can reduce points data to the level of neighborhoods.</p>
 </div>
 <div id="spatial-join" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Spatial join<a href="from-people-to-built-environment.html#spatial-join" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -272,17 +289,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Neighborhoods (x) contain restaurants (y), or</li>
 <li>restaurants (x) are within neighborhoods (y).</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="from-people-to-built-environment.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before joining, check if they have the same projections</span></span>
-<span id="cb43-2"><a href="from-people-to-built-environment.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(sfnh) <span class="sc">==</span> <span class="fu">st_crs</span>(sf_sfbiz)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="from-people-to-built-environment.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before joining, check if they have the same projections</span></span>
+<span id="cb48-2"><a href="from-people-to-built-environment.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(sfnh) <span class="sc">==</span> <span class="fu">st_crs</span>(sf_sfbiz)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="from-people-to-built-environment.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform spatial join</span></span>
-<span id="cb45-2"><a href="from-people-to-built-environment.html#cb45-2" aria-hidden="true" tabindex="-1"></a>nh_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(<span class="at">x =</span> sfnh, <span class="co"># join</span></span>
-<span id="cb45-3"><a href="from-people-to-built-environment.html#cb45-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> sf_sfbiz, <span class="co"># target</span></span>
-<span id="cb45-4"><a href="from-people-to-built-environment.html#cb45-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">join =</span> st_contains, <span class="co"># does x(polygon) contains y(point)?</span></span>
-<span id="cb45-5"><a href="from-people-to-built-environment.html#cb45-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">left =</span> <span class="cn">TRUE</span>) <span class="co"># keep all neighborhoods</span></span>
-<span id="cb45-6"><a href="from-people-to-built-environment.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-7"><a href="from-people-to-built-environment.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore</span></span>
-<span id="cb45-8"><a href="from-people-to-built-environment.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nh_joined, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="from-people-to-built-environment.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform spatial join</span></span>
+<span id="cb50-2"><a href="from-people-to-built-environment.html#cb50-2" aria-hidden="true" tabindex="-1"></a>nh_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(<span class="at">x =</span> sfnh, <span class="co"># join</span></span>
+<span id="cb50-3"><a href="from-people-to-built-environment.html#cb50-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> sf_sfbiz, <span class="co"># target</span></span>
+<span id="cb50-4"><a href="from-people-to-built-environment.html#cb50-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">join =</span> st_contains, <span class="co"># does x(polygon) contains y(point)?</span></span>
+<span id="cb50-5"><a href="from-people-to-built-environment.html#cb50-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">left =</span> <span class="cn">TRUE</span>) <span class="co"># keep all neighborhoods</span></span>
+<span id="cb50-6"><a href="from-people-to-built-environment.html#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="from-people-to-built-environment.html#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore</span></span>
+<span id="cb50-8"><a href="from-people-to-built-environment.html#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nh_joined, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Simple feature collection with 3 features and 10 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -304,123 +321,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1   MULTIPOLYGON (((-122.4214 3...
 ## 1.1 MULTIPOLYGON (((-122.4214 3...
 ## 1.2 MULTIPOLYGON (((-122.4214 3...</code></pre>
-</div>
-<div id="data-visualization-1" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Data visualization<a href="from-people-to-built-environment.html#data-visualization-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To start, you can simply overlay the restaurant locations on top of the neighborhood map.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="from-people-to-built-environment.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the restaurant locations</span></span>
-<span id="cb47-2"><a href="from-people-to-built-environment.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb47-3"><a href="from-people-to-built-environment.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># display neighborhood boundaries</span></span>
-<span id="cb47-4"><a href="from-people-to-built-environment.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_joined,</span>
-<span id="cb47-5"><a href="from-people-to-built-environment.html#cb47-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
-<span id="cb47-6"><a href="from-people-to-built-environment.html#cb47-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb47-7"><a href="from-people-to-built-environment.html#cb47-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
-<span id="cb47-8"><a href="from-people-to-built-environment.html#cb47-8" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
-<span id="cb47-9"><a href="from-people-to-built-environment.html#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># display restaurants</span></span>
-<span id="cb47-10"><a href="from-people-to-built-environment.html#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_sfbiz, </span>
-<span id="cb47-11"><a href="from-people-to-built-environment.html#cb47-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
-<span id="cb47-12"><a href="from-people-to-built-environment.html#cb47-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb47-13"><a href="from-people-to-built-environment.html#cb47-13" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span>  <span class="co"># Plot restaurants</span></span>
-<span id="cb47-14"><a href="from-people-to-built-environment.html#cb47-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb47-15"><a href="from-people-to-built-environment.html#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Restaurants in San Francisco&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/point-map-1.png" width="672" /></p>
-<p>Taking a step further, we can create a choropleth map by counting the number of restaurants in each neighborhood.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="from-people-to-built-environment.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count restaurants per neighborhood</span></span>
-<span id="cb48-2"><a href="from-people-to-built-environment.html#cb48-2" aria-hidden="true" tabindex="-1"></a>restaurant_counts <span class="ot">&lt;-</span> nh_joined <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a href="from-people-to-built-environment.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nhood) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-4"><a href="from-people-to-built-environment.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_rst =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(company)), <span class="co"># don&#39;t count NA as 1 </span></span>
-<span id="cb48-5"><a href="from-people-to-built-environment.html#cb48-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&#39;drop&#39;</span>) <span class="co"># avoid the nested structure of data</span></span>
-<span id="cb48-6"><a href="from-people-to-built-environment.html#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-7"><a href="from-people-to-built-environment.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the choropleth map</span></span>
-<span id="cb48-8"><a href="from-people-to-built-environment.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> restaurant_counts) <span class="sc">+</span></span>
-<span id="cb48-9"><a href="from-people-to-built-environment.html#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> n_rst), <span class="co"># fill based on the restaurant count </span></span>
-<span id="cb48-10"><a href="from-people-to-built-environment.html#cb48-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb48-11"><a href="from-people-to-built-environment.html#cb48-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb48-12"><a href="from-people-to-built-environment.html#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, </span>
-<span id="cb48-13"><a href="from-people-to-built-environment.html#cb48-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
-<span id="cb48-14"><a href="from-people-to-built-environment.html#cb48-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,</span>
-<span id="cb48-15"><a href="from-people-to-built-environment.html#cb48-15" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
-<span id="cb48-16"><a href="from-people-to-built-environment.html#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb48-17"><a href="from-people-to-built-environment.html#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>)</span></code></pre></div>
+<p>In the joined data, we can see that restaurants (company) are nested within neighborhoods (nhood). We can aggregate this data to the neighborhood level and get the number of restaurants per neighborhood. Some neighborhoods may not any have restaurants, so you want to preserve that as 0 and not count as 1.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="from-people-to-built-environment.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count restaurants per neighborhood</span></span>
+<span id="cb52-2"><a href="from-people-to-built-environment.html#cb52-2" aria-hidden="true" tabindex="-1"></a>restaurant_counts <span class="ot">&lt;-</span> nh_joined <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="from-people-to-built-environment.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="from-people-to-built-environment.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nhood) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-5"><a href="from-people-to-built-environment.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_rst =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(company)), <span class="co"># don&#39;t count NA as 1</span></span>
+<span id="cb52-6"><a href="from-people-to-built-environment.html#cb52-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<p>As the count of restaurants is a quantitative variable, we can visualize it using the choropleth map. I first join the restaurant counts data with neighborhood boundaries to get the neighborhood-level spatial data. Then, I create the map using custom breaks based on the distribution of the number of restaurants within a neighborhood.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="from-people-to-built-environment.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the restaurant count to neighborhood boundaries</span></span>
+<span id="cb53-2"><a href="from-people-to-built-environment.html#cb53-2" aria-hidden="true" tabindex="-1"></a>biz_colors <span class="ot">&lt;-</span></span>
+<span id="cb53-3"><a href="from-people-to-built-environment.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  sfnh <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="from-people-to-built-environment.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(restaurant_counts,</span>
+<span id="cb53-5"><a href="from-people-to-built-environment.html#cb53-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;nhood&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-6"><a href="from-people-to-built-environment.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_rst)) </span>
+<span id="cb53-7"><a href="from-people-to-built-environment.html#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="from-people-to-built-environment.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the map using Custom breaks</span></span>
+<span id="cb53-9"><a href="from-people-to-built-environment.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb53-10"><a href="from-people-to-built-environment.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_colors,</span>
+<span id="cb53-11"><a href="from-people-to-built-environment.html#cb53-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
+<span id="cb53-12"><a href="from-people-to-built-environment.html#cb53-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb53-13"><a href="from-people-to-built-environment.html#cb53-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb53-14"><a href="from-people-to-built-environment.html#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, </span>
+<span id="cb53-15"><a href="from-people-to-built-environment.html#cb53-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
+<span id="cb53-16"><a href="from-people-to-built-environment.html#cb53-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>), <span class="co"># specify custom breaks</span></span>
+<span id="cb53-17"><a href="from-people-to-built-environment.html#cb53-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb53-18"><a href="from-people-to-built-environment.html#cb53-18" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
+<span id="cb53-19"><a href="from-people-to-built-environment.html#cb53-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb53-20"><a href="from-people-to-built-environment.html#cb53-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/aggregate-map-1.png" width="672" /></p>
-<p>When creating a choropleth map, it’s crucial to check the statistical distribution of the variable.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="from-people-to-built-environment.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(restaurant_counts<span class="sc">$</span>n_rst)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/histogram-1.png" width="672" /></p>
-<p>There are various methods to determine how you classify colors. The most common methods are quantile binning, natural breaks (jenks), standard deviation, and custom breaks (defined by the researcher). Below, I use the custom breaks.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="from-people-to-built-environment.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom breaks</span></span>
-<span id="cb50-2"><a href="from-people-to-built-environment.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> restaurant_counts) <span class="sc">+</span></span>
-<span id="cb50-3"><a href="from-people-to-built-environment.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
-<span id="cb50-4"><a href="from-people-to-built-environment.html#cb50-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb50-5"><a href="from-people-to-built-environment.html#cb50-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb50-6"><a href="from-people-to-built-environment.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, </span>
-<span id="cb50-7"><a href="from-people-to-built-environment.html#cb50-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
-<span id="cb50-8"><a href="from-people-to-built-environment.html#cb50-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>), <span class="co"># specify breaks</span></span>
-<span id="cb50-9"><a href="from-people-to-built-environment.html#cb50-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,</span>
-<span id="cb50-10"><a href="from-people-to-built-environment.html#cb50-10" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
-<span id="cb50-11"><a href="from-people-to-built-environment.html#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb50-12"><a href="from-people-to-built-environment.html#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/custom-map-1.png" width="672" /></p>
+<p>Another way of visualizing a quantitative variable is a <em>proportional symbol map</em>. Proportional symbol maps are particularly useful for absolute quantitative variables (e.g., raw counts, measurements) while choropleth maps are more suitable for relative quantitative variables (e.g., ratios, percentages, proportions).</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="from-people-to-built-environment.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create neighborhood centroids</span></span>
+<span id="cb54-2"><a href="from-people-to-built-environment.html#cb54-2" aria-hidden="true" tabindex="-1"></a>nh_cent <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(sfnh, <span class="at">of_largest_polygon =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="from-people-to-built-environment.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the restaurant counts to neighborhood centroids</span></span>
+<span id="cb56-2"><a href="from-people-to-built-environment.html#cb56-2" aria-hidden="true" tabindex="-1"></a>biz_symbols <span class="ot">&lt;-</span></span>
+<span id="cb56-3"><a href="from-people-to-built-environment.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  nh_cent <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="from-people-to-built-environment.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(restaurant_counts,</span>
+<span id="cb56-5"><a href="from-people-to-built-environment.html#cb56-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;nhood&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="from-people-to-built-environment.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_rst)) <span class="co"># sort to ensure small points would be plotted in front of big points</span></span>
+<span id="cb56-7"><a href="from-people-to-built-environment.html#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="from-people-to-built-environment.html#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the proportional symbol map</span></span>
+<span id="cb56-9"><a href="from-people-to-built-environment.html#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb56-10"><a href="from-people-to-built-environment.html#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,           <span class="co"># add a base map layer of boundaries</span></span>
+<span id="cb56-11"><a href="from-people-to-built-environment.html#cb56-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb56-12"><a href="from-people-to-built-environment.html#cb56-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb56-13"><a href="from-people-to-built-environment.html#cb56-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb56-14"><a href="from-people-to-built-environment.html#cb56-14" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb56-15"><a href="from-people-to-built-environment.html#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_symbols,</span>
+<span id="cb56-16"><a href="from-people-to-built-environment.html#cb56-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">size =</span> n_rst),      <span class="co"># add a layer of symbols sized based on the restaurant counts </span></span>
+<span id="cb56-17"><a href="from-people-to-built-environment.html#cb56-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>,             <span class="co"># specify a circle shape for symbols</span></span>
+<span id="cb56-18"><a href="from-people-to-built-environment.html#cb56-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,           <span class="co"># set a color to fill the shape </span></span>
+<span id="cb56-19"><a href="from-people-to-built-environment.html#cb56-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> <span class="fl">0.6</span>,            <span class="co"># set a level of transparency</span></span>
+<span id="cb56-20"><a href="from-people-to-built-environment.html#cb56-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span>  <span class="co"># set a color for edges of the shape</span></span>
+<span id="cb56-21"><a href="from-people-to-built-environment.html#cb56-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">13</span>)) <span class="sc">+</span>  <span class="co"># set min and max for the size of the symbols</span></span>
+<span id="cb56-22"><a href="from-people-to-built-environment.html#cb56-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb56-23"><a href="from-people-to-built-environment.html#cb56-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">size =</span> <span class="st">&quot;Restaurant Count&quot;</span>) <span class="co"># legend title </span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/proportional-symbol-map-1.png" width="672" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="from-people-to-built-environment.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the proportional symbol map (size) combined with the choropleth map (fill color)</span></span>
+<span id="cb57-2"><a href="from-people-to-built-environment.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb57-3"><a href="from-people-to-built-environment.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,</span>
+<span id="cb57-4"><a href="from-people-to-built-environment.html#cb57-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb57-5"><a href="from-people-to-built-environment.html#cb57-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb57-6"><a href="from-people-to-built-environment.html#cb57-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb57-7"><a href="from-people-to-built-environment.html#cb57-7" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb57-8"><a href="from-people-to-built-environment.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_symbols,</span>
+<span id="cb57-9"><a href="from-people-to-built-environment.html#cb57-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">size =</span> n_rst, <span class="at">fill =</span> n_rst), </span>
+<span id="cb57-10"><a href="from-people-to-built-environment.html#cb57-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb57-11"><a href="from-people-to-built-environment.html#cb57-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-12"><a href="from-people-to-built-environment.html#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb57-13"><a href="from-people-to-built-environment.html#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add colors to the symbols</span></span>
+<span id="cb57-14"><a href="from-people-to-built-environment.html#cb57-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> <span class="fu">hcl.colors</span>(<span class="dv">4</span>,                   <span class="co"># fill the shape with four different colors</span></span>
+<span id="cb57-15"><a href="from-people-to-built-environment.html#cb57-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">&quot;RdBu&quot;</span>,              <span class="co"># red-blue color scheme</span></span>
+<span id="cb57-16"><a href="from-people-to-built-environment.html#cb57-16" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rev =</span> <span class="cn">TRUE</span>,          <span class="co"># reverse the color scheme so that smaller values are blue</span></span>
+<span id="cb57-17"><a href="from-people-to-built-environment.html#cb57-17" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">alpha =</span> <span class="fl">0.9</span>)) <span class="sc">+</span>      <span class="co"># transparency</span></span>
+<span id="cb57-18"><a href="from-people-to-built-environment.html#cb57-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb57-19"><a href="from-people-to-built-environment.html#cb57-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>, <span class="at">size =</span> <span class="st">&quot;Restaurant Count&quot;</span>) <span class="sc">+</span>  <span class="co"># combined legend title</span></span>
+<span id="cb57-20"><a href="from-people-to-built-environment.html#cb57-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Restaurant Count&quot;</span>, </span>
+<span id="cb57-21"><a href="from-people-to-built-environment.html#cb57-21" aria-hidden="true" tabindex="-1"></a>                             <span class="at">order =</span> <span class="dv">1</span>),                        <span class="co"># title for the legend</span></span>
+<span id="cb57-22"><a href="from-people-to-built-environment.html#cb57-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Restaurant Count&quot;</span>, </span>
+<span id="cb57-23"><a href="from-people-to-built-environment.html#cb57-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">order =</span> <span class="dv">1</span>))                        <span class="co"># same title for size</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/proportional-symbol-map-2.png" width="672" /></p>
 </div>
-<div id="export-maps" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Export Maps<a href="from-people-to-built-environment.html#export-maps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="export-maps" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Export Maps<a href="from-people-to-built-environment.html#export-maps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now, let’s say you are ready export your maps for publication. We will publish a figure of two maps side by side, displaying two ways of visualizing the distribution of restaurant by neighborhood in San Francisco.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="from-people-to-built-environment.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and store maps</span></span>
-<span id="cb51-2"><a href="from-people-to-built-environment.html#cb51-2" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb51-3"><a href="from-people-to-built-environment.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># display neighborhood boundaries</span></span>
-<span id="cb51-4"><a href="from-people-to-built-environment.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,</span>
-<span id="cb51-5"><a href="from-people-to-built-environment.html#cb51-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
-<span id="cb51-6"><a href="from-people-to-built-environment.html#cb51-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb51-7"><a href="from-people-to-built-environment.html#cb51-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
-<span id="cb51-8"><a href="from-people-to-built-environment.html#cb51-8" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
-<span id="cb51-9"><a href="from-people-to-built-environment.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># display restaurants</span></span>
-<span id="cb51-10"><a href="from-people-to-built-environment.html#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_sfbiz, </span>
-<span id="cb51-11"><a href="from-people-to-built-environment.html#cb51-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
-<span id="cb51-12"><a href="from-people-to-built-environment.html#cb51-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb51-13"><a href="from-people-to-built-environment.html#cb51-13" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span>  <span class="co"># Plot restaurants</span></span>
-<span id="cb51-14"><a href="from-people-to-built-environment.html#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb51-15"><a href="from-people-to-built-environment.html#cb51-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-16"><a href="from-people-to-built-environment.html#cb51-16" aria-hidden="true" tabindex="-1"></a>map2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> restaurant_counts) <span class="sc">+</span></span>
-<span id="cb51-17"><a href="from-people-to-built-environment.html#cb51-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
-<span id="cb51-18"><a href="from-people-to-built-environment.html#cb51-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb51-19"><a href="from-people-to-built-environment.html#cb51-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb51-20"><a href="from-people-to-built-environment.html#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, </span>
-<span id="cb51-21"><a href="from-people-to-built-environment.html#cb51-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
-<span id="cb51-22"><a href="from-people-to-built-environment.html#cb51-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>), <span class="co"># specify breaks</span></span>
-<span id="cb51-23"><a href="from-people-to-built-environment.html#cb51-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,</span>
-<span id="cb51-24"><a href="from-people-to-built-environment.html#cb51-24" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
-<span id="cb51-25"><a href="from-people-to-built-environment.html#cb51-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb51-26"><a href="from-people-to-built-environment.html#cb51-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb51-27"><a href="from-people-to-built-environment.html#cb51-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-28"><a href="from-people-to-built-environment.html#cb51-28" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(map1, map2, <span class="at">ncol=</span><span class="dv">2</span>,</span>
-<span id="cb51-29"><a href="from-people-to-built-environment.html#cb51-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Point Map&quot;</span>, <span class="st">&quot;Choropleth Map&quot;</span>))</span>
-<span id="cb51-30"><a href="from-people-to-built-environment.html#cb51-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-31"><a href="from-people-to-built-environment.html#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="from-people-to-built-environment.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the combined map</span></span>
-<span id="cb52-2"><a href="from-people-to-built-environment.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;sf_restaurant_maps.png&quot;</span>, <span class="at">plot =</span> combined, </span>
-<span id="cb52-3"><a href="from-people-to-built-environment.html#cb52-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="dv">6</span>, </span>
-<span id="cb52-4"><a href="from-people-to-built-environment.html#cb52-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span> <span class="co"># resolution</span></span>
-<span id="cb52-5"><a href="from-people-to-built-environment.html#cb52-5" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="from-people-to-built-environment.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store and combine maps</span></span>
+<span id="cb58-2"><a href="from-people-to-built-environment.html#cb58-2" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb58-3"><a href="from-people-to-built-environment.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,</span>
+<span id="cb58-4"><a href="from-people-to-built-environment.html#cb58-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb58-5"><a href="from-people-to-built-environment.html#cb58-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb58-6"><a href="from-people-to-built-environment.html#cb58-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb58-7"><a href="from-people-to-built-environment.html#cb58-7" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="from-people-to-built-environment.html#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sf_sfbiz, </span>
+<span id="cb58-9"><a href="from-people-to-built-environment.html#cb58-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb58-10"><a href="from-people-to-built-environment.html#cb58-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb58-11"><a href="from-people-to-built-environment.html#cb58-11" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span> </span>
+<span id="cb58-12"><a href="from-people-to-built-environment.html#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb58-13"><a href="from-people-to-built-environment.html#cb58-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-14"><a href="from-people-to-built-environment.html#cb58-14" aria-hidden="true" tabindex="-1"></a>map2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb58-15"><a href="from-people-to-built-environment.html#cb58-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_colors,</span>
+<span id="cb58-16"><a href="from-people-to-built-environment.html#cb58-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
+<span id="cb58-17"><a href="from-people-to-built-environment.html#cb58-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb58-18"><a href="from-people-to-built-environment.html#cb58-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb58-19"><a href="from-people-to-built-environment.html#cb58-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type=</span><span class="st">&quot;seq&quot;</span>, </span>
+<span id="cb58-20"><a href="from-people-to-built-environment.html#cb58-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
+<span id="cb58-21"><a href="from-people-to-built-environment.html#cb58-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>), </span>
+<span id="cb58-22"><a href="from-people-to-built-environment.html#cb58-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb58-23"><a href="from-people-to-built-environment.html#cb58-23" aria-hidden="true" tabindex="-1"></a>                       ) <span class="sc">+</span></span>
+<span id="cb58-24"><a href="from-people-to-built-environment.html#cb58-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb58-25"><a href="from-people-to-built-environment.html#cb58-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb58-26"><a href="from-people-to-built-environment.html#cb58-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-27"><a href="from-people-to-built-environment.html#cb58-27" aria-hidden="true" tabindex="-1"></a>map3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb58-28"><a href="from-people-to-built-environment.html#cb58-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,          </span>
+<span id="cb58-29"><a href="from-people-to-built-environment.html#cb58-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb58-30"><a href="from-people-to-built-environment.html#cb58-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb58-31"><a href="from-people-to-built-environment.html#cb58-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb58-32"><a href="from-people-to-built-environment.html#cb58-32" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb58-33"><a href="from-people-to-built-environment.html#cb58-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_symbols,</span>
+<span id="cb58-34"><a href="from-people-to-built-environment.html#cb58-34" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">size =</span> n_rst),      </span>
+<span id="cb58-35"><a href="from-people-to-built-environment.html#cb58-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>,           </span>
+<span id="cb58-36"><a href="from-people-to-built-environment.html#cb58-36" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,           </span>
+<span id="cb58-37"><a href="from-people-to-built-environment.html#cb58-37" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> <span class="fl">0.6</span>,           </span>
+<span id="cb58-38"><a href="from-people-to-built-environment.html#cb58-38" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb58-39"><a href="from-people-to-built-environment.html#cb58-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">13</span>)) <span class="sc">+</span>  </span>
+<span id="cb58-40"><a href="from-people-to-built-environment.html#cb58-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb58-41"><a href="from-people-to-built-environment.html#cb58-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">size =</span> <span class="st">&quot;Restaurant Count&quot;</span>) </span>
+<span id="cb58-42"><a href="from-people-to-built-environment.html#cb58-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-43"><a href="from-people-to-built-environment.html#cb58-43" aria-hidden="true" tabindex="-1"></a>map4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb58-44"><a href="from-people-to-built-environment.html#cb58-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh,</span>
+<span id="cb58-45"><a href="from-people-to-built-environment.html#cb58-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;lightgray&quot;</span>,</span>
+<span id="cb58-46"><a href="from-people-to-built-environment.html#cb58-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb58-47"><a href="from-people-to-built-environment.html#cb58-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb58-48"><a href="from-people-to-built-environment.html#cb58-48" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">+</span></span>
+<span id="cb58-49"><a href="from-people-to-built-environment.html#cb58-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_symbols,</span>
+<span id="cb58-50"><a href="from-people-to-built-environment.html#cb58-50" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">size =</span> n_rst, <span class="at">fill =</span> n_rst), </span>
+<span id="cb58-51"><a href="from-people-to-built-environment.html#cb58-51" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb58-52"><a href="from-people-to-built-environment.html#cb58-52" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb58-53"><a href="from-people-to-built-environment.html#cb58-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb58-54"><a href="from-people-to-built-environment.html#cb58-54" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add colors to the symbols</span></span>
+<span id="cb58-55"><a href="from-people-to-built-environment.html#cb58-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> <span class="fu">hcl.colors</span>(<span class="dv">4</span>,                  </span>
+<span id="cb58-56"><a href="from-people-to-built-environment.html#cb58-56" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">&quot;RdBu&quot;</span>,              </span>
+<span id="cb58-57"><a href="from-people-to-built-environment.html#cb58-57" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rev =</span> <span class="cn">TRUE</span>,          </span>
+<span id="cb58-58"><a href="from-people-to-built-environment.html#cb58-58" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">alpha =</span> <span class="fl">0.9</span>)) <span class="sc">+</span>     </span>
+<span id="cb58-59"><a href="from-people-to-built-environment.html#cb58-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb58-60"><a href="from-people-to-built-environment.html#cb58-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>, <span class="at">size =</span> <span class="st">&quot;Restaurant Count&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb58-61"><a href="from-people-to-built-environment.html#cb58-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Restaurant Count&quot;</span>, </span>
+<span id="cb58-62"><a href="from-people-to-built-environment.html#cb58-62" aria-hidden="true" tabindex="-1"></a>                             <span class="at">order =</span> <span class="dv">1</span>),  </span>
+<span id="cb58-63"><a href="from-people-to-built-environment.html#cb58-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Restaurant Count&quot;</span>, </span>
+<span id="cb58-64"><a href="from-people-to-built-environment.html#cb58-64" aria-hidden="true" tabindex="-1"></a>                             <span class="at">order =</span> <span class="dv">1</span>))  </span>
+<span id="cb58-65"><a href="from-people-to-built-environment.html#cb58-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-66"><a href="from-people-to-built-environment.html#cb58-66" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(map1, map2, map3, map4, <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>,</span>
+<span id="cb58-67"><a href="from-people-to-built-environment.html#cb58-67" aria-hidden="true" tabindex="-1"></a>                  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Point Map&quot;</span>, <span class="st">&quot;Choropleth Map&quot;</span>, <span class="st">&quot;PropSymbol Map&quot;</span>, <span class="st">&quot;PSxC Map&quot;</span>))</span>
+<span id="cb58-68"><a href="from-people-to-built-environment.html#cb58-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-69"><a href="from-people-to-built-environment.html#cb58-69" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/store-and-export-maps-1.png" width="672" /></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="from-people-to-built-environment.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the combined map</span></span>
+<span id="cb59-2"><a href="from-people-to-built-environment.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;sf_restaurant_maps.png&quot;</span>, <span class="at">plot =</span> combined, </span>
+<span id="cb59-3"><a href="from-people-to-built-environment.html#cb59-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="dv">9</span>, </span>
+<span id="cb59-4"><a href="from-people-to-built-environment.html#cb59-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span> <span class="co"># resolution</span></span>
+<span id="cb59-5"><a href="from-people-to-built-environment.html#cb59-5" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p>While it is not strictly expected in sociology papers, you can also add a north arrow and a scale bar to a map using the ggspatial package.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="from-people-to-built-environment.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span></code></pre></div>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="from-people-to-built-environment.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a scale bar and a north arrow </span></span>
-<span id="cb54-2"><a href="from-people-to-built-environment.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> restaurant_counts) <span class="sc">+</span></span>
-<span id="cb54-3"><a href="from-people-to-built-environment.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
-<span id="cb54-4"><a href="from-people-to-built-environment.html#cb54-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb54-5"><a href="from-people-to-built-environment.html#cb54-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb54-6"><a href="from-people-to-built-environment.html#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">&quot;seq&quot;</span>, </span>
-<span id="cb54-7"><a href="from-people-to-built-environment.html#cb54-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
-<span id="cb54-8"><a href="from-people-to-built-environment.html#cb54-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>),</span>
-<span id="cb54-9"><a href="from-people-to-built-environment.html#cb54-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb54-10"><a href="from-people-to-built-environment.html#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb54-11"><a href="from-people-to-built-environment.html#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>) <span class="sc">+</span></span>
-<span id="cb54-12"><a href="from-people-to-built-environment.html#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a scale bar</span></span>
-<span id="cb54-13"><a href="from-people-to-built-environment.html#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">&quot;bl&quot;</span>,  <span class="co"># &quot;br&quot; is for bottom right, adjust as needed</span></span>
-<span id="cb54-14"><a href="from-people-to-built-environment.html#cb54-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;cm&quot;</span>) <span class="co"># place the scale bar close to the bottom</span></span>
-<span id="cb54-15"><a href="from-people-to-built-environment.html#cb54-15" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span> </span>
-<span id="cb54-16"><a href="from-people-to-built-environment.html#cb54-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a north arrow</span></span>
-<span id="cb54-17"><a href="from-people-to-built-environment.html#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,  <span class="co"># &quot;tl&quot; is for top left, adjust as needed</span></span>
-<span id="cb54-18"><a href="from-people-to-built-environment.html#cb54-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">style =</span> north_arrow_fancy_orienteering)  </span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="from-people-to-built-environment.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="from-people-to-built-environment.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a scale bar and a north arrow </span></span>
+<span id="cb61-2"><a href="from-people-to-built-environment.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb61-3"><a href="from-people-to-built-environment.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> biz_colors,</span>
+<span id="cb61-4"><a href="from-people-to-built-environment.html#cb61-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> n_rst), </span>
+<span id="cb61-5"><a href="from-people-to-built-environment.html#cb61-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb61-6"><a href="from-people-to-built-environment.html#cb61-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb61-7"><a href="from-people-to-built-environment.html#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">&quot;seq&quot;</span>, </span>
+<span id="cb61-8"><a href="from-people-to-built-environment.html#cb61-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">&quot;Greys&quot;</span>,</span>
+<span id="cb61-9"><a href="from-people-to-built-environment.html#cb61-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">250</span>),</span>
+<span id="cb61-10"><a href="from-people-to-built-environment.html#cb61-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb61-11"><a href="from-people-to-built-environment.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb61-12"><a href="from-people-to-built-environment.html#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Restaurant Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb61-13"><a href="from-people-to-built-environment.html#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add a scale bar</span></span>
+<span id="cb61-14"><a href="from-people-to-built-environment.html#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">&quot;bl&quot;</span>,  <span class="co"># &quot;br&quot; is for bottom right, adjust as needed</span></span>
+<span id="cb61-15"><a href="from-people-to-built-environment.html#cb61-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;cm&quot;</span>) <span class="co"># place the scale bar close to the bottom</span></span>
+<span id="cb61-16"><a href="from-people-to-built-environment.html#cb61-16" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span> </span>
+<span id="cb61-17"><a href="from-people-to-built-environment.html#cb61-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add a north arrow</span></span>
+<span id="cb61-18"><a href="from-people-to-built-environment.html#cb61-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,  <span class="co"># &quot;tl&quot; is for top left, adjust as needed</span></span>
+<span id="cb61-19"><a href="from-people-to-built-environment.html#cb61-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">style =</span> north_arrow_fancy_orienteering)  </span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/add-arrow-scale-1.png" width="672" /></p>
 
 </div>
