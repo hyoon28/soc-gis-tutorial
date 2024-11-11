@@ -47,7 +47,43 @@ sf_joined %>%
   select(pwhite)
 ```
 
-```{r export-joined, message=FALSE}
+
+In maps, we can highlight specific neighborhoods by creating conditions.
+
+```{r highlgiht-neighborhood}
+# Create conditions for highlights
+sf_joined <- sf_joined %>%
+  mutate(
+    highlight_mission = ifelse(nhood == "Mission", "Highlighted", "Other"), # highlight the Mission
+    highlight_white = ifelse(pwhite > 70, "Highlighted", "Other")           # highlight white neighborhoods
+  )
+
+# Create highlighted maps
+mission_map <- ggplot(data = sf_joined) +
+  geom_sf(aes(fill = highlight_mission), # specify a variable to fill
+          color = "white") + 
+  scale_fill_manual(values = c("Highlighted" = "red", "Other" = "light grey")) + # specify colors to fill
+  theme_minimal() +
+  theme_void() +
+  theme(legend.position = "none")  # remove legend
+
+white_map <- ggplot(data = sf_joined) +
+  geom_sf(aes(fill = highlight_white), 
+    color = "white") + 
+  scale_fill_manual(values = c("Highlighted" = "red", "Other" = "light grey")) +
+  theme_minimal() +
+  theme_void() +
+  theme(legend.position = "none")  
+
+# Combining maps
+ggpubr::ggarrange(mission_map, white_map, ncol=2,
+                  labels = c("The Mission",
+                             "White Neighborhoods")
+                  ) 
+
+```
+
+```{r export-joined, message = FALSE, warning = FALSE}
 # Export your joined sf object as a geojson file
 st_write(sf_joined, "processed-data/sfnh_dem_joined.geojson", 
          driver = "GeoJSON",
@@ -61,7 +97,7 @@ st_write(sf_joined, "processed-data/sfnh_dem_joined.geojson",
 
 Below, you see two maps, each representing Chicago ans Seattle.
 
-![Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png)
+![Source: Hwang (2015).doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png)
 
  - What are the geographic boundaries used in this figure?
  - What attribute is displayed in the map?
@@ -69,7 +105,12 @@ Below, you see two maps, each representing Chicago ans Seattle.
 
 Compare this map to the other map of Chicago below:
 
-![Source: Bader, 2011. doi: 10.1111/j.1540-6040.2011.01368.x](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png)
+![Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png)
 
+Explore [Open Data website for City of Paris](https://opendata.paris.fr/pages/home/). 
+
+ - Can you find boundaries data? 
+ - What kind of data do you find interesting? Demographic? Cultural?
+ - What potential research questions could you ask?
 
 

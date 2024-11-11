@@ -1,6 +1,22 @@
 ## Data visualization
 
-By joining attributes with spatial boundaries, now we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. We will learn about two different types of maps: **Choropleth map** for quantitative variables and **Typology map** for qualitative variables.
+By joining attributes with spatial boundaries, now we can map demographic patterns. But, first of all, what is a map? A map is a simplified and codified image of geographical space, representing its characteristics and/or its organization. It is the result of a creative action and of the choices made by its author (Lambert and Zanin, 2000; p.4).
+
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-concept.png)
+
+Lambert and Zanin (2020) classify maps into two types: Topographic maps are maps that mainly show results of direct observation, such as water courses and human constructions. These maps represent concrete elements that are durably established on a portion of terrestrial space at a given time.
+
+Thematic maps are maps on which localizable qualitative or quantitative phenomena of all kinds are represented. Information is represented according to the rules of graphic semiology. These maps are designed, laid out, and “staged” to produce an intelligible image of the geographical phenomenon at hand.
+
+We will learn how to create **thematic maps**.
+
+
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/thematic_map.png)
+
+
+
+When it comes to making thematic maps, it is important to consider what type of variable you intend to display (think of your attribute data). We will learn about two different types of maps: **Choropleth map** for quantitative variables and **Typology map** for qualitative variables.
+
 
 ### Choropleth map
 

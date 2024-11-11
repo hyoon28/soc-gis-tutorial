@@ -5,7 +5,7 @@ In this chapter, we will discuss demographic data nested in places, which is oft
 
 ## Defining boundaries
 
-Geographic boundaries can be defined and drawn at various levels, from nations to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Common topics studied by urban sociologists, for instance, often involves neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as "community areas" that are more meaningful to its residents.
+Geographic boundaries can be defined and drawn at various levels, from regions to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Common topics studied by urban sociologists, for instance, often involves neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as "community areas" that are more meaningful to its residents.
 
 
 
@@ -74,16 +74,15 @@ We can compare how San Francisco neighborhood boundaries differ by mapping them 
 library(ggplot2)
 
 # Displaying geometry for "analysis neighborhood" boundaries
-sfnh_geo <- ggplot() + 
-  geom_sf(data = sfnh, # add a layer to the plot using spatial data
-          fill = "grey", # set the fill color of the spatial features
-          color = "white", # set the color of boundaries
-          size = 0.5) +  # set the thickness of the boundary lines
-  theme_void()  # apply no background
+sfnh_geo <- ggplot(data = sfnh) + # add a layer to the plot using spatial data
+  geom_sf(fill = "grey",          # set the fill color of the spatial features
+          color = "white",        # set the color of boundaries
+          size = 0.5) +           # set the thickness of the boundary lines
+  theme_void()                    # apply no background
 
 # Replicate the map using census tract boundaries
-sftrt_geo <- ggplot() +
-  geom_sf(data = sftrt, fill = "grey", color = "white", size = 0.5) +  
+sftrt_geo <- ggplot(data = sftrt) +
+  geom_sf(fill = "grey", color = "white", size = 0.5) +  
   theme_void()  
 
 # Combining maps
@@ -91,15 +90,35 @@ ggpubr::ggarrange(sfnh_geo, sftrt_geo, ncol=2,
                   labels = c("Analysis Neighborhood",
                              "2010 Census Tract")
                   ) 
+
+# Overlaying boundaries
+ggplot() + 
+  geom_sf(data = sftrt, fill = NA, color = "blue", size = 0.2) +  
+  geom_sf(data = sfnh, fill = NA, color = "red", size = 5) +
+  theme_void()  +
+  labs(title = "Compare Boundaries")
+
 ```
+
+What differences do you see between "Analysis Neighborhood" and "Census Tract"?
+
 
 
 **THINK AND SHARE**
 
-[New York Times Upshot report](https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html) did a great job exploring New York City's neighborhood boundaries using crowd-sourced data. They asked residents of New York City to demarcate neighborhood boundaries and identify their names. It provides a fascinating window to understand the sticky yet malleable nature of geographic boundaries.
+Let's consider another example of contentious geographic unit: Europe. How will you define "Europe"? Should a map of Europe include Turkey, Ukraine, Lapland, or French Guyana? Where is the center of Europe? 
+
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/europe.png)
 
  - Think of various geographic levels of analysis.
  - What questions could we ask about them?
  - How will you define their boundaries?
+
+
+**LEARN MORE**
+
+[New York Times Upshot report](https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html) did a great job exploring New York City's neighborhood boundaries using crowd-sourced data. They asked residents of New York City to demarcate neighborhood boundaries and identify their names. It provides a fascinating window to understand the sticky yet malleable nature of geographic boundaries.
+
+Documentation for [Simple Features for R (sf package)](https://r-spatial.github.io/sf/)
 
 

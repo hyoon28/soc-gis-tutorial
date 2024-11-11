@@ -192,6 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Before the class, make sure you have R/R studio installed.</li>
 <li>You can download all the data used in the tutorials <a href="https://github.com/hyoon28/soc-gis-tutorial/tree/main/data">here</a>.</li>
+<li>There is no textbook for this module. However, [Practical Handbook of Thematic Cartography] (<a href="https://www.google.fr/books/edition/Practical_Handbook_of_Thematic_Cartograp/g7fjDwAAQBAJ?hl=en&amp;gbpv=0" class="uri">https://www.google.fr/books/edition/Practical_Handbook_of_Thematic_Cartograp/g7fjDwAAQBAJ?hl=en&amp;gbpv=0</a>) (Lambert and Zanin, 2020) is highly recommended.</li>
 </ul>
 <p>Each tutorial is a chapter in this website. You can navigate through the chapters using the sidebar.</p>
 <div id="spatial-data-and-analysis" class="section level2 hasAnchor" number="1.1">
@@ -199,23 +200,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Spatial data refers to data representing features or objects on the Earth’s surface. Whether it’s man-made or natural, if it has to do with a specific location on the surface of the Earth, it is spatial. Spatial data is typically classified into two types: Vector data and raster data. Vector data represents geographic data symbolized as points, lines, or polygons. Raster data represents geographic data as a matrix of cells that each contains an attribute value. In this series of tutorials, we focus on the <em>vector data</em> type.</p>
 <div class="figure">
 <img src="images/types-of-data.png" alt="" />
-<p class="caption">Types of Spatial Data</p>
+<p class="caption">Representing Real World Through Spatial Data</p>
 </div>
-<p><strong>VECTOR DATA</strong></p>
 <p>There are three forms of vector data.</p>
 <ul>
 <li>Points: A single dot, expressed as a coordinate (e.g., landmarks).</li>
 <li>Lines: A line defined by two coordinates, with a definite length (e.g., roads, rivers)</li>
-<li>Polygons: A closed shape is defined using three or more coordinates, representing areas (neighborhood boundaries).</li>
+<li>Polygons: A closed shape is defined using three or more coordinates, representing areas (e.g., neighborhood boundaries).</li>
 </ul>
+<div class="figure">
+<img src="images/vector_raster.png" alt="" />
+<p class="caption">Types of Spatial Data. Source: Lambert and Zanin (2020)</p>
+</div>
 <p>Spatial data contains more information than just a location on the surface of the Earth represented by vector data. Any additional information, or non-spatial data, that describes a feature is referred to as an <em>attribute</em>. Sociologists utilize a variety of non-spatial data, such as demographic and socioeconomic data linked to particular locales.</p>
-<p>Spatial data analytics involves collecting, processing, and analyzing various types of spatial data. The results are often descriptive, which involves summarizing and visualizing spatial data to identify patterns and relationships in geographic contexts.</p>
 <p><strong>ANALYTIC TOOLS</strong></p>
+<p>Spatial data analytics involves collecting, processing, and analyzing various types of spatial data. The results are often descriptive, which involves summarizing and visualizing spatial data to identify patterns and relationships in geographic contexts.</p>
 <p>While there are multiple tools to carry out spatial analysis, we will use R in this tutorial. R provides sufficient spatial packages prepared for data manipulation, visualization, and analysis for social scientists. It can also be readily linked with more traditional statistical analysis. Last but not least, using R is helpful for open science and replication, which is increasingly important in social science research.</p>
 <div class="figure">
 <img src="images/spatial-analysis.png" alt="" />
-<p class="caption">Tools for Spatial Analysis (Source: CARTO)</p>
+<p class="caption">Tools for Spatial Analysis. Source: CARTO)</p>
 </div>
+<p><strong>LEARN MORE</strong></p>
+<p><a href="https://rcarto.github.io/geomatique_avec_r/">Geomatics with R</a> is a tutorial developed by RIATE (<a href="https://riate.cnrs.fr/riate.html" class="uri">https://riate.cnrs.fr/riate.html</a>). Specifically, it provides how to use <a href="https://rcarto.github.io/geomatique_avec_r/09_package_terra.html">terra package</a> for handling raster data type.</p>
 
 </div>
 </div>
