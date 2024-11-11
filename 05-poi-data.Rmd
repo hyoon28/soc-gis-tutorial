@@ -1,11 +1,11 @@
 # From People to Built Environment
 
 
-So far, we have focused on embedding demographic data into places. However, sociological questions beyond people. People don't just exist in places but they interact with the built environment, such as schools, local businesses, landmarks, and so forth. In GIS terms, this type of data can be called point-of-interest (POI), meaning a specific point location or useful site, defined by geographical coordinates (latitude and longitude). In this tutorial, we will use Airbnb and local business data as an example of point-of-interest data.
+So far, we have focused on embedding demographic data into places. However, sociological questions extend beyond just understanding people in places. People don’t simply exist in locations—they interact with the built environment, including schools, local businesses, landmarks, and more. In GIS terms, this type of data is known as point-of-interest (POI) data, which refers to specific points or useful sites identified by geographic coordinates (latitude and longitude). In this tutorial, we will use Airbnb listings and local business data as examples of point-of-interest data.
 
 ## Transforming Airbnbs
 
-When the data contains the latitude and longitude, we can simply transform it to sf object by using "st_as_sf" command. We will use the San Francisco Airbnb data to illustrate this case. Unlike neighborhood boundaries of which geometries were polygons, these geometries will be **points**.
+When data contains latitude and longitude coordinates, we can transform it into an sf object by using the st_as_sf command. Here, we’ll use San Francisco Airbnb data to illustrate this process. Unlike neighborhood boundaries, which have polygon geometries, POIs will have **point** geometries.
 
 ```{r import-bnb}
 # Import the Airbnb data
@@ -25,6 +25,8 @@ head(sf_sfbnb, n=3)
 
 You can see that geometry is points, rather than polygons. Each point represents an Airbnb property (id- unique identifier). It also indicates the census tract (trt10) and neighborhood name (analysis) in which the Airbnb  property is located. The data also contains attributes of the Airbnb property, such as property type, review score ratings, and the number of reviews.
 
+You can save the converted file as geojson using the "st_write" command.
+
 ```{r export-bnb, results='hide', warning=FALSE, message=FALSE}
 # Export the Airbnb data as a geojson file
 st_write(sf_sfbnb, "processed-data/airbnbs.geojson", driver = "GeoJSON", delete_dsn = TRUE)
@@ -33,7 +35,7 @@ st_write(sf_sfbnb, "processed-data/airbnbs.geojson", driver = "GeoJSON", delete_
 
 ## Geocoding Restaurants
 
-Sometimes, your data may not have the latitude and longitude information. Instead, the data may contain street addresses. In such a case, we have to perform **geocoding** which converts formatted addresses into latitude and longitude, so that we can displayed as a point on a map. Below, we use the restaurant data in San Francisco to demonstrate the geocoding process.
+Sometimes, your data may lack latitude and longitude information. Instead, the data may contain street addresses. In such cases, we need to perform **geocoding** which converts formatted addresses into latitude and longitude coordinates, allowing the data to be displayed as points on a map. Below, we will demonstrate the geocoding process using the restaurant data in San Francisco.
 
 ```{r import-biz}
 # Import restaurant data
@@ -43,7 +45,7 @@ sfbiz <- read.csv("data/sfbiz_clean.csv")
 head(sfbiz, 3)
 ```
 
-In this data, we can see that latitude and longitude does not exist. However, it contains street address, city, state, and zip code. To carry out geocoding, first, we have to create a field that displays a full address. Based on the full address, we can get the latitude and longitude via open street map (osm). Once the data is geocoded, we can transform this data frame to sf object for mapping.
+In this data, we can see that latitude and longitude coordinates do not exist. However, it contains information on street address, city, state, and zip code. To carry out geocoding, first, we have to create a field that displays a full address. Based on the full address, we can get the coordinates via open street map (osm). Once the data is geocoded, we can transform this data frame to sf object for mapping.
 
 ```{r geocode, warning=FALSE, message=FALSE}
 # Set up

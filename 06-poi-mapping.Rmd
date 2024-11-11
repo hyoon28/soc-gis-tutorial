@@ -13,7 +13,7 @@ ggplot() +
   geom_sf(data = sf_sfbiz, 
           color = "red", 
           size = 0.5, alpha = 0.8
-          ) +  # Plot restaurants
+          ) +  
   theme_void() +
   labs(title = "Restaurants in San Francisco")
 ```
@@ -79,9 +79,12 @@ ggplot() +
 
 Another way of visualizing a quantitative variable is a *proportional symbol map*. Proportional symbol maps are particularly useful for absolute quantitative variables (e.g., raw counts, measurements) while choropleth maps are more suitable for relative quantitative variables (e.g., ratios, percentages, proportions).
 
-```{r proportional-symbol-map}
+```{r proportional-symbol-map, warning=FALSE}
 # Create neighborhood centroids
-nh_cent <- st_centroid(sfnh, of_largest_polygon = TRUE)
+nh_cent <- st_centroid(sfnh)
+
+# Check centroids
+print(nh_cent)
 
 # Join the restaurant counts to neighborhood centroids
 biz_symbols <-
@@ -233,7 +236,8 @@ ggplot() +
                        breaks = c(50, 150, 250),
                        direction = 1) +
   theme_void() +
-  labs(fill = "Restaurant Count") +
+  labs(fill = "Restaurant Count",
+       title = "Distribution of Restaurants in San Francisco") +
   # add a scale bar
   annotation_scale(location = "bl",  # "br" is for bottom right, adjust as needed
                    pad_y = unit(0.01, "cm") # place the scale bar close to the bottom

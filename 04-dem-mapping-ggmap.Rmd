@@ -1,19 +1,21 @@
 ## Data visualization
 
-By joining attributes with spatial boundaries, we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. In this tutorial, we will cover two different types of maps: *Choropleth map* for quantitative variables and *Typology map* for qualitative variables.
+By joining attributes with spatial boundaries, now we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. We will learn about two different types of maps: **Choropleth map** for quantitative variables and **Typology map** for qualitative variables.
 
 ### Choropleth map
 
-A choropleth map is useful for visualizing quantitative variables. This type of map displays color corresponding with an aggregated variable for a given geographic unit, such as population density or per-capital income. Below, this tutorial will walk you through how to create a demographic variable of interest, and visualize it using a choropleth map.
+A choropleth map is useful for visualizing quantitative variables. This type of map displays color corresponding with an aggregated variable for a given geographic unit, such as population density or per-capital income.
 
-In social science research, scholars often use *the Herfindahl-Hirschman Index (HHI)* as a measure for *diversity*. It is an economic index measuring the level of market competition/monopolization, but the formula is also used in ecology (called the Simpson diversity index), as well as in demographic contexts. The formula is:
+**EXAMPLE: MEASURING AND MAPPING DIVERSITY**
+
+In social science research, scholars often use the Herfindahl-Hirschman Index (HHI) as a measure for diversity. It is an economic index, but the formula is also used in ecology (called the Simpson diversity index), as well as in demographic contexts. The formula is:
 
 $$
 HHI = \sum_{i=1}^{N} (MS_i)^2
 $$
 Where $MS_i$ is the market share of firm $i$ in the market, and $N$ is the number of firms. The lower the HHI, the more competition in the market (many firms with relatively equal market shares). Reversely, the higher the HHI, the less competition in the market, suggesting monopoly.
 
-In demographic research, sociologists commonly use the HHI to measure racial diversity of neighborhoods. Instead of market share of firms in a market, we use the shares of racial groups in a neighborhood.
+In demographic research, sociologists commonly use the HHI to measure racial diversity of neighborhoods. Instead of market shares of firms in a market, we use the shares of racial groups in a neighborhood.
 
 For example, in a neighborhood with 4 racial groups each representing 25%, the HHI would be:
 
@@ -72,7 +74,7 @@ ggplot() +
  
 For those who are not familair with San Francisco neighborhoods, we can add labels displaying neighborhood names corresponding to neighborhood boundaries.
 
-```{r add-labels}
+```{r add-labels, warning=FALSE}
 # Add labels to the map
 ggplot() + 
   geom_sf(data = sf_joined, 
@@ -95,7 +97,7 @@ ggplot() +
                  check_overlap = TRUE) +    # suppress overlapping texts
   theme_void() +
   labs(fill = "HHI", # add a label for legend
-       title = "Gentrification in San Francisco" # figure title
+       title = "Racial Diversity in San Francisco" # figure title
        ) 
 ```
 
@@ -166,8 +168,5 @@ ggplot(data = sftrt_joined) +
        )
 ```
 
- - Name two or more neighborhoods that are gentrifying neighborhoods.
- - Name two or more neighborhoods that are not gentrifying.
- - Is there a relationship between gentrification and racial diversity in San Francisco?
 
 

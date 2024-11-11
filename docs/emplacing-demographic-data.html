@@ -182,17 +182,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="emplacing-demographic-data" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Emplacing Demographic Data<a href="emplacing-demographic-data.html#emplacing-demographic-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter, we will discuss demographic data nested in places, which is often used in sociological research. Sociologists often study where people live and move to. Topics like migration, segregation, gentrification, integration/assimilation, and diversity/fractionalization can be studied using aggregated demographic data for a given geographic unit. To conduct such analysis, defining a geographic unit and boundary suitable for your research question is critical.</p>
+<p>In this chapter, we will discuss demographic data nested in places, which is often used in sociological research. Sociologists often study where people live and move to. Topics like migration, segregation, gentrification, integration/assimilation, and diversity/fractionalization can be studied using aggregated demographic data for a given geographic unit. As a first step, defining a geographic unit and boundary suitable for your analysis is critical.</p>
 <div id="defining-boundaries" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Defining boundaries<a href="emplacing-demographic-data.html#defining-boundaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Geographic boundaries can be defined and drawn at various levels, from nations to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Urban sociologists, for instance, tend to focus on studying neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as “community areas” that are more meaningful to its residents.</p>
+<p>Geographic boundaries can be defined and drawn at various levels, from nations to cities to neighborhoods. Territories are contested and (re)defined through social processes, therefore, it is important to clearly define and justify your choice of spatial boundary as a unit of analysis. Common topics studied by urban sociologists, for instance, often involves neighborhood dynamics. But what are neighborhoods? While government-defined census tracts are often used as a proxy for neighborhoods in quantitative social science research, some scholars choose to analyze other types of boundaries, such as “community areas” that are more meaningful to its residents.</p>
 <p><strong>THE CASE OF SAN FRANCISCO</strong></p>
-<p>Let’s demonstrate the importance of defining neighborhood boundaries using the case of San Francisco. San Francisco’s neighborhood names and boundaries have changed over time <a href="https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php">(1)</a> and the current names and boundaries are often inconsistently perceived and administered <a href="https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/">(2)</a>.</p>
+<p>Let’s demonstrate the importance of defining neighborhood boundaries using the case of San Francisco. San Francisco’s neighborhood names and boundaries have changed over time <a href="https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php">(1)</a> and the current names and boundaries are often inconsistently perceived and administered <a href="https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/">(2)</a>. The image below, for example, compares the old and current neighborhood names and boundaries in San Francisco.</p>
 <div class="figure">
 <img src="images/sf-name-change.png" alt="" />
 <p class="caption">Source: SFGATE</p>
 </div>
-<p>In this tutorial, I visualize San Francisco neighborhoods based on census tracts as well as the “Analysis Neighborhood” created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco’s <a href="https://datasf.org/opendata/">DataSF</a>. You want to look for “Geographic Locations &amp; Boundaries” tab.</p>
+<p>In this tutorial, we will learn how to visualize San Francisco neighborhoods based on census tracts as well as the “Analysis Neighborhood” created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco’s <a href="https://datasf.org/opendata/">DataSF</a>. Open their website and then click the “Geographic Locations &amp; Boundaries” tab.</p>
 <div class="figure">
 <img src="images/sf-open-data.png" alt="" />
 <p class="caption">DataSF is an open data website provided by the city government of San Francisco</p>
@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1   Western Addition
 ## 2 West of Twin Peaks
 ## 3  Visitacion Valley</code></pre>
-<p>We can compare how San Francisco neighborhood boundaries differ by mapping them next to each other. In this tutorial, we will use ggplot for mapping.</p>
+<p>We can compare how San Francisco neighborhood boundaries differ by mapping them next to each other. We use ggplot for mapping.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="emplacing-demographic-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb7-2"><a href="emplacing-demographic-data.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="emplacing-demographic-data.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying geometry for &quot;analysis neighborhood&quot; boundaries</span></span>
@@ -252,15 +252,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-19"><a href="emplacing-demographic-data.html#cb7-19" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;2010 Census Tract&quot;</span>)</span>
 <span id="cb7-20"><a href="emplacing-demographic-data.html#cb7-20" aria-hidden="true" tabindex="-1"></a>                  ) </span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/boundary-map-1.png" width="672" /></p>
-<p>In my research, for example, I ask: How do Airbnb hosts use neighborhood names to market their properties? To answer this question, using census tract boundaries wouldn’t make much sense because they don’t carry meanings. Rather, it would be more suitable to use boundaries such as Analysis Neighborhood that are associated with meaningful labels.</p>
 <p><strong>THINK AND SHARE</strong></p>
+<p><a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html">New York Times Upshot report</a> did a great job exploring New York City’s neighborhood boundaries using crowd-sourced data. They asked residents of New York City to demarcate neighborhood boundaries and identify their names. It provides a fascinating window to understand the sticky yet malleable nature of geographic boundaries.</p>
 <ul>
-<li>Are you interested in conducting spatial analysis on nations, cities, regions, or neighborhoods?</li>
-<li>What spatial questions do you have about them?</li>
+<li>Think of various geographic levels of analysis.</li>
+<li>What questions could we ask about them?</li>
 <li>How will you define their boundaries?</li>
 </ul>
-<p><em>Want to learn more?</em></p>
-<p><a href="https://www.nytimes.com/interactive/2023/upshot/extremely-detailed-nyc-neighborhood-map.html">New York Times Upshot report</a> did a great job exploring New York City’s neighborhood boundaries using crowd-sourced data. They asked residents of New York City to demarcate neighborhood boundaries and identify their names. It provides a fascinating window to understand the sticky yet malleable nature of geographic boundaries.</p>
 
 </div>
 <div id="joining-attributes" class="section level2 hasAnchor" number="2.2">
@@ -342,27 +340,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   `processed-data/sfnh_dem_joined.geojson&#39; using driver `GeoJSON&#39;
 ## Writing 41 features with 9 fields and geometry type Multi Polygon.</code></pre>
 <p><strong>THINK AND SHARE</strong></p>
-<p>Below, you see two maps, each representing Chicago ans Seattle.
-<img src="images/map-example.png" alt="Gentrification Stage Scores in Chicago and Seattle. Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823" /></p>
+<p>Below, you see two maps, each representing Chicago ans Seattle.</p>
+<div class="figure">
+<img src="images/map-example.png" alt="" />
+<p class="caption">Source: Hwang, Jackelyn. 2015.doi: 10.1177/0002716215579823</p>
+</div>
 <ul>
 <li>What are the geographic boundaries used in this figure?</li>
 <li>What attribute is displayed in the map?</li>
 <li>Is this attribute quantitative or qualitative?</li>
 </ul>
+<p>Compare this map to the other map of Chicago below:</p>
+<div class="figure">
+<img src="images/map-example2.png" alt="" />
+<p class="caption">Source: Bader, 2011. doi: 10.1111/j.1540-6040.2011.01368.x</p>
+</div>
 
 </div>
 <div id="data-visualization" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> Data visualization<a href="emplacing-demographic-data.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>By joining attributes with spatial boundaries, we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. In this tutorial, we will cover two different types of maps: <em>Choropleth map</em> for quantitative variables and <em>Typology map</em> for qualitative variables.</p>
+<p>By joining attributes with spatial boundaries, now we can map demographic patterns. When it comes to mapping, it is important to consider what type of variable you intend to display. We will learn about two different types of maps: <strong>Choropleth map</strong> for quantitative variables and <strong>Typology map</strong> for qualitative variables.</p>
 <div id="choropleth-map" class="section level3 hasAnchor" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Choropleth map<a href="emplacing-demographic-data.html#choropleth-map" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A choropleth map is useful for visualizing quantitative variables. This type of map displays color corresponding with an aggregated variable for a given geographic unit, such as population density or per-capital income. Below, this tutorial will walk you through how to create a demographic variable of interest, and visualize it using a choropleth map.</p>
-<p>In social science research, scholars often use <em>the Herfindahl-Hirschman Index (HHI)</em> as a measure for <em>diversity</em>. It is an economic index measuring the level of market competition/monopolization, but the formula is also used in ecology (called the Simpson diversity index), as well as in demographic contexts. The formula is:</p>
+<p>A choropleth map is useful for visualizing quantitative variables. This type of map displays color corresponding with an aggregated variable for a given geographic unit, such as population density or per-capital income.</p>
+<p><strong>EXAMPLE: MEASURING AND MAPPING DIVERSITY</strong></p>
+<p>In social science research, scholars often use the Herfindahl-Hirschman Index (HHI) as a measure for diversity. It is an economic index, but the formula is also used in ecology (called the Simpson diversity index), as well as in demographic contexts. The formula is:</p>
 <p><span class="math display">\[
 HHI = \sum_{i=1}^{N} (MS_i)^2
 \]</span>
 Where <span class="math inline">\(MS_i\)</span> is the market share of firm <span class="math inline">\(i\)</span> in the market, and <span class="math inline">\(N\)</span> is the number of firms. The lower the HHI, the more competition in the market (many firms with relatively equal market shares). Reversely, the higher the HHI, the less competition in the market, suggesting monopoly.</p>
-<p>In demographic research, sociologists commonly use the HHI to measure racial diversity of neighborhoods. Instead of market share of firms in a market, we use the shares of racial groups in a neighborhood.</p>
+<p>In demographic research, sociologists commonly use the HHI to measure racial diversity of neighborhoods. Instead of market shares of firms in a market, we use the shares of racial groups in a neighborhood.</p>
 <p>For example, in a neighborhood with 4 racial groups each representing 25%, the HHI would be:</p>
 <p><span class="math display">\[
 0.25^2 + 0.25^2 + 0.25^2 + 0.25^2 = 0.25
@@ -444,12 +451,8 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 <span id="cb24-20"><a href="emplacing-demographic-data.html#cb24-20" aria-hidden="true" tabindex="-1"></a>                 <span class="at">check_overlap =</span> <span class="cn">TRUE</span>) <span class="sc">+</span>    <span class="co"># suppress overlapping texts</span></span>
 <span id="cb24-21"><a href="emplacing-demographic-data.html#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb24-22"><a href="emplacing-demographic-data.html#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;HHI&quot;</span>, <span class="co"># add a label for legend</span></span>
-<span id="cb24-23"><a href="emplacing-demographic-data.html#cb24-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span> <span class="co"># figure title</span></span>
+<span id="cb24-23"><a href="emplacing-demographic-data.html#cb24-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Racial Diversity in San Francisco&quot;</span> <span class="co"># figure title</span></span>
 <span id="cb24-24"><a href="emplacing-demographic-data.html#cb24-24" aria-hidden="true" tabindex="-1"></a>       ) </span></code></pre></div>
-<pre><code>## Warning in layer_sf(data = data, mapping = mapping, stat = stat, geom =
-## GeomLabel, : Ignoring unknown parameters: `check_overlap`</code></pre>
-<pre><code>## Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
-## give correct results for longitude/latitude data</code></pre>
 <p><img src="bookdownproj_files/figure-html/add-labels-1.png" width="672" /></p>
 </div>
 <div id="typology-map" class="section level3 hasAnchor" number="2.3.2">
@@ -477,48 +480,43 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 <p><strong>Not Gentrifying</strong>: Gentrifiable census tracts that did NOT experience growth in the socioeconomic status of their residents <em>AND</em> their home values at a rate higher than the city-wide median values over the decade period.</p>
 </blockquote>
 <p>This measurement strategy results in a three-category gentrification measure - Not Gentrifiable, Gentrifying, and Not Gentrifying. With these three categories we can make a typology map of census tracts in San Francisco.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emplacing-demographic-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes for census tracts</span></span>
-<span id="cb27-2"><a href="emplacing-demographic-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sftrt_dem.csv&quot;</span>)</span>
-<span id="cb27-3"><a href="emplacing-demographic-data.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="emplacing-demographic-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
-<span id="cb27-5"><a href="emplacing-demographic-data.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="emplacing-demographic-data.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes for census tracts</span></span>
+<span id="cb25-2"><a href="emplacing-demographic-data.html#cb25-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sftrt_dem.csv&quot;</span>)</span>
+<span id="cb25-3"><a href="emplacing-demographic-data.html#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="emplacing-demographic-data.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
+<span id="cb25-5"><a href="emplacing-demographic-data.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] 10100 10200 10300 10400 10500 10600</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emplacing-demographic-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;016400&quot; &quot;016100&quot; &quot;015900&quot; &quot;015500&quot; &quot;015300&quot; &quot;015100&quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="emplacing-demographic-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="emplacing-demographic-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
-<span id="cb35-2"><a href="emplacing-demographic-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="emplacing-demographic-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
-<span id="cb35-4"><a href="emplacing-demographic-data.html#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="emplacing-demographic-data.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
-<span id="cb35-6"><a href="emplacing-demographic-data.html#cb35-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
-<span id="cb35-7"><a href="emplacing-demographic-data.html#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
-<span id="cb35-8"><a href="emplacing-demographic-data.html#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
-<span id="cb35-9"><a href="emplacing-demographic-data.html#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
-<span id="cb35-10"><a href="emplacing-demographic-data.html#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
-<span id="cb35-11"><a href="emplacing-demographic-data.html#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
-<span id="cb35-12"><a href="emplacing-demographic-data.html#cb35-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="emplacing-demographic-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
-<span id="cb36-2"><a href="emplacing-demographic-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
-<span id="cb36-3"><a href="emplacing-demographic-data.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
-<span id="cb36-4"><a href="emplacing-demographic-data.html#cb36-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb36-5"><a href="emplacing-demographic-data.html#cb36-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="emplacing-demographic-data.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
-<span id="cb36-7"><a href="emplacing-demographic-data.html#cb36-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
-<span id="cb36-8"><a href="emplacing-demographic-data.html#cb36-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify color corresponding to each category</span></span>
-<span id="cb36-9"><a href="emplacing-demographic-data.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb36-10"><a href="emplacing-demographic-data.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
-<span id="cb36-11"><a href="emplacing-demographic-data.html#cb36-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
-<span id="cb36-12"><a href="emplacing-demographic-data.html#cb36-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="emplacing-demographic-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
+<span id="cb33-2"><a href="emplacing-demographic-data.html#cb33-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="emplacing-demographic-data.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
+<span id="cb33-4"><a href="emplacing-demographic-data.html#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="emplacing-demographic-data.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
+<span id="cb33-6"><a href="emplacing-demographic-data.html#cb33-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb33-7"><a href="emplacing-demographic-data.html#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
+<span id="cb33-8"><a href="emplacing-demographic-data.html#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
+<span id="cb33-9"><a href="emplacing-demographic-data.html#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
+<span id="cb33-10"><a href="emplacing-demographic-data.html#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
+<span id="cb33-11"><a href="emplacing-demographic-data.html#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
+<span id="cb33-12"><a href="emplacing-demographic-data.html#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="emplacing-demographic-data.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
+<span id="cb34-2"><a href="emplacing-demographic-data.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="emplacing-demographic-data.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
+<span id="cb34-4"><a href="emplacing-demographic-data.html#cb34-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb34-5"><a href="emplacing-demographic-data.html#cb34-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="emplacing-demographic-data.html#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
+<span id="cb34-7"><a href="emplacing-demographic-data.html#cb34-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
+<span id="cb34-8"><a href="emplacing-demographic-data.html#cb34-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify color corresponding to each category</span></span>
+<span id="cb34-9"><a href="emplacing-demographic-data.html#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb34-10"><a href="emplacing-demographic-data.html#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
+<span id="cb34-11"><a href="emplacing-demographic-data.html#cb34-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
+<span id="cb34-12"><a href="emplacing-demographic-data.html#cb34-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/typo-map-1.png" width="672" /></p>
-<ul>
-<li>Name two or more neighborhoods that are gentrifying neighborhoods.</li>
-<li>Name two or more neighborhoods that are not gentrifying.</li>
-<li>Is there a relationship between gentrification and racial diversity in San Francisco?</li>
-</ul>
 
 </div>
 </div>
