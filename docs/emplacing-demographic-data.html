@@ -157,10 +157,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.1" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#transforming-airbnbs"><i class="fa fa-check"></i><b>3.1</b> Transforming Airbnbs</a></li>
 <li class="chapter" data-level="3.2" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#geocoding-restaurants"><i class="fa fa-check"></i><b>3.2</b> Geocoding Restaurants</a></li>
-<li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.3</b> Spatial join</a></li>
-<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.4</b> Export Maps</a></li>
+<li class="chapter" data-level="3.3" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#distribution-and-density"><i class="fa fa-check"></i><b>3.3</b> Distribution and density</a></li>
+<li class="chapter" data-level="3.4" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#spatial-join"><i class="fa fa-check"></i><b>3.4</b> Spatial join</a></li>
+<li class="chapter" data-level="3.5" data-path="from-people-to-built-environment.html"><a href="from-people-to-built-environment.html#export-maps"><i class="fa fa-check"></i><b>3.5</b> Export Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>4</b> Additional Topics</a></li>
+<li class="chapter" data-level="4" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html"><i class="fa fa-check"></i><b>4</b> Accounting for Regulations</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html#spatial-relationships"><i class="fa fa-check"></i><b>4.1</b> Spatial relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>5</b> Additional Topics</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -299,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-10"><a href="emplacing-demographic-data.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate geometries</span></span>
 <span id="cb12-11"><a href="emplacing-demographic-data.html#cb12-11" aria-hidden="true" tabindex="-1"></a>sf_joined <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(sf_joined)</span></code></pre></div>
 <p>Now, we can explore neighborhood-level characteristics.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="emplacing-demographic-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="emplacing-demographic-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb13-2"><a href="emplacing-demographic-data.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="emplacing-demographic-data.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the share of white population of neighborhoods</span></span>
 <span id="cb13-4"><a href="emplacing-demographic-data.html#cb13-4" aria-hidden="true" tabindex="-1"></a>sf_joined <span class="sc">%&gt;%</span></span>
@@ -546,40 +551,85 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emplacing-demographic-data.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import demographic attributes for census tracts</span></span>
 <span id="cb27-2"><a href="emplacing-demographic-data.html#cb27-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sftrt_dem.csv&quot;</span>)</span>
 <span id="cb27-3"><a href="emplacing-demographic-data.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="emplacing-demographic-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
-<span id="cb27-5"><a href="emplacing-demographic-data.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<span id="cb27-4"><a href="emplacing-demographic-data.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the data</span></span>
+<span id="cb27-5"><a href="emplacing-demographic-data.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   trt10 tpop pyoung  pcol      minc     mhval    mrent  pwht pblk pasian phisp
+## 1 10100 2879  36.99 55.63  76037.34  801814.8 1544.629 57.55 5.52  26.02  7.26
+## 2 10200 4288  36.92 70.51 122888.48 1206373.1 1808.258 83.65 0.72   9.82  3.78
+## 3 10300 4092  30.99 59.79 100281.00  927944.9 1671.979 58.04 0.56  35.04  3.42
+## 4 10400 4859  32.62 61.38 108566.69 1057897.0 1645.376 62.85 0.62  31.34  3.42
+## 5 10500 2217  16.78 68.54 113515.23  791430.7 2258.772 75.33 1.89  17.14  3.20
+##   tpop17 pyoung17 pcol17 minc17 mhval17 mrent17 pwht17 pblk17 pasian17 phisp17
+## 1   3889    34.89  52.96  62414 1145800    1770  39.01   6.07    39.44   12.21
+## 2   4167    33.79  85.81 151453 1305300    2471  80.71   2.02    12.07    3.26
+## 3   4359    37.49  72.79 150972 1545800    2206  59.44   0.00    29.04    9.34
+## 4   4536    30.69  74.11 130732 1519800    2220  62.94   0.20    22.57    7.58
+## 5   2779    24.72  78.56 135300 1525000    2270  49.80   9.07    23.68    7.56
+##            gentcat
+## 1  non-gentrifying
+## 2 non-gentrifiable
+## 3 non-gentrifiable
+## 4 non-gentrifiable
+## 5 non-gentrifiable</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the geometry</span></span>
+<span id="cb29-2"><a href="emplacing-demographic-data.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 5 features and 2 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -122.4438 ymin: 37.77271 xmax: -122.4234 ymax: 37.7887
+## Geodetic CRS:  WGS 84
+##              nhood tractce10                       geometry
+## 1     Hayes Valley    016400 MULTIPOLYGON (((-122.4325 3...
+## 2 Western Addition    016100 MULTIPOLYGON (((-122.4235 3...
+## 3 Western Addition    015900 MULTIPOLYGON (((-122.4247 3...
+## 4        Japantown    015500 MULTIPOLYGON (((-122.4247 3...
+## 5  Pacific Heights    015300 MULTIPOLYGON (((-122.4349 3...</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if it has a common identifier with sftrt</span></span>
+<span id="cb31-2"><a href="emplacing-demographic-data.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] 10100 10200 10300 10400 10500 10600</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emplacing-demographic-data.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="emplacing-demographic-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt_dem<span class="sc">$</span>trt10)</span></code></pre></div>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emplacing-demographic-data.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="emplacing-demographic-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;016400&quot; &quot;016100&quot; &quot;015900&quot; &quot;015500&quot; &quot;015300&quot; &quot;015100&quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="emplacing-demographic-data.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="emplacing-demographic-data.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sftrt<span class="sc">$</span>tractce10)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="emplacing-demographic-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
-<span id="cb35-2"><a href="emplacing-demographic-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="emplacing-demographic-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
-<span id="cb35-4"><a href="emplacing-demographic-data.html#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="emplacing-demographic-data.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
-<span id="cb35-6"><a href="emplacing-demographic-data.html#cb35-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
-<span id="cb35-7"><a href="emplacing-demographic-data.html#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
-<span id="cb35-8"><a href="emplacing-demographic-data.html#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
-<span id="cb35-9"><a href="emplacing-demographic-data.html#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
-<span id="cb35-10"><a href="emplacing-demographic-data.html#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
-<span id="cb35-11"><a href="emplacing-demographic-data.html#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
-<span id="cb35-12"><a href="emplacing-demographic-data.html#cb35-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="emplacing-demographic-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
-<span id="cb36-2"><a href="emplacing-demographic-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
-<span id="cb36-3"><a href="emplacing-demographic-data.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
-<span id="cb36-4"><a href="emplacing-demographic-data.html#cb36-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb36-5"><a href="emplacing-demographic-data.html#cb36-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="emplacing-demographic-data.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
-<span id="cb36-7"><a href="emplacing-demographic-data.html#cb36-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
-<span id="cb36-8"><a href="emplacing-demographic-data.html#cb36-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify color corresponding to each category</span></span>
-<span id="cb36-9"><a href="emplacing-demographic-data.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb36-10"><a href="emplacing-demographic-data.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
-<span id="cb36-11"><a href="emplacing-demographic-data.html#cb36-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
-<span id="cb36-12"><a href="emplacing-demographic-data.html#cb36-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="emplacing-demographic-data.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill with leading zeros and convert to string</span></span>
+<span id="cb39-2"><a href="emplacing-demographic-data.html#cb39-2" aria-hidden="true" tabindex="-1"></a>sftrt_dem <span class="ot">&lt;-</span> sftrt_dem <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="emplacing-demographic-data.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tractce10 =</span> <span class="fu">as.character</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%06d&quot;</span>, trt10)))</span>
+<span id="cb39-4"><a href="emplacing-demographic-data.html#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="emplacing-demographic-data.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join demographic data with geometric boundaries</span></span>
+<span id="cb39-6"><a href="emplacing-demographic-data.html#cb39-6" aria-hidden="true" tabindex="-1"></a>sftrt_joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb39-7"><a href="emplacing-demographic-data.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sftrt,               <span class="co"># sf object</span></span>
+<span id="cb39-8"><a href="emplacing-demographic-data.html#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> sftrt_dem,           <span class="co"># data frame</span></span>
+<span id="cb39-9"><a href="emplacing-demographic-data.html#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
+<span id="cb39-10"><a href="emplacing-demographic-data.html#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
+<span id="cb39-11"><a href="emplacing-demographic-data.html#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
+<span id="cb39-12"><a href="emplacing-demographic-data.html#cb39-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="emplacing-demographic-data.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your variable of interest</span></span>
+<span id="cb40-2"><a href="emplacing-demographic-data.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(sftrt_joined<span class="sc">$</span>gentcat))</span></code></pre></div>
+<pre><code>## [1] &quot;non-gentrifying&quot;  &quot;non-gentrifiable&quot; &quot;gentrifying&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="emplacing-demographic-data.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
+<span id="cb42-2"><a href="emplacing-demographic-data.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
+<span id="cb42-3"><a href="emplacing-demographic-data.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
+<span id="cb42-4"><a href="emplacing-demographic-data.html#cb42-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb42-5"><a href="emplacing-demographic-data.html#cb42-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="emplacing-demographic-data.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
+<span id="cb42-7"><a href="emplacing-demographic-data.html#cb42-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
+<span id="cb42-8"><a href="emplacing-demographic-data.html#cb42-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify colors corresponding to each category</span></span>
+<span id="cb42-9"><a href="emplacing-demographic-data.html#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb42-10"><a href="emplacing-demographic-data.html#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
+<span id="cb42-11"><a href="emplacing-demographic-data.html#cb42-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
+<span id="cb42-12"><a href="emplacing-demographic-data.html#cb42-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/typo-map-1.png" width="672" /></p>
+<p><strong>CODING EXERCISE</strong></p>
+<ul>
+<li>Create a qualitative variable with three categories: high-income, middle-income, and low-income.</li>
+<li>Create a typology map using this variable (“nh-ses”).</li>
+</ul>
+<p><strong>LEARN MORE</strong></p>
+<p>For more detailed guidance as to how to choose a discretization method for choropleth map, you can see <a href="https://magrit-formations.github.io/discretisation/#/title-slide">the slides</a> made by Nicholas Lambert and his colleagues.</p>
+<p>Steele and her colleagues (2022) published a <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-soc-030420-015435">review article</a>, summerizing existing quantitative approaches to measuring ethnic diversity. HHI (also referred to as ELF) is included as one of the most common measurements.</p>
+<p>Brown-Saracino (2017) reviews the concept and measurement of gentrification in contemporary literature in a <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-soc-060116-053427">review article</a>.</p>
 
 </div>
 </div>

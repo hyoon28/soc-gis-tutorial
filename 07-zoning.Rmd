@@ -4,12 +4,12 @@ So far, we have explored various ways to map the distribution of restaurants in 
 
 However, the distribution of organizational resources, and more broadly, the built environment is heavily shaped by regulations. Particularly, local zoning laws have tremendous impact on what gets or doesn't get built in the neighborhood.
 
-In the following, we will discuss how ["community benefit districts (CBDs)" (also known as "business improvement districts (BIDs)")](https://www.sf.gov/information/community-benefit-districts) may have a spatial relationship with the distribution of restaurants in San Francisco. In San Francisco, CBDs are designated based on a private-public partnership to fund improvements and get customized support for commercial and mixed-use corridors in select neighborhoods. 
+In the following, we will discuss how ["community benefit districts (CBDs)"](https://www.sf.gov/information/community-benefit-districts), also known as "business improvement districts (BIDs), may have a spatial relationship with the distribution of restaurants in San Francisco. In San Francisco, CBDs are designated based on a private-public partnership to fund improvements and get customized support for commercial and mixed-use corridors in select neighborhoods. 
 
-```{r import zone}
+```{r import-zone}
 # Import the cbds data
 sfzone <- st_read("data/bid-cbd.geojson") %>%
-  select(community_benefit_district, contract_duration, established, geometry)
+  dplyr::select(community_benefit_district, contract_duration, established, geometry)
 
 head(sfzone, 3)
 
@@ -45,7 +45,7 @@ head(biz_colors, 3)
 
 Here, we can see that a new "intersects_cbd" column was created and added to the sf object, biz_colors. With this neighborhood-level data, you could run a bivariate regression model estimating the relationship between the number of businesses and being in BIDs. 
 
-```{r}
+```{r run-models}
 # Assuming you have the number of businesses in a column `num_businesses`
 model <- lm(n_rst ~ intersects_cbd, data = biz_colors)
 
@@ -57,7 +57,7 @@ This simple analysis demonstrates that neighborhoods that intersect BIDs, on ave
 
 The second solution requires calculating distance. What is the nearest or average distance to BIDs for a given neighborhood? We use the centroids of polygons for distance calculations.
 
-```{r calculate-distance, warning = false}
+```{r create-centroids, warning = FALSE}
 # Create centroids for both neighborhood polygons and community benefit district polygons
 nh_centroids <- st_centroid(sfnh)
 bids_centroids <- st_centroid(sfzone)
@@ -78,6 +78,7 @@ rownames(distance_df) <- sfnh$nhood
 
 head(distance_df, 3)
 ```
+
 ```{r nearest-distance}
 # Reshape to a long-format for analysis
 distance_long <- distance_df %>%
@@ -102,7 +103,7 @@ This type of distance data can be used for network analysis to study urban conne
 
 We can simply add the nearest distance to the existing neighborhood-level data using the following function.
 
-```{r}
+```{r add-distance}
 # Calculate the minimum distance for each neighborhood
 biz_colors$min_distance_to_bid <- apply(distances, 1, min) # 'mean' for average distance
 
@@ -123,7 +124,7 @@ Remember three different forms of vector data? We have discussed polygons, point
 During COVID, San Francisco city government launched [the Slow Street Program](https://www.sfmta.com/projects/slow-streets-program) to help maintain social distance requirements for users on the streets. Slow Streets utilize temporary tools like cones and signage to divert traffic and remind vehicles to maintain a safe speed to accommodate for pedestrians and bicyclists who may be traveling to make essential trips. After COVID, this program continued as part of a connected, citywide Active Transportation Network, designed to eliminate deaths and severe injuries related to transportation, and encourage more people to choose low-carbon ways to travel for their daily trips. 
 
 
-```{r import street}
+```{r import-street}
 # Import slow street data (lines)
 slowst <- st_read("data/slow-st.geojson")
 
@@ -144,4 +145,5 @@ ggplot() +
  - What kind of research questions can you ask about slow streets?
  
  Discuss the potential predictors (x) or outcomes (y).
+ 
  

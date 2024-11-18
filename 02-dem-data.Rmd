@@ -51,7 +51,6 @@ library(sf)
 # Import neighborhood boundaries data (polygons)
 sfnh <- st_read("data/sfnh.geojson") # for "Analysis Neighborhood" boundaries
 sftrt <- st_read("data/sftrt_clean.geojson") # for census tracts
-
 ```
 
 You can treat sf objects like data frames.
@@ -97,7 +96,6 @@ ggplot() +
   geom_sf(data = sfnh, fill = NA, color = "red", size = 5) +
   theme_void()  +
   labs(title = "Compare Boundaries")
-
 ```
 
 What differences do you see between "Analysis Neighborhood" and "Census Tract"?

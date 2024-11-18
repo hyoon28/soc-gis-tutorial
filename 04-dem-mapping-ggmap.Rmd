@@ -148,10 +148,10 @@ This measurement strategy results in a three-category gentrification measure - N
 sftrt_dem <- read.csv("data/sftrt_dem.csv")
 
 # Explore the data
-print(sftrt_dem)
+head(sftrt_dem, 5)
 
 # Explore the geometry
-print(sftrt)
+head(sftrt, 5)
 ```
 
 ```{r}
@@ -194,6 +194,12 @@ ggplot(data = sftrt_joined) +
        title = "Gentrification in San Francisco"
        )
 ```
+
+
+**CODING EXERCISE**
+
+ - Create a qualitative variable with three categories: high-income, middle-income, and low-income. 
+ - Create a typology map using this variable ("nh-ses").
 
 
 **LEARN MORE**

@@ -31,7 +31,7 @@ sf_joined <- st_make_valid(sf_joined)
 Now, we can explore neighborhood-level characteristics.
 
 ```{r explore-joined, warning=FALSE, message=FALSE}
-library(dplyr)
+library(tidyverse)
 
 # Display the share of white population of neighborhoods
 sf_joined %>%
@@ -80,7 +80,6 @@ ggpubr::ggarrange(mission_map, white_map, ncol=2,
                   labels = c("The Mission",
                              "White Neighborhoods")
                   ) 
-
 ```
 
 ```{r export-joined, message = FALSE, warning = FALSE}

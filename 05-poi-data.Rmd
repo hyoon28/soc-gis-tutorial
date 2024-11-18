@@ -74,6 +74,8 @@ prep_sfbiz <- read.csv("data/geocoded_sfbiz_clean.csv")
 sf_sfbiz <- st_as_sf(prep_sfbiz, 
                      coords = c("long", "lat"), 
                      crs = 4326)
+
+head(sf_sfbiz, 5)
 ```
 
 ```{r export-biz, results='hide', warning=FALSE, message=FALSE}

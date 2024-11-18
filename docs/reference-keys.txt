@@ -9,6 +9,9 @@ typology-map
 from-people-to-built-environment
 transforming-airbnbs
 geocoding-restaurants
+distribution-and-density
 spatial-join
 export-maps
+accounting-for-regulations
+spatial-relationships
 additional-topics
