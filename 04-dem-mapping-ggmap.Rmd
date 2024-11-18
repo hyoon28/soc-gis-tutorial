@@ -147,6 +147,14 @@ This measurement strategy results in a three-category gentrification measure - N
 # Import demographic attributes for census tracts
 sftrt_dem <- read.csv("data/sftrt_dem.csv")
 
+# Explore the data
+print(sftrt_dem)
+
+# Explore the geometry
+print(sftrt)
+```
+
+```{r}
 # Check if it has a common identifier with sftrt
 head(sftrt_dem$trt10)
 class(sftrt_dem$trt10)
@@ -170,6 +178,9 @@ sftrt_joined <- merge(
 ```
 
 ```{r typo-map}
+# Check your variable of interest
+print(unique(sftrt_joined$gentcat))
+
 # Create a typology map
 ggplot(data = sftrt_joined) + 
   geom_sf(aes(fill = gentcat), 
@@ -177,12 +188,21 @@ ggplot(data = sftrt_joined) +
           color = "white") +
   scale_fill_manual(values = c("non-gentrifiable" = "light grey", 
                                "gentrifying" = "pink", 
-                               "non-gentrifying" = "black")) +    # specify color corresponding to each category
+                               "non-gentrifying" = "black")) +    # specify colors corresponding to each category
   theme_void() +
   labs(fill = "Gentrification Category", 
        title = "Gentrification in San Francisco"
        )
 ```
+
+
+**LEARN MORE**
+
+For more detailed guidance as to how to choose a discretization method for choropleth map, you can see [the slides](https://magrit-formations.github.io/discretisation/#/title-slide) made by Nicholas Lambert and his colleagues.
+
+Steele and her colleagues (2022) published a [review article](https://www.annualreviews.org/content/journals/10.1146/annurev-soc-030420-015435), summerizing existing quantitative approaches to measuring ethnic diversity. HHI (also referred to as ELF) is included as one of the most common measurements.
+
+Brown-Saracino (2017) reviews the concept and measurement of gentrification in contemporary literature in a [review article](https://www.annualreviews.org/content/journals/10.1146/annurev-soc-060116-053427).
 
 
 

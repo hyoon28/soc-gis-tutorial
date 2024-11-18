@@ -11,16 +11,17 @@ When data contains latitude and longitude coordinates, we can transform it into 
 # Import the Airbnb data
 sfbnb <- read.csv("data/sfbnb.csv")
 
-# Transform lat/long data into sf object
+head(sfbnb, 3)
+```
+
+```{r transform-bnb}
+# Transform lat/long into sf object
 sf_sfbnb <- st_as_sf(sfbnb, 
                      coords = c("longitude", "latitude"), 
                      crs = 4326 # specify the projection; WGS84 is a standard projection for global mapping. 
                      )
-```
-
-```{r explore-bnb}
-# Check variables
-head(sf_sfbnb, n=3)
+# Check the data
+head(sf_sfbnb, 3)
 ```
 
 You can see that geometry is points, rather than polygons. Each point represents an Airbnb property (id- unique identifier). It also indicates the census tract (trt10) and neighborhood name (analysis) in which the Airbnb  property is located. The data also contains attributes of the Airbnb property, such as property type, review score ratings, and the number of reviews.

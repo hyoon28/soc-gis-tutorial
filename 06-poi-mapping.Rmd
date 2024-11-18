@@ -1,4 +1,11 @@
-Now that we have restaurant locations as points, we can simply overlay the restaurant locations on top of the neighborhood boundaries layer.
+## Distribution and density
+
+```{r import-processed-map}
+sfnh <- st_read("data/sfnh.geojson")
+sf_sfbiz <- st_read("processed-data/restaurants.geojson")
+```
+
+Now that we have restaurant locations as points, we can simply overlay the restaurant locations on top of the neighborhood boundaries layer to explore the geographical distribution of restaurants.
 
 ```{r point-map}
 # Plot the restaurant locations
@@ -11,14 +18,109 @@ ggplot() +
           ) +
   # add restaurants as another layer
   geom_sf(data = sf_sfbiz, 
-          color = "red", 
-          size = 0.5, alpha = 0.8
+          color = "red",    
+          size = 0.5,       
+          alpha = 0.8       # set transparency
           ) +  
   theme_void() +
   labs(title = "Restaurants in San Francisco")
 ```
 
-In this map, we can see the distribution of restaurants in San Francisco. However, because restaurants are both in and outside of neighborhood boundaries, it is hard to discern spatial patterns of restaurants by neighborhoods. Spatial join, which we will discuss in the next section, allows us to spatially link restaurants to neighborhoods, so that we can reduce points data to the level of neighborhoods.
+
+**SYMBOLOGY BASED ON ATTRIBUTES**
+
+You can differentiate points based on attributes using symbology based on colors or shapes. Here, we are only looking at restaurants. But imagine you have a dataset that contains multiple types of retail, such as bars, coffee shops, and restaurants. You might want to map the overall distribution of businesses, but also focus on one specific type of business or highlight differences by business type.
+
+In our data, we have "employee size" and "sales volume" of restaurants as attributes. Let's say you want to focus on small, mom and pop businesses and explore where these small restaurants are concentrated. In the US, businesses with less than 10 or 5 employees are often considered as "small". Here, we will use 5 as a cutoff to define a small restaurant. You can highlight your data based on this specific attribute.
+
+```{r}
+# Create a new column based on employee size
+sf_sfbiz$small <- ifelse(sf_sfbiz$employee_size_location < 5, "small", "non-small")
+
+# Plot with ggplot
+ggplot() +
+  # display neighborhood boundaries as a layer
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  # add restaurants as another layer
+  geom_sf(data = sf_sfbiz,
+          aes(color = small), # specify the color based on "small" variable
+          size = 0.5, alpha = 0.8
+          ) +
+  scale_color_manual(values = c("small" = "red", "non-small" = "black"), # specify colors 
+                     labels = c("less than 5", "5 or more")) +           # set labels
+  theme_void() +
+  labs(title = "Restaurants by Employee Size in San Francisco",
+       color = "Employee Size")
+```
+
+```{r}
+# Add more symbology details
+ggplot() +
+  # display neighborhood boundaries as a layer
+  geom_sf(data = sfnh,
+          fill = "lightgray",
+          size = 0.02,
+          color = "white"
+          ) +
+  # add restaurants as another layer
+  geom_sf(data = sf_sfbiz,
+          aes(color = small,
+              shape = small,
+              size = small), # specify the color based on "small" variable
+          alpha = 0.8) +
+  scale_color_manual(values = c("small" = "red", "non-small" = "black")) +  
+  scale_shape_manual(values = c("small" = 23, "non-small" = 16),
+                     labels = c("less than 5", "5 or more")) + 
+  scale_size_manual(values = c("small" = 1.5, "non-small" = 0.5)) + 
+  guides(color = "none",
+         size = "none",
+         shape = guide_legend(override.aes = list(
+           color = c("red", "black"), 
+           size = c(1.5, 0.5), 
+           shape = c(23, 16)
+           ))) +
+  theme_void() +
+  labs(title = "Restaurants by Employee Size in San Francisco",
+       shape = "Employee Size")
+```
+
+In this map, we can get a general sense of the distribution of restaurants in San Francisco. However, there are two limitations to this visualization. First, it is hard to tell exactly where restaurants are more or less concentrated because points overlap where densely populated. To draw attention to where points are concentrated the most, we can use a **density map** (also known as a heat map). Among various methods for creating a density map, we will learn how to create a density map using kernel density estimation (KDE). This function is available through the "MASS" package.
+
+
+```{r density-map}
+# Install and set up the "MASS" package 
+library("MASS")
+
+# Extract coordinates from the sf object
+coords <- st_coordinates(sf_sfbiz)
+
+# Calculate KDE based on coordinates
+kde <- kde2d(coords[, 1], coords[, 2], n = 500) # n specifies the number of grids
+
+# Convert KDE to raster format
+kde_df <- expand.grid(x = kde$x, y = kde$y)
+kde_df$z <- as.vector(kde$z)
+
+# Plot KDE heat map
+ggplot() +
+  geom_raster(data = kde_df, 
+              aes(x = x, y = y, fill = z), 
+              alpha = 1) +  # Kernel density heat map
+  geom_sf(data = sfnh, fill = NA, color = "black") +  # Neighborhood boundaries
+  scale_fill_gradientn(colors = c("transparent", "lightpink", "red", "darkred"), name = "Density") +
+  theme_void() +
+  labs(title = "Heat Map of Restaurants in San Francisco")
+
+```
+
+Now, you can clearly see where the restaurants are most concentrated!
+
+While heat maps are useful for clearly visualizing concentration of restaurants, the second limitation still remains. With points data, it is difficult to discern spatial patterns of restaurants by neighborhoods because restaurants are both in and outside of neighborhood boundaries. To solve this problem, we will discuss **spatial join** in the following section, which allows us to spatially link restaurants to neighborhoods, so that we can reduce points data to the level of neighborhoods.
+
 
 ## Spatial join
 
@@ -48,20 +150,26 @@ In the joined data, we can see that restaurants (company) are nested within neig
 restaurant_counts <- nh_joined %>%
   st_drop_geometry() %>%
   group_by(nhood) %>% 
-  summarize(n_rst = sum(!is.na(company)), # don't count NA as 1
-            )
+  summarise(n_rst = sum(!is.na(company))) # don't count NA as 1
+
+head(restaurant_counts, 10)
 ```
 
-As the count of restaurants is a quantitative variable, we can visualize it using the choropleth map. I first join the restaurant counts data with neighborhood boundaries to get the neighborhood-level spatial data. Then, I create the map using custom breaks based on the distribution of the number of restaurants within a neighborhood. 
+**MAPPING AGGREGATED RESTAURANT COUNTS**
+
+As the count of restaurants is a quantitative variable, we can visualize it using the choropleth map. I first join the restaurant counts data with neighborhood boundaries to get the neighborhood-level spatial data. Then, I create a map using custom breaks based on the distribution of the number of restaurants within a neighborhood. 
+
+```{r aggregate-join}
+# Join the restaurant count to neighborhood boundaries
+biz_colors <- sfnh %>%
+  left_join(restaurant_counts,
+            by = "nhood")
+
+head(biz_colors, 3)
+hist(biz_colors$n_rst)
+```
 
 ```{r aggregate-map}
-# Join the restaurant count to neighborhood boundaries
-biz_colors <-
-  sfnh %>%
-  left_join(restaurant_counts,
-            by = "nhood") %>%
-  arrange(desc(n_rst)) 
-
 # Create the map using Custom breaks
 ggplot() +
   geom_sf(data = biz_colors,
@@ -74,7 +182,8 @@ ggplot() +
                        direction = 1,
                        ) +
   theme_void() +
-  labs(fill = "Restaurant Count")
+  labs(fill = "Restaurant Count",
+       title = "Choropleth Map of Restaurants in San Francisco")
 ```
 
 Another way of visualizing a quantitative variable is a *proportional symbol map*. Proportional symbol maps are particularly useful for absolute quantitative variables (e.g., raw counts, measurements) while choropleth maps are more suitable for relative quantitative variables (e.g., ratios, percentages, proportions).
@@ -87,11 +196,11 @@ nh_cent <- st_centroid(sfnh)
 print(nh_cent)
 
 # Join the restaurant counts to neighborhood centroids
-biz_symbols <-
-  nh_cent %>%
-  left_join(restaurant_counts,
-            by = "nhood") %>%
+biz_symbols <- nh_cent %>%
+  left_join(restaurant_counts, by = "nhood") %>%
   arrange(desc(n_rst)) # sort to ensure small points would be plotted in front of big points
+
+head(biz_symbols, 3)
 
 # Create the proportional symbol map
 ggplot() +
@@ -108,8 +217,13 @@ ggplot() +
           color = "lightgray") +  # set a color for edges of the shape
   scale_size(range = c(3, 13)) +  # set min and max for the size of the symbols
   theme_void() +
-  labs(size = "Restaurant Count") # legend title 
+  labs(size = "Restaurant Count",
+       title = "Proportional Symbol Map of Restaurants in San Francisco") 
+```
 
+A proportional symbol map is also called a clustered point map. In this map, the symbol sizes correspond with the frequency of restaurants - the larger the symbol, the more restaurants that are present in that area. This type of clustering and aggregating visualization technique is particularly helpful when your data only have approximate locations. You can combine two types of aggregated into one visualization by specifying both symbol sizes and colors.
+
+```{r}
 # Create the proportional symbol map (size) combined with the choropleth map (fill color)
 ggplot() +
   geom_sf(data = sfnh,
@@ -125,14 +239,12 @@ ggplot() +
   # add colors to the symbols
   scale_fill_gradientn(colors = hcl.colors(4,                   # fill the shape with four different colors
                                            "RdBu",              # red-blue color scheme
-                                           rev = TRUE,          # reverse the color scheme so that smaller values are blue
+                                           rev = TRUE,          # reverse the color scheme
                                            alpha = 0.9)) +      # transparency
   theme_void() +
-  labs(fill = "Restaurant Count", size = "Restaurant Count") +  # combined legend title
-  guides(fill = guide_legend(title = "Restaurant Count", 
-                             order = 1),                        # title for the legend
-         size = guide_legend(title = "Restaurant Count", 
-                             order = 1))                        # same title for size
+  guides(fill = guide_legend(title = "Restaurant Count"), 
+         size = guide_legend(title = "Restaurant Count")) +     # combine legends
+  labs(title = "Choropleth/Proportional Symbol Map of Restaurants in San Francisco")
 ```
 
 
@@ -155,6 +267,15 @@ map1 <- ggplot() +
   theme_void()
 
 map2 <- ggplot() +
+  geom_raster(data = kde_df, 
+              aes(x = x, y = y, fill = z), 
+              alpha = 1) +  
+  geom_sf(data = sfnh, fill = NA, color = "black") +  
+  scale_fill_gradientn(colors = c("transparent", "lightpink", "red", "darkred"), name = "Density") +
+  theme_void() +
+  theme(legend.position = "none")
+
+map3 <- ggplot() +
   geom_sf(data = biz_colors,
           aes(fill = n_rst), 
           size = 0.2,
@@ -167,7 +288,7 @@ map2 <- ggplot() +
   theme_void() +
   theme(legend.position = "none")
 
-map3 <- ggplot() +
+map4 <- ggplot() +
   geom_sf(data = sfnh,          
           fill = "lightgray",
           size = 0.02,
@@ -181,33 +302,10 @@ map3 <- ggplot() +
           color = "lightgray") + 
   scale_size(range = c(3, 13)) +  
   theme_void() +
-  labs(size = "Restaurant Count") 
-
-map4 <- ggplot() +
-  geom_sf(data = sfnh,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  geom_sf(data = biz_symbols,
-          aes(size = n_rst, fill = n_rst), 
-          shape = 21, 
-          color = "lightgray") +
-  scale_size(range = c(3, 10)) +
-  # add colors to the symbols
-  scale_fill_gradientn(colors = hcl.colors(4,                  
-                                           "RdBu",              
-                                           rev = TRUE,          
-                                           alpha = 0.9)) +     
-  theme_void() +
-  labs(fill = "Restaurant Count", size = "Restaurant Count") +  
-  guides(fill = guide_legend(title = "Restaurant Count", 
-                             order = 1),  
-         size = guide_legend(title = "Restaurant Count", 
-                             order = 1))  
+  theme(legend.position = "none")
 
 combined <- ggpubr::ggarrange(map1, map2, map3, map4, nrow=2, ncol=2,
-                  labels = c("Point Map", "Choropleth Map", "PropSymbol Map", "PSxC Map"))
+                  labels = c("Point Map", "Heat Map", "Choropleth Map", "PropSymbol Map"))
 
 print(combined)
 
@@ -217,6 +315,11 @@ ggsave("sf_restaurant_maps.png", plot = combined,
        dpi = 300 # resolution
        )
 ```
+
+**THINK AND SHARE**
+
+Discuss similarities and differences across four different types of maps. What are pros and cons of each type of map? Which visualization do you think is most effective and why?
+
 
 While it is not strictly expected in sociology papers, you can also add a north arrow and a scale bar to a map using the ggspatial package.
 
@@ -246,5 +349,10 @@ ggplot() +
   annotation_north_arrow(location = "tl",  # "tl" is for top left, adjust as needed
                          style = north_arrow_fancy_orienteering)  
 ```
+
+
+**LEARN MORE**
+
+For visualizing density, **hotspot maps** also exist though we do not cover in this tutorial. What makes a hotspot map different from a heat map? The short answer is statistics! A heat map provides a smooth, continuous visualization of data across the given area of interest (e.g., neighborhood), similar to histogram. A hotspot map highlights areas that are statistically significant by comparing the distribution of points in the area of interest (e.g., neighborhood) to how they would be distributed in a random manner. For example, a hotspot map of crimes would demonstrate which areas have more or less incidents than we would expect if the “crime generating process” was completely random. The hotspots indicate areas where the frequency of crimes is higher than we would expect if crime was randomly distributed across the neighborhood. If you want to learn how to make a hotspot map, see [this tutorial](https://crimebythenumbers.com/hotspot-maps.html#making-a-hotspot-map).
 
 

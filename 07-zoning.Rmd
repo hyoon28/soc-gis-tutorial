@@ -1,0 +1,147 @@
+# Accounting for Regulations
+
+So far, we have explored various ways to map the distribution of restaurants in San Francisco. Studies have consistently found that restaurants, and other **organizational resources** like police stations, schools, childcare centers, banks, and parks, are unevenly distributed across neighborhoods by race and class in the US. Surely, race and class are important determinants of the distribution of resources. For example, white and more affluent neighborhoods have more private childcare centers, traditional financial services, "high-end" restaurants while racial minority and poorer neighborhoods have more public childcare centers, alternative financial services, and "unhealthy" restaurants. We can explore these relationships using the aggregated demographic data merged with the POI data, which we've discussed so far.
+
+However, the distribution of organizational resources, and more broadly, the built environment is heavily shaped by regulations. Particularly, local zoning laws have tremendous impact on what gets or doesn't get built in the neighborhood.
+
+In the following, we will discuss how ["community benefit districts (CBDs)" (also known as "business improvement districts (BIDs)")](https://www.sf.gov/information/community-benefit-districts) may have a spatial relationship with the distribution of restaurants in San Francisco. In San Francisco, CBDs are designated based on a private-public partnership to fund improvements and get customized support for commercial and mixed-use corridors in select neighborhoods. 
+
+```{r import zone}
+# Import the cbds data
+sfzone <- st_read("data/bid-cbd.geojson") %>%
+  select(community_benefit_district, contract_duration, established, geometry)
+
+head(sfzone, 3)
+
+# Check the boundaries
+ggplot() +
+  geom_sf(data = sfnh, fill = NA, color = "black", size = 0.2) + 
+  geom_sf(data = sfzone, 
+          aes(fill = community_benefit_district),
+          color = "white", size = 0.02) +    
+  theme_void() +
+  labs(title = "Community Benefit Districts in San Francisco")
+```
+
+Recollect how restaurants were distributed in San Francisco. We can, for instance, ask if a neighborhood is within or close to BIDs, they are likely to have more businesses. If this was the case, such a spatial proximity could be an important factor in estimating the relationship between a neighborhood and the number of businesses. Below, we will how to create a spatial variable at the neighborhood-level, indicating 1) whether the neighborhood intersects with BIDs (binary), as well as 2) its nearest or average distance to BIDs (continuous).
+
+
+## Spatial relationships
+
+First, let's determine whether a neighborhood boundary intersects with BIDs. We can use st_intersects function to create a list of neighborhoods and its intersecting BIDs. 
+
+```{r within-zone}
+# Find out if neighborhoods intersect with any BIDs
+intersections <- st_intersects(biz_colors, sfzone)
+
+print(intersections)
+
+# Create a new binary variable indicating whether a neighborhood intersects with any BIDs
+biz_colors$intersects_cbd <- sapply(intersections, 
+                                    function(x) ifelse(length(x) > 0, 1, 0))
+
+head(biz_colors, 3)
+```
+
+Here, we can see that a new "intersects_cbd" column was created and added to the sf object, biz_colors. With this neighborhood-level data, you could run a bivariate regression model estimating the relationship between the number of businesses and being in BIDs. 
+
+```{r}
+# Assuming you have the number of businesses in a column `num_businesses`
+model <- lm(n_rst ~ intersects_cbd, data = biz_colors)
+
+# View the summary of the model
+summary(model)
+```
+
+This simple analysis demonstrates that neighborhoods that intersect BIDs, on average, indeed have 65.54 more businesses compared to neighborhoods that do not intersect with BIDs. Such a spatial variable can be included as a main predictor or as a control variable depending on your research question. 
+
+The second solution requires calculating distance. What is the nearest or average distance to BIDs for a given neighborhood? We use the centroids of polygons for distance calculations.
+
+```{r calculate-distance, warning = false}
+# Create centroids for both neighborhood polygons and community benefit district polygons
+nh_centroids <- st_centroid(sfnh)
+bids_centroids <- st_centroid(sfzone)
+```
+
+```{r calculate-distance}
+# Compute pairwise distances (matrix form)
+distances <- st_distance(nh_centroids, bids_centroids)
+
+# Convert to a data frame for easier manipulation
+distance_df <- as.data.frame(as.matrix(distances))
+
+head(distance_df, 3)
+
+# Add meaningful column and row names
+colnames(distance_df) <- sfzone$community_benefit_district 
+rownames(distance_df) <- sfnh$nhood
+
+head(distance_df, 3)
+```
+```{r nearest-distance}
+# Reshape to a long-format for analysis
+distance_long <- distance_df %>%
+  rownames_to_column("Neighborhood") %>%
+  pivot_longer(
+    cols = -Neighborhood,
+    names_to = "BID",
+    values_to = "Distance"
+  )
+
+head(distance_long, 10)
+
+# Identify nearest distance
+nearest_bid <- distance_long %>%
+  group_by(Neighborhood) %>%
+  slice_min(order_by = Distance)
+
+head(nearest_bid, 10)
+```
+
+This type of distance data can be used for network analysis to study urban connectivity, accessibility, and so forth. In network terms, a Neighborhood is ego, and a BID is alter. Distance is edge, connecting ego and alter. Network analysis is beyond the scope of this tutorial, but remember, handling spatial data is a powerful tool that will enable you to conduct advanced statistical analysis.
+
+We can simply add the nearest distance to the existing neighborhood-level data using the following function.
+
+```{r}
+# Calculate the minimum distance for each neighborhood
+biz_colors$min_distance_to_bid <- apply(distances, 1, min) # 'mean' for average distance
+
+head(biz_colors, 3)
+```
+
+Now, you have a neighborhood-level data with the number of restaurants (n_rst) as an outcome variable, and two spatial predictors - intersects_cbd and min_distance_to_bid. You can always merge additional predictors, such as aggregated demographic variables, which we covered in the beginning of the tutorial.
+
+**THINK AND SHARE**
+
+What other regulations, including but not limited to zoning, can you think of that have meaningful impact on spatial organization of people and the built environment? For example, scholars have examined the relationship between historic districts and gentrification [(McCabe and Ellen, 2016)](https://www.tandfonline.com/doi/full/10.1080/01944363.2015.1126195) and the impact of BIDs on property values [(Ellen et al, 2007)](https://www.jstor.org/stable/pdf/25067439.pdf). What are their research questions? How did these authors build and analyze their data? What are the key findings?
+
+
+**LINES**
+
+Remember three different forms of vector data? We have discussed polygons, points.. and what's left? Lines. Lines are useful when you are interested in exploring and visualizing transportation networks, mobility patterns, connectivity, and so forth. We won't cover much details about the line formatted data, but will provide a short example of mapping lines.
+
+During COVID, San Francisco city government launched [the Slow Street Program](https://www.sfmta.com/projects/slow-streets-program) to help maintain social distance requirements for users on the streets. Slow Streets utilize temporary tools like cones and signage to divert traffic and remind vehicles to maintain a safe speed to accommodate for pedestrians and bicyclists who may be traveling to make essential trips. After COVID, this program continued as part of a connected, citywide Active Transportation Network, designed to eliminate deaths and severe injuries related to transportation, and encourage more people to choose low-carbon ways to travel for their daily trips. 
+
+
+```{r import street}
+# Import slow street data (lines)
+slowst <- st_read("data/slow-st.geojson")
+
+ggplot() +
+  geom_sf(data = sfnh, fill = "lightgrey", color = "white", size = 0.2) + 
+  geom_sf(data = slowst,
+          color = "blue", 
+          size = 50, 
+          linetype = "solid") + # options: dashed, dotted, etc 
+  theme_void()
+```
+
+![Source: SFMTA (Accessed 2024)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-slow-st.png)
+
+**THINK AND SHARE**
+
+ - What kind of research questions can you ask about BIDs?
+ - What kind of research questions can you ask about slow streets?
+ 
+ Discuss the potential predictors (x) or outcomes (y).
+ 
