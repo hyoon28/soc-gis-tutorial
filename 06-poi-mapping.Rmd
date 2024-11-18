@@ -105,8 +105,6 @@ coords <- st_coordinates(sf_sfbiz)
 # Calculate KDE based on coordinates
 kde <- kde2d(coords[, 1], coords[, 2], n = 500) # n specifies the number of grids
 
-print(kde)
-
 # Convert KDE to raster format
 kde_df <- expand.grid(x = kde$x, y = kde$y)
 kde_df$z <- as.vector(kde$z)

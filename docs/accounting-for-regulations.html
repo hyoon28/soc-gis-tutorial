@@ -190,9 +190,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>So far, we have explored various ways to map the distribution of restaurants in San Francisco. Studies have consistently found that restaurants, and other <strong>organizational resources</strong> like police stations, schools, childcare centers, banks, and parks, are unevenly distributed across neighborhoods by race and class in the US. Surely, race and class are important determinants of the distribution of resources. For example, white and more affluent neighborhoods have more private childcare centers, traditional financial services, “high-end” restaurants while racial minority and poorer neighborhoods have more public childcare centers, alternative financial services, and “unhealthy” restaurants. We can explore these relationships using the aggregated demographic data merged with the POI data, which we’ve discussed so far.</p>
 <p>However, the distribution of organizational resources, and more broadly, the built environment is heavily shaped by regulations. Particularly, local zoning laws have tremendous impact on what gets or doesn’t get built in the neighborhood.</p>
 <p>In the following, we will discuss how <a href="https://www.sf.gov/information/community-benefit-districts">“community benefit districts (CBDs)”</a>, also known as “business improvement districts (BIDs), may have a spatial relationship with the distribution of restaurants in San Francisco. In San Francisco, CBDs are designated based on a private-public partnership to fund improvements and get customized support for commercial and mixed-use corridors in select neighborhoods.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="accounting-for-regulations.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the cbds data</span></span>
-<span id="cb83-2"><a href="accounting-for-regulations.html#cb83-2" aria-hidden="true" tabindex="-1"></a>sfzone <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/bid-cbd.geojson&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb83-3"><a href="accounting-for-regulations.html#cb83-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(community_benefit_district, contract_duration, established, geometry)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="accounting-for-regulations.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the cbds data</span></span>
+<span id="cb81-2"><a href="accounting-for-regulations.html#cb81-2" aria-hidden="true" tabindex="-1"></a>sfzone <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/bid-cbd.geojson&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb81-3"><a href="accounting-for-regulations.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(community_benefit_district, contract_duration, established, geometry)</span></code></pre></div>
 <pre><code>## Reading layer `bid-cbd&#39; from data source 
 ##   `/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/data/bid-cbd.geojson&#39; 
 ##   using driver `GeoJSON&#39;
@@ -201,7 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Dimension:     XY
 ## Bounding box:  xmin: -122.4653 ymin: 37.71984 xmax: -122.3881 ymax: 37.80862
 ## Geodetic CRS:  WGS 84</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="accounting-for-regulations.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfzone, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="accounting-for-regulations.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfzone, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Simple feature collection with 3 features and 3 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -215,23 +215,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1 MULTIPOLYGON (((-122.4178 3...
 ## 2 MULTIPOLYGON (((-122.4385 3...
 ## 3 MULTIPOLYGON (((-122.4653 3...</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="accounting-for-regulations.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the boundaries</span></span>
-<span id="cb87-2"><a href="accounting-for-regulations.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb87-3"><a href="accounting-for-regulations.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
-<span id="cb87-4"><a href="accounting-for-regulations.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfzone, </span>
-<span id="cb87-5"><a href="accounting-for-regulations.html#cb87-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> community_benefit_district),</span>
-<span id="cb87-6"><a href="accounting-for-regulations.html#cb87-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.02</span>) <span class="sc">+</span>    </span>
-<span id="cb87-7"><a href="accounting-for-regulations.html#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb87-8"><a href="accounting-for-regulations.html#cb87-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Community Benefit Districts in San Francisco&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="accounting-for-regulations.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the boundaries</span></span>
+<span id="cb85-2"><a href="accounting-for-regulations.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb85-3"><a href="accounting-for-regulations.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb85-4"><a href="accounting-for-regulations.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfzone, </span>
+<span id="cb85-5"><a href="accounting-for-regulations.html#cb85-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> community_benefit_district),</span>
+<span id="cb85-6"><a href="accounting-for-regulations.html#cb85-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.02</span>) <span class="sc">+</span>    </span>
+<span id="cb85-7"><a href="accounting-for-regulations.html#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb85-8"><a href="accounting-for-regulations.html#cb85-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Community Benefit Districts in San Francisco&quot;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/import-zone-1.png" width="672" /></p>
 <p>Recollect how restaurants were distributed in San Francisco. We can, for instance, ask if a neighborhood is within or close to BIDs, they are likely to have more businesses. If this was the case, such a spatial proximity could be an important factor in estimating the relationship between a neighborhood and the number of businesses. Below, we will how to create a spatial variable at the neighborhood-level, indicating 1) whether the neighborhood intersects with BIDs (binary), as well as 2) its nearest or average distance to BIDs (continuous).</p>
 <div id="spatial-relationships" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Spatial relationships<a href="accounting-for-regulations.html#spatial-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First, let’s determine whether a neighborhood boundary intersects with BIDs. We can use st_intersects function to create a list of neighborhoods and its intersecting BIDs.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="accounting-for-regulations.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find out if neighborhoods intersect with any BIDs</span></span>
-<span id="cb88-2"><a href="accounting-for-regulations.html#cb88-2" aria-hidden="true" tabindex="-1"></a>intersections <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(biz_colors, sfzone)</span>
-<span id="cb88-3"><a href="accounting-for-regulations.html#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb88-4"><a href="accounting-for-regulations.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(intersections)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="accounting-for-regulations.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find out if neighborhoods intersect with any BIDs</span></span>
+<span id="cb86-2"><a href="accounting-for-regulations.html#cb86-2" aria-hidden="true" tabindex="-1"></a>intersections <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(biz_colors, sfzone)</span>
+<span id="cb86-3"><a href="accounting-for-regulations.html#cb86-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-4"><a href="accounting-for-regulations.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(intersections)</span></code></pre></div>
 <pre><code>## Sparse geometry binary predicate list of length 41, where the predicate
 ## was `intersects&#39;
 ## first 10 elements:
@@ -245,11 +245,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8: (empty)
 ##  9: (empty)
 ##  10: (empty)</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="accounting-for-regulations.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new binary variable indicating whether a neighborhood intersects with any BIDs</span></span>
-<span id="cb90-2"><a href="accounting-for-regulations.html#cb90-2" aria-hidden="true" tabindex="-1"></a>biz_colors<span class="sc">$</span>intersects_cbd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(intersections, </span>
-<span id="cb90-3"><a href="accounting-for-regulations.html#cb90-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="cf">function</span>(x) <span class="fu">ifelse</span>(<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb90-4"><a href="accounting-for-regulations.html#cb90-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-5"><a href="accounting-for-regulations.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biz_colors, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="accounting-for-regulations.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new binary variable indicating whether a neighborhood intersects with any BIDs</span></span>
+<span id="cb88-2"><a href="accounting-for-regulations.html#cb88-2" aria-hidden="true" tabindex="-1"></a>biz_colors<span class="sc">$</span>intersects_cbd <span class="ot">&lt;-</span> <span class="fu">sapply</span>(intersections, </span>
+<span id="cb88-3"><a href="accounting-for-regulations.html#cb88-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="cf">function</span>(x) <span class="fu">ifelse</span>(<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb88-4"><a href="accounting-for-regulations.html#cb88-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-5"><a href="accounting-for-regulations.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biz_colors, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Simple feature collection with 3 features and 3 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -260,11 +260,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 West of Twin Peaks    74 MULTIPOLYGON (((-122.461 37...              1
 ## 3  Visitacion Valley     6 MULTIPOLYGON (((-122.4039 3...              0</code></pre>
 <p>Here, we can see that a new “intersects_cbd” column was created and added to the sf object, biz_colors. With this neighborhood-level data, you could run a bivariate regression model estimating the relationship between the number of businesses and being in BIDs.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="accounting-for-regulations.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have the number of businesses in a column `num_businesses`</span></span>
-<span id="cb92-2"><a href="accounting-for-regulations.html#cb92-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(n_rst <span class="sc">~</span> intersects_cbd, <span class="at">data =</span> biz_colors)</span>
-<span id="cb92-3"><a href="accounting-for-regulations.html#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-4"><a href="accounting-for-regulations.html#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the summary of the model</span></span>
-<span id="cb92-5"><a href="accounting-for-regulations.html#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="accounting-for-regulations.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have the number of businesses in a column `num_businesses`</span></span>
+<span id="cb90-2"><a href="accounting-for-regulations.html#cb90-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(n_rst <span class="sc">~</span> intersects_cbd, <span class="at">data =</span> biz_colors)</span>
+<span id="cb90-3"><a href="accounting-for-regulations.html#cb90-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-4"><a href="accounting-for-regulations.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the summary of the model</span></span>
+<span id="cb90-5"><a href="accounting-for-regulations.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = n_rst ~ intersects_cbd, data = biz_colors)
@@ -285,16 +285,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## F-statistic: 9.594 on 1 and 39 DF,  p-value: 0.00361</code></pre>
 <p>This simple analysis demonstrates that neighborhoods that intersect BIDs, on average, indeed have 65.54 more businesses compared to neighborhoods that do not intersect with BIDs. Such a spatial variable can be included as a main predictor or as a control variable depending on your research question.</p>
 <p>The second solution requires calculating distance. What is the nearest or average distance to BIDs for a given neighborhood? We use the centroids of polygons for distance calculations.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="accounting-for-regulations.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create centroids for both neighborhood polygons and community benefit district polygons</span></span>
-<span id="cb94-2"><a href="accounting-for-regulations.html#cb94-2" aria-hidden="true" tabindex="-1"></a>nh_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(sfnh)</span>
-<span id="cb94-3"><a href="accounting-for-regulations.html#cb94-3" aria-hidden="true" tabindex="-1"></a>bids_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(sfzone)</span></code></pre></div>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="accounting-for-regulations.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise distances (matrix form)</span></span>
-<span id="cb95-2"><a href="accounting-for-regulations.html#cb95-2" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(nh_centroids, bids_centroids)</span>
-<span id="cb95-3"><a href="accounting-for-regulations.html#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-4"><a href="accounting-for-regulations.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a data frame for easier manipulation</span></span>
-<span id="cb95-5"><a href="accounting-for-regulations.html#cb95-5" aria-hidden="true" tabindex="-1"></a>distance_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(distances))</span>
-<span id="cb95-6"><a href="accounting-for-regulations.html#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-7"><a href="accounting-for-regulations.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_df, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="accounting-for-regulations.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create centroids for both neighborhood polygons and community benefit district polygons</span></span>
+<span id="cb92-2"><a href="accounting-for-regulations.html#cb92-2" aria-hidden="true" tabindex="-1"></a>nh_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(sfnh)</span>
+<span id="cb92-3"><a href="accounting-for-regulations.html#cb92-3" aria-hidden="true" tabindex="-1"></a>bids_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(sfzone)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="accounting-for-regulations.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise distances (matrix form)</span></span>
+<span id="cb93-2"><a href="accounting-for-regulations.html#cb93-2" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(nh_centroids, bids_centroids)</span>
+<span id="cb93-3"><a href="accounting-for-regulations.html#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="accounting-for-regulations.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a data frame for easier manipulation</span></span>
+<span id="cb93-5"><a href="accounting-for-regulations.html#cb93-5" aria-hidden="true" tabindex="-1"></a>distance_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(distances))</span>
+<span id="cb93-6"><a href="accounting-for-regulations.html#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="accounting-for-regulations.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_df, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##             V1           V2           V3           V4           V5           V6
 ## 1 2113.160 [m] 6330.618 [m] 6579.378 [m] 3389.777 [m] 1824.279 [m] 2582.332 [m]
 ## 2 6240.084 [m] 2536.732 [m] 1253.155 [m] 3041.710 [m] 4212.930 [m] 7469.365 [m]
@@ -307,11 +307,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1  414.8295 [m] 1096.984 [m] 1442.067 [m] 1130.678 [m] 1497.141 [m]
 ## 2 6181.4583 [m] 5951.285 [m] 6710.372 [m] 6815.890 [m] 7285.227 [m]
 ## 3 8271.5464 [m] 7276.509 [m] 7873.987 [m] 8384.073 [m] 9011.337 [m]</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="accounting-for-regulations.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add meaningful column and row names</span></span>
-<span id="cb97-2"><a href="accounting-for-regulations.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(distance_df) <span class="ot">&lt;-</span> sfzone<span class="sc">$</span>community_benefit_district </span>
-<span id="cb97-3"><a href="accounting-for-regulations.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(distance_df) <span class="ot">&lt;-</span> sfnh<span class="sc">$</span>nhood</span>
-<span id="cb97-4"><a href="accounting-for-regulations.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="accounting-for-regulations.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_df, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="accounting-for-regulations.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add meaningful column and row names</span></span>
+<span id="cb95-2"><a href="accounting-for-regulations.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(distance_df) <span class="ot">&lt;-</span> sfzone<span class="sc">$</span>community_benefit_district </span>
+<span id="cb95-3"><a href="accounting-for-regulations.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(distance_df) <span class="ot">&lt;-</span> sfnh<span class="sc">$</span>nhood</span>
+<span id="cb95-4"><a href="accounting-for-regulations.html#cb95-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="accounting-for-regulations.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_df, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##                       SoMa West    Excelsior Ocean Avenue
 ## Western Addition   2113.160 [m] 6330.618 [m] 6579.378 [m]
 ## West of Twin Peaks 6240.084 [m] 2536.732 [m] 1253.155 [m]
@@ -336,16 +336,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Western Addition   1130.678 [m]  1497.141 [m]
 ## West of Twin Peaks 6815.890 [m]  7285.227 [m]
 ## Visitacion Valley  8384.073 [m]  9011.337 [m]</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="accounting-for-regulations.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape to a long-format for analysis</span></span>
-<span id="cb99-2"><a href="accounting-for-regulations.html#cb99-2" aria-hidden="true" tabindex="-1"></a>distance_long <span class="ot">&lt;-</span> distance_df <span class="sc">%&gt;%</span></span>
-<span id="cb99-3"><a href="accounting-for-regulations.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Neighborhood&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb99-4"><a href="accounting-for-regulations.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb99-5"><a href="accounting-for-regulations.html#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Neighborhood,</span>
-<span id="cb99-6"><a href="accounting-for-regulations.html#cb99-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;BID&quot;</span>,</span>
-<span id="cb99-7"><a href="accounting-for-regulations.html#cb99-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;Distance&quot;</span></span>
-<span id="cb99-8"><a href="accounting-for-regulations.html#cb99-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb99-9"><a href="accounting-for-regulations.html#cb99-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-10"><a href="accounting-for-regulations.html#cb99-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_long, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="accounting-for-regulations.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape to a long-format for analysis</span></span>
+<span id="cb97-2"><a href="accounting-for-regulations.html#cb97-2" aria-hidden="true" tabindex="-1"></a>distance_long <span class="ot">&lt;-</span> distance_df <span class="sc">%&gt;%</span></span>
+<span id="cb97-3"><a href="accounting-for-regulations.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;Neighborhood&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb97-4"><a href="accounting-for-regulations.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb97-5"><a href="accounting-for-regulations.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>Neighborhood,</span>
+<span id="cb97-6"><a href="accounting-for-regulations.html#cb97-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;BID&quot;</span>,</span>
+<span id="cb97-7"><a href="accounting-for-regulations.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;Distance&quot;</span></span>
+<span id="cb97-8"><a href="accounting-for-regulations.html#cb97-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-9"><a href="accounting-for-regulations.html#cb97-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-10"><a href="accounting-for-regulations.html#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distance_long, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    Neighborhood     BID                                        Distance
 ##    &lt;chr&gt;            &lt;chr&gt;                                           [m]
@@ -359,12 +359,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Western Addition Downtown                                      2949.
 ##  9 Western Addition Union Square Business Improvement District    2135.
 ## 10 Western Addition Fisherman&#39;s Wharf                             3077.</code></pre>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="accounting-for-regulations.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify nearest distance</span></span>
-<span id="cb101-2"><a href="accounting-for-regulations.html#cb101-2" aria-hidden="true" tabindex="-1"></a>nearest_bid <span class="ot">&lt;-</span> distance_long <span class="sc">%&gt;%</span></span>
-<span id="cb101-3"><a href="accounting-for-regulations.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Neighborhood) <span class="sc">%&gt;%</span></span>
-<span id="cb101-4"><a href="accounting-for-regulations.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> Distance)</span>
-<span id="cb101-5"><a href="accounting-for-regulations.html#cb101-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb101-6"><a href="accounting-for-regulations.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nearest_bid, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="accounting-for-regulations.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify nearest distance</span></span>
+<span id="cb99-2"><a href="accounting-for-regulations.html#cb99-2" aria-hidden="true" tabindex="-1"></a>nearest_bid <span class="ot">&lt;-</span> distance_long <span class="sc">%&gt;%</span></span>
+<span id="cb99-3"><a href="accounting-for-regulations.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Neighborhood) <span class="sc">%&gt;%</span></span>
+<span id="cb99-4"><a href="accounting-for-regulations.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> Distance)</span>
+<span id="cb99-5"><a href="accounting-for-regulations.html#cb99-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-6"><a href="accounting-for-regulations.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nearest_bid, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ## # Groups:   Neighborhood [10]
 ##    Neighborhood                   BID                            Distance
@@ -381,10 +381,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 Hayes Valley                   Civic Center                       934.</code></pre>
 <p>This type of distance data can be used for network analysis to study urban connectivity, accessibility, and so forth. In network terms, a Neighborhood is ego, and a BID is alter. Distance is edge, connecting ego and alter. Network analysis is beyond the scope of this tutorial, but remember, handling spatial data is a powerful tool that will enable you to conduct advanced statistical analysis.</p>
 <p>We can simply add the nearest distance to the existing neighborhood-level data using the following function.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="accounting-for-regulations.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the minimum distance for each neighborhood</span></span>
-<span id="cb103-2"><a href="accounting-for-regulations.html#cb103-2" aria-hidden="true" tabindex="-1"></a>biz_colors<span class="sc">$</span>min_distance_to_bid <span class="ot">&lt;-</span> <span class="fu">apply</span>(distances, <span class="dv">1</span>, min) <span class="co"># &#39;mean&#39; for average distance</span></span>
-<span id="cb103-3"><a href="accounting-for-regulations.html#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-4"><a href="accounting-for-regulations.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biz_colors, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="accounting-for-regulations.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the minimum distance for each neighborhood</span></span>
+<span id="cb101-2"><a href="accounting-for-regulations.html#cb101-2" aria-hidden="true" tabindex="-1"></a>biz_colors<span class="sc">$</span>min_distance_to_bid <span class="ot">&lt;-</span> <span class="fu">apply</span>(distances, <span class="dv">1</span>, min) <span class="co"># &#39;mean&#39; for average distance</span></span>
+<span id="cb101-3"><a href="accounting-for-regulations.html#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="accounting-for-regulations.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biz_colors, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Simple feature collection with 3 features and 4 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
@@ -404,8 +404,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>LINES</strong></p>
 <p>Remember three different forms of vector data? We have discussed polygons, points.. and what’s left? Lines. Lines are useful when you are interested in exploring and visualizing transportation networks, mobility patterns, connectivity, and so forth. We won’t cover much details about the line formatted data, but will provide a short example of mapping lines.</p>
 <p>During COVID, San Francisco city government launched <a href="https://www.sfmta.com/projects/slow-streets-program">the Slow Street Program</a> to help maintain social distance requirements for users on the streets. Slow Streets utilize temporary tools like cones and signage to divert traffic and remind vehicles to maintain a safe speed to accommodate for pedestrians and bicyclists who may be traveling to make essential trips. After COVID, this program continued as part of a connected, citywide Active Transportation Network, designed to eliminate deaths and severe injuries related to transportation, and encourage more people to choose low-carbon ways to travel for their daily trips.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="accounting-for-regulations.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import slow street data (lines)</span></span>
-<span id="cb105-2"><a href="accounting-for-regulations.html#cb105-2" aria-hidden="true" tabindex="-1"></a>slowst <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/slow-st.geojson&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="accounting-for-regulations.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import slow street data (lines)</span></span>
+<span id="cb103-2"><a href="accounting-for-regulations.html#cb103-2" aria-hidden="true" tabindex="-1"></a>slowst <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/slow-st.geojson&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `slow-st&#39; from data source 
 ##   `/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/data/slow-st.geojson&#39; 
 ##   using driver `GeoJSON&#39;
@@ -414,13 +414,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Dimension:     XY
 ## Bounding box:  xmin: -122.5056 ymin: 37.71392 xmax: -122.3902 ymax: 37.7905
 ## Geodetic CRS:  WGS 84</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="accounting-for-regulations.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb107-2"><a href="accounting-for-regulations.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh, <span class="at">fill =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
-<span id="cb107-3"><a href="accounting-for-regulations.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> slowst,</span>
-<span id="cb107-4"><a href="accounting-for-regulations.html#cb107-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
-<span id="cb107-5"><a href="accounting-for-regulations.html#cb107-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="dv">50</span>, </span>
-<span id="cb107-6"><a href="accounting-for-regulations.html#cb107-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>) <span class="sc">+</span> <span class="co"># options: dashed, dotted, etc </span></span>
-<span id="cb107-7"><a href="accounting-for-regulations.html#cb107-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="accounting-for-regulations.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb105-2"><a href="accounting-for-regulations.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sfnh, <span class="at">fill =</span> <span class="st">&quot;lightgrey&quot;</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb105-3"><a href="accounting-for-regulations.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> slowst,</span>
+<span id="cb105-4"><a href="accounting-for-regulations.html#cb105-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb105-5"><a href="accounting-for-regulations.html#cb105-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="dv">50</span>, </span>
+<span id="cb105-6"><a href="accounting-for-regulations.html#cb105-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>) <span class="sc">+</span> <span class="co"># options: dashed, dotted, etc </span></span>
+<span id="cb105-7"><a href="accounting-for-regulations.html#cb105-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/import-street-1.png" width="672" /></p>
 <div class="figure">
 <img src="images/sf-slow-st.png" alt="" />
