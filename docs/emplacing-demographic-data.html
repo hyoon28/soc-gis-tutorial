@@ -163,7 +163,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html"><i class="fa fa-check"></i><b>4</b> Accounting for Regulations</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html#spatial-relationships"><i class="fa fa-check"></i><b>4.1</b> Spatial relationships</a></li>
+<li class="chapter" data-level="4.1" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html#spatial-functions"><i class="fa fa-check"></i><b>4.1</b> Spatial functions</a></li>
+<li class="chapter" data-level="4.2" data-path="accounting-for-regulations.html"><a href="accounting-for-regulations.html#constructing-geometry"><i class="fa fa-check"></i><b>4.2</b> Constructing Geometry</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>5</b> Additional Topics</a></li>
 <li class="divider"></li>
@@ -194,12 +195,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THE CASE OF SAN FRANCISCO</strong></p>
 <p>Let’s demonstrate the importance of defining neighborhood boundaries using the case of San Francisco. San Francisco’s neighborhood names and boundaries have changed over time <a href="https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php">(1)</a> and the current names and boundaries are often inconsistently perceived and administered <a href="https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/">(2)</a>. The image below, for example, compares the old and current neighborhood names and boundaries in San Francisco.</p>
 <div class="figure">
-<img src="images/sf-name-change.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-name-change.png" alt="" />
 <p class="caption">Source: SFGATE</p>
 </div>
 <p>In this tutorial, we will learn how to visualize San Francisco neighborhoods based on census tracts as well as the “Analysis Neighborhood” created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco’s <a href="https://datasf.org/opendata/">DataSF</a>. Open their website and then click the “Geographic Locations &amp; Boundaries” tab.</p>
 <div class="figure">
-<img src="images/sf-open-data.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-open-data.png" alt="" />
 <p class="caption">DataSF is an open data website provided by the city government of San Francisco</p>
 </div>
 <p>Under this tab, you will find the 2010 census tract and “Analysis Neighborhood” boundaries, among many other geographic data.</p>
@@ -267,7 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THINK AND SHARE</strong></p>
 <p>Let’s consider another example of contentious geographic unit: Europe. How will you define “Europe”? Should a map of Europe include Turkey, Ukraine, Lapland, or French Guyana? Where is the center of Europe?</p>
 <div class="figure">
-<img src="images/europe.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/europe.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <ul>
@@ -392,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THINK AND SHARE</strong></p>
 <p>Below, you see two maps, each representing Chicago ans Seattle.</p>
 <div class="figure">
-<img src="images/map-example.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png" alt="" />
 <p class="caption">Source: Hwang (2015).doi: 10.1177/0002716215579823</p>
 </div>
 <ul>
@@ -402,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Compare this map to the other map of Chicago below:</p>
 <div class="figure">
-<img src="images/map-example2.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png" alt="" />
 <p class="caption">Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x</p>
 </div>
 <p>Explore <a href="https://opendata.paris.fr/pages/home/">Open Data website for City of Paris</a>.</p>
@@ -417,14 +418,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.3</span> Data visualization<a href="emplacing-demographic-data.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>By joining attributes with spatial boundaries, now we can map demographic patterns. But, first of all, what is a map? A map is a simplified and codified image of geographical space, representing its characteristics and/or its organization. It is the result of a creative action and of the choices made by its author (Lambert and Zanin, 2000; p.4).</p>
 <div class="figure">
-<img src="images/map-concept.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-concept.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <p>Lambert and Zanin (2020) classify maps into two types: Topographic maps are maps that mainly show results of direct observation, such as water courses and human constructions. These maps represent concrete elements that are durably established on a portion of terrestrial space at a given time.</p>
 <p>Thematic maps are maps on which localizable qualitative or quantitative phenomena of all kinds are represented. Information is represented according to the rules of graphic semiology. These maps are designed, laid out, and “staged” to produce an intelligible image of the geographical phenomenon at hand.</p>
 <p>We will learn how to create <strong>thematic maps</strong>.</p>
 <div class="figure">
-<img src="images/thematic_map.png" alt="" />
+<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/thematic_map.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <p>When it comes to making thematic maps, it is important to consider what type of variable you intend to display (think of your attribute data). We will learn about two different types of maps: <strong>Choropleth map</strong> for quantitative variables and <strong>Typology map</strong> for qualitative variables.</p>
@@ -604,22 +605,32 @@ Where <span class="math inline">\(MS_i\)</span> is the market share of firm <spa
 <span id="cb39-9"><a href="emplacing-demographic-data.html#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.x =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># x identifier</span></span>
 <span id="cb39-10"><a href="emplacing-demographic-data.html#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">by.y =</span> <span class="st">&quot;tractce10&quot;</span>,      <span class="co"># y identifier</span></span>
 <span id="cb39-11"><a href="emplacing-demographic-data.html#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">all.x =</span> <span class="cn">TRUE</span>,            <span class="co"># keep all lines</span></span>
-<span id="cb39-12"><a href="emplacing-demographic-data.html#cb39-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="emplacing-demographic-data.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your variable of interest</span></span>
-<span id="cb40-2"><a href="emplacing-demographic-data.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(sftrt_joined<span class="sc">$</span>gentcat))</span></code></pre></div>
+<span id="cb39-12"><a href="emplacing-demographic-data.html#cb39-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-13"><a href="emplacing-demographic-data.html#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="emplacing-demographic-data.html#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your joined sf object as a geojson file</span></span>
+<span id="cb39-15"><a href="emplacing-demographic-data.html#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(sftrt_joined, <span class="st">&quot;processed-data/sftrt_dem_joined.geojson&quot;</span>, </span>
+<span id="cb39-16"><a href="emplacing-demographic-data.html#cb39-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">driver =</span> <span class="st">&quot;GeoJSON&quot;</span>,</span>
+<span id="cb39-17"><a href="emplacing-demographic-data.html#cb39-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">delete_dsn =</span> <span class="cn">TRUE</span> <span class="co"># overwrite the existing file</span></span>
+<span id="cb39-18"><a href="emplacing-demographic-data.html#cb39-18" aria-hidden="true" tabindex="-1"></a>         )</span></code></pre></div>
+<pre><code>## Deleting source `processed-data/sftrt_dem_joined.geojson&#39; using driver `GeoJSON&#39;
+## Writing layer `sftrt_dem_joined&#39; to data source 
+##   `processed-data/sftrt_dem_joined.geojson&#39; using driver `GeoJSON&#39;
+## Writing 195 features with 24 fields and geometry type Multi Polygon.</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="emplacing-demographic-data.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check your variable of interest</span></span>
+<span id="cb41-2"><a href="emplacing-demographic-data.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(sftrt_joined<span class="sc">$</span>gentcat))</span></code></pre></div>
 <pre><code>## [1] &quot;non-gentrifying&quot;  &quot;non-gentrifiable&quot; &quot;gentrifying&quot;</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="emplacing-demographic-data.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
-<span id="cb42-2"><a href="emplacing-demographic-data.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
-<span id="cb42-3"><a href="emplacing-demographic-data.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
-<span id="cb42-4"><a href="emplacing-demographic-data.html#cb42-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
-<span id="cb42-5"><a href="emplacing-demographic-data.html#cb42-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="emplacing-demographic-data.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
-<span id="cb42-7"><a href="emplacing-demographic-data.html#cb42-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
-<span id="cb42-8"><a href="emplacing-demographic-data.html#cb42-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify colors corresponding to each category</span></span>
-<span id="cb42-9"><a href="emplacing-demographic-data.html#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb42-10"><a href="emplacing-demographic-data.html#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
-<span id="cb42-11"><a href="emplacing-demographic-data.html#cb42-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
-<span id="cb42-12"><a href="emplacing-demographic-data.html#cb42-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="emplacing-demographic-data.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a typology map</span></span>
+<span id="cb43-2"><a href="emplacing-demographic-data.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sftrt_joined) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="emplacing-demographic-data.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gentcat), </span>
+<span id="cb43-4"><a href="emplacing-demographic-data.html#cb43-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.02</span>,</span>
+<span id="cb43-5"><a href="emplacing-demographic-data.html#cb43-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="emplacing-demographic-data.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;non-gentrifiable&quot;</span> <span class="ot">=</span> <span class="st">&quot;light grey&quot;</span>, </span>
+<span id="cb43-7"><a href="emplacing-demographic-data.html#cb43-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>, </span>
+<span id="cb43-8"><a href="emplacing-demographic-data.html#cb43-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;non-gentrifying&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span>    <span class="co"># specify colors corresponding to each category</span></span>
+<span id="cb43-9"><a href="emplacing-demographic-data.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb43-10"><a href="emplacing-demographic-data.html#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Gentrification Category&quot;</span>, </span>
+<span id="cb43-11"><a href="emplacing-demographic-data.html#cb43-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Gentrification in San Francisco&quot;</span></span>
+<span id="cb43-12"><a href="emplacing-demographic-data.html#cb43-12" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/typo-map-1.png" width="672" /></p>
 <p><strong>CODING EXERCISE</strong></p>
 <ul>

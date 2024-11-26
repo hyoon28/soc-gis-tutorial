@@ -175,8 +175,14 @@ sftrt_joined <- merge(
   all.x = TRUE,            # keep all lines
 )
 
+# Export your joined sf object as a geojson file
+st_write(sftrt_joined, "processed-data/sftrt_dem_joined.geojson", 
+         driver = "GeoJSON",
+         delete_dsn = TRUE # overwrite the existing file
+         )
 ```
 
+         
 ```{r typo-map}
 # Check your variable of interest
 print(unique(sftrt_joined$gentcat))

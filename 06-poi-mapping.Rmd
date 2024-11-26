@@ -1,132 +1,3 @@
-## Distribution and density
-
-Now that we have restaurant locations as points, we can simply overlay the restaurant locations on top of the neighborhood boundaries layer to explore the geographical distribution of restaurants.
-
-```{r point-map}
-# Plot the restaurant locations
-ggplot() +
-  # display neighborhood boundaries as a layer
-  geom_sf(data = sfnh,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  # add restaurants as another layer
-  geom_sf(data = sf_sfbiz, 
-          color = "red",    
-          size = 0.5,       
-          alpha = 0.8       # set transparency
-          ) +  
-  theme_void() +
-  labs(title = "Restaurants in San Francisco")
-```
-
-
-**SYMBOLOGY BASED ON ATTRIBUTES**
-
-You can differentiate points based on attributes using symbology (e.g., colors, shapes, sizes). Here, we are only looking at restaurants. But imagine you have a dataset that contains multiple types of retail, such as bars, coffee shops, and restaurants. You might want to map the overall distribution of businesses, but also focus on one specific type of business or highlight differences by business type.
-
-In our data, we have "employee size" and "sales volume" of restaurants as attributes. Let's say you want to focus on small, mom and pop businesses and explore where these small restaurants are concentrated. In the US, businesses with less than 10 or 5 employees are often considered as "small". Here, we will use 5 as a cutoff to define a small restaurant. You can highlight your data based on this specific attribute.
-
-```{r point-attribute-map}
-# Create a new column based on employee size
-sf_sfbiz$small <- ifelse(sf_sfbiz$employee_size_location < 5, "small", "non-small")
-
-# Plot with ggplot
-ggplot() +
-  # display neighborhood boundaries as a layer
-  geom_sf(data = sfnh,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  # add restaurants as another layer
-  geom_sf(data = sf_sfbiz,
-          aes(color = small), # specify the color based on "small" variable
-          size = 0.5, alpha = 0.8
-          ) +
-  scale_color_manual(values = c("small" = "red", "non-small" = "black"), # specify colors 
-                     labels = c("less than 5", "5 or more")) +           # set labels
-  theme_void() +
-  labs(title = "Restaurants by Employee Size in San Francisco",
-       color = "Employee Size")
-```
-
-```{r add-symbology}
-# Add more symbology details
-ggplot() +
-  # display neighborhood boundaries as a layer
-  geom_sf(data = sfnh,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  # add restaurants as another layer
-  geom_sf(data = sf_sfbiz,
-          aes(color = small,
-              shape = small,
-              size = small), 
-          alpha = 0.8) +
-  scale_color_manual(values = c("small" = "red", "non-small" = "black")) +  
-  scale_shape_manual(values = c("small" = 23, "non-small" = 16),
-                     labels = c("less than 5", "5 or more")) + 
-  scale_size_manual(values = c("small" = 1.5, "non-small" = 0.5)) + 
-  guides(color = "none",
-         size = "none",
-         shape = guide_legend(override.aes = list(
-           color = c("red", "black"), 
-           size = c(1.5, 0.5), 
-           shape = c(23, 16)
-           ))) +
-  theme_void() +
-  labs(title = "Restaurants by Employee Size in San Francisco",
-       shape = "Employee Size")
-```
-
-
-
-**CODING EXERCISE**
-
- - Create a point map using symbology
-   - Use the sales volume variable to create a new category
-   - Try using different colors, shapes, and sizes to represent your data
-
-
-From point maps, we can get a general sense of the distribution of restaurants in San Francisco. However, there are two limitations to this visualization. First, it is hard to tell exactly where restaurants are more or less concentrated because points overlap where densely populated. To draw attention to where points are concentrated the most, we can use a **density map** (also known as a heat map). Among various methods for creating a density map, we will learn how to create a density map using kernel density estimation (KDE). This function is available through the "MASS" package.
-
-
-```{r density-map, message=FALSE}
-# Install and set up the "MASS" package 
-library("MASS")
-
-# Extract coordinates from the sf object
-coords <- st_coordinates(sf_sfbiz)
-
-# Calculate KDE based on coordinates
-kde <- kde2d(coords[, 1], coords[, 2], n = 500) # n specifies the number of grids
-
-# Convert KDE to raster format
-kde_df <- expand.grid(x = kde$x, y = kde$y)
-kde_df$z <- as.vector(kde$z)
-
-head(kde_df, 5)
-
-# Plot KDE heat map
-ggplot() +
-  geom_raster(data = kde_df, 
-              aes(x = x, y = y, fill = z), 
-              alpha = 1) +  # Kernel density heat map
-  geom_sf(data = sfnh, fill = NA, color = "black") +  # Neighborhood boundaries
-  scale_fill_gradientn(colors = c("transparent", "lightpink", "red", "darkred"), name = "Density") +
-  theme_void() +
-  labs(title = "Heat Map of Restaurants in San Francisco")
-```
-
-Now, you can clearly see where the restaurants are most concentrated!
-
-While heat maps are useful for clearly visualizing concentration of restaurants, the second limitation still remains. With points data, it is difficult to discern spatial patterns of restaurants by neighborhoods because restaurants are both in and outside of neighborhood boundaries. To solve this problem, we will discuss **spatial join** in the following section, which allows us to spatially link restaurants to neighborhoods, so that we can reduce points data to the level of neighborhoods.
-
-
 ## Spatial join
 
 Spatial join allows you to combine two sf objects based on the spatial relationship between their geometries. For example, we can think of the relationship between neighborhoods (polygons) and restaurants (points).
@@ -160,6 +31,7 @@ restaurant_counts <- nh_joined %>%
 head(restaurant_counts, 10)
 ```
 
+
 **MAPPING AGGREGATED RESTAURANT COUNTS**
 
 As the count of restaurants is a quantitative variable, we can visualize it using the choropleth map. I first join the restaurant counts data with neighborhood boundaries to get the neighborhood-level spatial data. Then, I create a map using custom breaks based on the distribution of the number of restaurants within a neighborhood. 
@@ -172,6 +44,10 @@ biz_colors <- sfnh %>%
 
 head(biz_colors, 3)
 hist(biz_colors$n_rst)
+```
+
+```{r save aggregated data, message=FALSE}
+st_write(biz_colors, "processed-data/agg_restaurants.geojson", driver = "GeoJSON", delete_dsn = TRUE)
 ```
 
 ```{r aggregate-map}
@@ -327,7 +203,8 @@ ggsave("sf_restaurant_maps.png", plot = combined,
 Discuss similarities and differences across four different types of maps. What are pros and cons of each type of map? Which visualization do you think is most effective and why?
 
 
-**AESTHETIC DETAILS**
+
+**LEARN MORE**
 
 While it is not strictly expected in sociology papers, you can also add a north arrow and a scale bar to a map using the ggspatial package.
 
@@ -358,13 +235,4 @@ ggplot() +
                          style = north_arrow_fancy_orienteering)  
 ```
 
-
-
-
-**LEARN MORE**
-
-For visualizing density, **hotspot maps** also exist though we do not cover in this tutorial. What makes a hotspot map different from a heat map? The short answer is statistics! A heat map provides a smooth, continuous visualization of data across the given area of interest (e.g., neighborhood), similar to histogram. A hotspot map highlights areas that are statistically significant by comparing the distribution of points in the area of interest (e.g., neighborhood) to how they would be distributed in a random manner. For example, a hotspot map of crimes would demonstrate which areas have more or less incidents than we would expect if the “crime generating process” was completely random. The hotspots indicate areas where the frequency of crimes is higher than we would expect if crime was randomly distributed across the neighborhood. 
-
-
-![Source: ESRI](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/hotspot.png)
 

@@ -13,5 +13,6 @@ distribution-and-density
 spatial-join
 export-maps
 accounting-for-regulations
-spatial-relationships
+spatial-functions
+constructing-geometry
 additional-topics

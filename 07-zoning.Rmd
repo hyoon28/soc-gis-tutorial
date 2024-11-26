@@ -6,9 +6,9 @@ However, the distribution of organizational resources, and more broadly, the bui
 
 In the following, we will discuss how ["community benefit districts (CBDs)"](https://www.sf.gov/information/community-benefit-districts), also known as "business improvement districts (BIDs), may have a spatial relationship with the distribution of restaurants in San Francisco. In San Francisco, CBDs are designated based on a private-public partnership to fund improvements and get customized support for commercial and mixed-use corridors in select neighborhoods. 
 
-```{r import-zone}
+```{r import-zone, message=FALSE}
 # Import the cbds data
-sfzone <- st_read("data/bid-cbd.geojson") %>%
+sfzone <- st_read("data/bid_cbd.geojson") %>%
   dplyr::select(community_benefit_district, contract_duration, established, geometry)
 
 head(sfzone, 3)
@@ -23,10 +23,10 @@ ggplot() +
   labs(title = "Community Benefit Districts in San Francisco")
 ```
 
-Recollect how restaurants were distributed in San Francisco. We can, for instance, ask if a neighborhood is within or close to BIDs, they are likely to have more businesses. If this was the case, such a spatial proximity could be an important factor in estimating the relationship between a neighborhood and the number of businesses. Below, we will how to create a spatial variable at the neighborhood-level, indicating 1) whether the neighborhood intersects with BIDs (binary), as well as 2) its nearest or average distance to BIDs (continuous).
+Recollect how restaurants were distributed in San Francisco. We can, for instance, ask if a neighborhood is within or close to BIDs, they are likely to have more businesses. If this was the case, such a spatial proximity could be an important factor in estimating the relationship between a neighborhood and the number of businesses. Below, we will learn how to create a spatial variable at the neighborhood-level, indicating 1) whether the neighborhood intersects with BIDs (binary), as well as 2) its nearest or average distance to BIDs (continuous).
 
 
-## Spatial relationships
+## Spatial functions
 
 First, let's determine whether a neighborhood boundary intersects with BIDs. We can use st_intersects function to create a list of neighborhoods and its intersecting BIDs. 
 
@@ -43,17 +43,7 @@ biz_colors$intersects_cbd <- sapply(intersections,
 head(biz_colors, 3)
 ```
 
-Here, we can see that a new "intersects_cbd" column was created and added to the sf object, biz_colors. With this neighborhood-level data, you could run a bivariate regression model estimating the relationship between the number of businesses and being in BIDs. 
-
-```{r run-models}
-# Assuming you have the number of businesses in a column `num_businesses`
-model <- lm(n_rst ~ intersects_cbd, data = biz_colors)
-
-# View the summary of the model
-summary(model)
-```
-
-This simple analysis demonstrates that neighborhoods that intersect BIDs, on average, indeed have 65.54 more businesses compared to neighborhoods that do not intersect with BIDs. Such a spatial variable can be included as a main predictor or as a control variable depending on your research question. 
+Here, we can see that a new "intersects_cbd" column was created and added to the sf object, biz_colors.
 
 The second solution requires calculating distance. What is the nearest or average distance to BIDs for a given neighborhood? We use the centroids of polygons for distance calculations.
 
@@ -82,42 +72,229 @@ head(distance_df, 3)
 ```{r nearest-distance}
 # Reshape to a long-format for analysis
 distance_long <- distance_df %>%
-  rownames_to_column("Neighborhood") %>%
+  rownames_to_column("Neighborhood") %>% # convert row names into a new column
   pivot_longer(
-    cols = -Neighborhood,
-    names_to = "BID",
-    values_to = "Distance"
+    cols = -Neighborhood,          # pivot all columns except "Neighborhood"
+    names_to = "BID",              # names of the  column will become values in "BID"
+    values_to = "Distance"         # values will go into "Distance" column
   )
 
 head(distance_long, 10)
 
-# Identify nearest distance
+# Identify nearest distance BID
 nearest_bid <- distance_long %>%
   group_by(Neighborhood) %>%
   slice_min(order_by = Distance)
 
 head(nearest_bid, 10)
-```
 
-This type of distance data can be used for network analysis to study urban connectivity, accessibility, and so forth. In network terms, a Neighborhood is ego, and a BID is alter. Distance is edge, connecting ego and alter. Network analysis is beyond the scope of this tutorial, but remember, handling spatial data is a powerful tool that will enable you to conduct advanced statistical analysis.
+# Join the distance data to the existing neighborhood-level spatial data
+biz_colors <- biz_colors %>%
+  left_join(nearest_bid, 
+            by = c("nhood" = "Neighborhood"))
 
-We can simply add the nearest distance to the existing neighborhood-level data using the following function.
-
-```{r add-distance}
-# Calculate the minimum distance for each neighborhood
-biz_colors$min_distance_to_bid <- apply(distances, 1, min) # 'mean' for average distance
+# Alternatively, you can directly add the distance variable using apply function
+biz_colors$min_distance_to_bid <- apply(distances, # use distances matrix
+                                        1,   # apply to rows
+                                        min) # get minimum
 
 head(biz_colors, 3)
 ```
 
-Now, you have a neighborhood-level data with the number of restaurants (n_rst) as an outcome variable, and two spatial predictors - intersects_cbd and min_distance_to_bid. You can always merge additional predictors, such as aggregated demographic variables, which we covered in the beginning of the tutorial.
+Instead of just looking at the nearest neighbor, if you want the average of the nearest three or specific number of neighbors, you can specify the number and get the average as well.
 
-**THINK AND SHARE**
+```{r nearest-bids}
+# Identify three nearest BIDs
+nearest_three_bid <- distance_long %>%
+  group_by(Neighborhood) %>%
+  slice_min(order_by = Distance,
+            n = 3) # the number of nearest neighbors
 
-What other regulations, including but not limited to zoning, can you think of that have meaningful impact on spatial organization of people and the built environment? For example, scholars have examined the relationship between historic districts and gentrification [(McCabe and Ellen, 2016)](https://www.tandfonline.com/doi/full/10.1080/01944363.2015.1126195) and the impact of BIDs on property values [(Ellen et al, 2007)](https://www.jstor.org/stable/pdf/25067439.pdf). What are their research questions? How did these authors build and analyze their data? What are the key findings?
+# Calculate the average distance
+avg_distance_to_bids <- nearest_three_bid %>%
+  group_by(Neighborhood) %>%
+  summarize(avg_distance = mean(Distance, na.rm = TRUE))
+
+# Join the distance data to the existing neighborhood-level spatial data
+biz_colors <- biz_colors %>%
+  left_join(avg_distance_to_bids, 
+            by = c("nhood" = "Neighborhood"))
+
+head(biz_colors, 3)
+```
+
+This type of distance data can be used for network analysis to study urban connectivity, accessibility, and so forth. In network terms, a Neighborhood is ego, and a BID is alter. Distance is edge, connecting ego and alter. Network analysis is beyond the scope of this tutorial, but remember, handling spatial data is a powerful tool that will enable you to conduct advanced statistical analysis.
+
+Now, you have a neighborhood-level data with the number of restaurants (n_rst) as an outcome variable, and three spatial predictors - intersects_cbd, min_distnace_distance_to_bid, and avg_distance_to_bids. You can always merge additional predictors, such as aggregated demographic variables, which we covered in the beginning of the tutorial.
+
+With this neighborhood-level data, you could run a bivariate regression model estimating the relationship between the number of businesses and being in BIDs. 
+
+```{r run-models}
+# Run the bivariate ols regression model
+model <- lm(n_rst ~ intersects_cbd, data = biz_colors)
+
+# View the summary of the model
+summary(model)
+```
+
+This simple analysis demonstrates that neighborhoods that intersect BIDs, on average, indeed have 65.54 more businesses compared to neighborhoods that do not intersect with BIDs. Such a spatial variable can be included as a main predictor or as a control variable depending on your research question. 
 
 
-**LINES**
+**CODING EXERCISE**
+
+ - Create spatial variables between neighborhoods and historic districts  
+   - Import the historic district data.
+   - Create a binary variable based on whether the neighborhood overlaps with any historic districts.
+   - Calculate distance of the three nearest historic districts for each neighborhood.
+
+
+## Constructing Geometry
+
+In the following, we will learn some techniques that enable you to manipulate geometries. Specifically, we will focus on three geometric operations: aggregating polygons, creating a buffer zone, and extracting overlapping areas.
+
+**AGGREGATING POLYGONS**
+
+In San Francisco, there are 16 BIDs. In the original data, these districts come as separate polygons. However, you could combine them into one polygon. 
+
+```{r create-union}
+# Create a simple union
+sfzone_union <- st_union(sfzone)
+
+head(sfzone_union, 3)
+
+# Display the new polygon
+plot(st_geometry(sfzone_union))
+
+# Compare it with the original BIDs
+ggplot() +
+  # add neighborhood boundaries
+  geom_sf(data = sfnh, fill = "light grey", color = "white", size = 0.3) +
+  # add BID boundaries
+  geom_sf(data = sfzone, fill = "light blue", color = "black", size = 0.3)+
+  # add combined BIDs
+  geom_sf(data = sfzone_union, fill = NA, color = "red", size = 1.5) +
+  theme_void()
+```
+
+Taking a step further from a simple aggregation, you can create combined polygons based on a grouping variable. For example, we know when each BID was established. We can divide BIDs into those established before/after 2010, and create two BID polygons that are new vs. old.
+
+```{r agg-by-type}
+# Add a column to classify BIDs
+sfzone <- sfzone %>%
+  mutate(bid_type = ifelse(established > 2010, "New", "Old"))
+
+# Aggregate polygons by BID_Type
+sfzone_by_type <- sfzone %>%
+  group_by(bid_type) %>%
+  summarize(geometry = st_union(geometry), .groups = "drop")
+
+head(sfzone_by_type, 3)
+
+# Visualize
+ggplot() +
+  # add neighborhood boundaries
+  geom_sf(data = sfnh, fill = "light grey", color = "white", size = 0.3) +
+  # aggregated BIDs by type
+  geom_sf(data = sfzone_by_type, 
+          aes(fill = bid_type), 
+          color = "black", size = 0.3) +
+  theme_void() +
+  labs(fill = "BID Type")
+```
+
+
+**BUILDING BUFFER ZONES**
+
+The function st_buffer() allows to construct buffer zones. It takes in a buffer distance and geometry type and outputs a polygon with a boundary the buffer distance away from the input geometry. Buffer zones are useful to think about spatial spill over effects, for example. Take the case of BIDs. Since BIDs help improve the commercial corridors, you can expect that areas (or businesses) located within BIDs might experience positive economic impact. Moreover, those that are not within, but in the vicinity of BIDs may also receive positive impacts by the function of proximity. Such a process can be conceptualized as spatial spill over effects. To address this issue, you could create buffers.
+
+```{r create-buffer, warning=FALSE}
+# Create a buffer around the BID boundaries (e.g., 200 meters)
+bid_buffer <- st_buffer(sfzone, dist = 200) 
+
+head(bid_buffer, 3)
+
+# Exclude the BID area from the buffer
+surrounding_buffer <- st_difference(bid_buffer, sfzone_union)
+
+plot(st_geometry(bid_buffer))
+plot(st_geometry(surrounding_buffer))
+```
+
+```{r plot buffer}
+# Create a plot displaying buffer zones around neighborhoods
+ggplot() +
+  # add neighborhoods
+  geom_sf(data = sfnh, fill = "lightgray", color = "white", size = 0.2) +
+  # add buffer zones
+  geom_sf(data = bid_buffer, fill = "blue", alpha = 0.1, color = "blue", size = 0.5) +
+  # add BID boundaries
+  geom_sf(data = sfzone, fill = NA, color = "red", size = 1) +
+  # style the map
+  theme_void()
+```
+
+
+**INTERSECTING POLYGONS**
+
+We can also extract overlapping areas of two polygons and create a new geometry. Let's say if you're interested in focusing on areas that are central in San Francisco.
+
+```{r intersection}
+# Create a central circle
+circle <- sftrt %>%
+  st_union() %>%
+  st_centroid() %>% 
+  st_buffer(2000)
+
+# Display the circle 
+ggplot() +
+  # add neighborhoods
+  geom_sf(data = sftrt, fill = "lightgray", color = "white", size = 0.2) +
+  # add a circle
+  geom_sf(data = circle, fill = "red", alpha = 0.5, color = "green", size = 0.5) +
+  # style the map
+  theme_void() 
+
+# Get the overlapping area 
+sf_circle <- st_intersection(x = sftrt, y = circle)
+
+plot(st_geometry(sf_circle), border = "black")
+
+# Highlight the central area in SF
+ggplot() +
+  # add neighborhoods
+  geom_sf(data = sftrt, fill = "lightgray", color = "white", size = 0.2) +
+  # add a circle
+  geom_sf(data = sf_circle, fill = "red", alpha = 0.5, color = "green", size = 0.5) +
+  # style the map
+  theme_void() 
+```
+
+By the same token, you can identify and map areas that intersect with both BIDs and historic districts in SF.
+
+```{r historic-intersect, warning=FALSE}
+# Import historic district data
+historic <- st_read("data/historic_district.geojson")
+
+# Get intersecting polygons
+bid_historic <- st_intersection(x = historic, y = sfzone)
+
+# Visualize the overlapping areas
+ggplot() +
+  # add neighborhoods
+  geom_sf(data = sfnh, fill = "lightgray", color = "white", size = 0.2) +
+  # add BIDs
+  geom_sf(data = sfzone, fill = NA, alpha = 0.5, color = "red", size = 0.5) +
+  # add historic districts
+  geom_sf(data = historic, fill = NA, alpha = 0.5, color = "blue", size = 0.5) +
+  # add the overlapping areas
+  geom_sf(data = bid_historic, fill = "green", alpha = 0.5, color = NA) +
+  # style the map
+  theme_void() 
+```
+
+
+
+**LEARN MORE**
 
 Remember three different forms of vector data? We have discussed polygons, points.. and what's left? Lines. Lines are useful when you are interested in exploring and visualizing transportation networks, mobility patterns, connectivity, and so forth. We won't cover much details about the line formatted data, but will provide a short example of mapping lines.
 
@@ -126,7 +303,7 @@ During COVID, San Francisco city government launched [the Slow Street Program](h
 
 ```{r import-street}
 # Import slow street data (lines)
-slowst <- st_read("data/slow-st.geojson")
+slowst <- st_read("data/slow_st.geojson")
 
 ggplot() +
   geom_sf(data = sfnh, fill = "lightgrey", color = "white", size = 0.2) + 
@@ -139,11 +316,18 @@ ggplot() +
 
 ![Source: SFMTA (Accessed 2024)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-slow-st.png)
 
+
+
 **THINK AND SHARE**
 
- - What kind of research questions can you ask about BIDs?
- - What kind of research questions can you ask about slow streets?
+What other regulations, including but not limited to zoning, can you think of that have meaningful impact on spatial organization of people and the built environment? 
+
+For example, scholars have examined the relationship between historic districts and neighborhood change [(McCabe and Ellen, 2016)](https://www.tandfonline.com/doi/full/10.1080/01944363.2015.1126195) and the impact of BIDs on property values [(Ellen et al, 2007)](https://www.jstor.org/stable/pdf/25067439.pdf). 
+
+ - What are their research questions? 
+ - How did these authors build and analyze their data? 
+ - What are the key findings?
+
+What kind of research questions can you ask about the impact of zoning? Discuss the potential predictors (x) or outcomes (y).
  
- Discuss the potential predictors (x) or outcomes (y).
- 
- 
+
