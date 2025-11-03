@@ -96,7 +96,7 @@ st_write(sf_joined, "processed-data/sfnh_dem_joined.geojson",
 
 Below, you see two maps, each representing Chicago ans Seattle.
 
-![Source: Hwang (2015).doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png)
+![Source: Hwang (2015).doi: 10.1177/0002716215579823](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png)
 
  - What are the geographic boundaries used in this figure?
  - What attribute is displayed in the map?
@@ -104,7 +104,7 @@ Below, you see two maps, each representing Chicago ans Seattle.
 
 Compare this map to the other map of Chicago below:
 
-![Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png)
+![Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png)
 
 Explore [Open Data website for City of Paris](https://opendata.paris.fr/pages/home/). 
 

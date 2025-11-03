@@ -314,7 +314,7 @@ ggplot() +
   theme_void()
 ```
 
-![Source: SFMTA (Accessed 2024)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-slow-st.png)
+![Source: SFMTA (Accessed 2024)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-slow-st.png)
 
 
 

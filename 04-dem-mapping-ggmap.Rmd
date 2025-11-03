@@ -2,7 +2,7 @@
 
 By joining attributes with spatial boundaries, now we can map demographic patterns. But, first of all, what is a map? A map is a simplified and codified image of geographical space, representing its characteristics and/or its organization. It is the result of a creative action and of the choices made by its author (Lambert and Zanin, 2000; p.4).
 
-![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-concept.png)
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/map-concept.png)
 
 Lambert and Zanin (2020) classify maps into two types: Topographic maps are maps that mainly show results of direct observation, such as water courses and human constructions. These maps represent concrete elements that are durably established on a portion of terrestrial space at a given time.
 
@@ -11,7 +11,7 @@ Thematic maps are maps on which localizable qualitative or quantitative phenomen
 We will learn how to create **thematic maps**.
 
 
-![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/thematic_map.png)
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/thematic_map.png)
 
 
 

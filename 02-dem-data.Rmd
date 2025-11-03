@@ -14,7 +14,7 @@ Geographic boundaries can be defined and drawn at various levels, from regions t
 Let's demonstrate the importance of defining neighborhood boundaries using the case of San Francisco. San Francisco's neighborhood names and boundaries have changed over time [(1)](https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php) and the current names and boundaries are often inconsistently perceived and administered [(2)](https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/). The image below, for example, compares the old and current neighborhood names and boundaries in San Francisco.
 
 
-![Source: SFGATE](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-name-change.png)
+![Source: SFGATE](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-name-change.png)
 
 
 
@@ -22,7 +22,7 @@ In this tutorial, we will learn how to visualize San Francisco neighborhoods bas
 
 
 
-![DataSF is an open data website provided by the city government of San Francisco](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-open-data.png)
+![DataSF is an open data website provided by the city government of San Francisco](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-open-data.png)
 
 
 
@@ -106,7 +106,7 @@ What differences do you see between "Analysis Neighborhood" and "Census Tract"?
 
 Let's consider another example of contentious geographic unit: Europe. How will you define "Europe"? Should a map of Europe include Turkey, Ukraine, Lapland, or French Guyana? Where is the center of Europe? 
 
-![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/europe.png)
+![Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/europe.png)
 
  - Think of various geographic levels of analysis.
  - What questions could we ask about them?

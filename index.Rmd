@@ -24,7 +24,7 @@ Each tutorial is a chapter in this website. You can navigate through the chapter
 
 Spatial data refers to data representing features or objects on the Earth’s surface. Whether it’s man-made or natural, if it has to do with a specific location on the surface of the Earth, it is spatial. Spatial data is typically classified into two types: Vector data and raster data. Vector data represents geographic data symbolized as points, lines, or polygons. Raster data represents geographic data as a matrix of cells that each contains an attribute value. In this series of tutorials, we focus on the *vector data* type.
 
-![Representing Real World Through Spatial Data](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/types-of-data.png)
+![Representing Real World Through Spatial Data](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/types-of-data.png)
 
 
 There are three forms of vector data.
@@ -33,7 +33,7 @@ There are three forms of vector data.
  - Lines: A line defined by two coordinates, with a definite length (e.g., roads, rivers)
  - Polygons: A closed shape is defined using three or more coordinates, representing areas (e.g., neighborhood boundaries).
  
-![Types of Spatial Data. Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/vector_raster.png)
+![Types of Spatial Data. Source: Lambert and Zanin (2020)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/vector_raster.png)
 
 Spatial data contains more information than just a location on the surface of the Earth represented by vector data. Any additional information, or non-spatial data, that describes a feature is referred to as an *attribute*. Sociologists utilize a variety of non-spatial data, such as demographic and socioeconomic data linked to particular locales.
 
@@ -46,7 +46,7 @@ While there are multiple tools to carry out spatial analysis, we will use R in t
 
 
 
-![Tools for Spatial Analysis. Source: CARTO)](/Users/hesuyoon/Documents/ENSAE-CREST/2024/2 Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/spatial-analysis.png)
+![Tools for Spatial Analysis. Source: CARTO)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/spatial-analysis.png)
 
 
 

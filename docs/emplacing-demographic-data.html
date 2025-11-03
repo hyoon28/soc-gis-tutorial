@@ -195,12 +195,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THE CASE OF SAN FRANCISCO</strong></p>
 <p>Let’s demonstrate the importance of defining neighborhood boundaries using the case of San Francisco. San Francisco’s neighborhood names and boundaries have changed over time <a href="https://www.sfgate.com/places/article/What-did-your-neighborhood-used-to-be-called-15098783.php">(1)</a> and the current names and boundaries are often inconsistently perceived and administered <a href="https://www.sfchronicle.com/projects/2022/san-francisco-neighborhoods/">(2)</a>. The image below, for example, compares the old and current neighborhood names and boundaries in San Francisco.</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-name-change.png" alt="" />
+<img src="images/sf-name-change.png" alt="" />
 <p class="caption">Source: SFGATE</p>
 </div>
 <p>In this tutorial, we will learn how to visualize San Francisco neighborhoods based on census tracts as well as the “Analysis Neighborhood” created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco’s <a href="https://datasf.org/opendata/">DataSF</a>. Open their website and then click the “Geographic Locations &amp; Boundaries” tab.</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-open-data.png" alt="" />
+<img src="images/sf-open-data.png" alt="" />
 <p class="caption">DataSF is an open data website provided by the city government of San Francisco</p>
 </div>
 <p>Under this tab, you will find the 2010 census tract and “Analysis Neighborhood” boundaries, among many other geographic data.</p>
@@ -268,7 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THINK AND SHARE</strong></p>
 <p>Let’s consider another example of contentious geographic unit: Europe. How will you define “Europe”? Should a map of Europe include Turkey, Ukraine, Lapland, or French Guyana? Where is the center of Europe?</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/europe.png" alt="" />
+<img src="images/europe.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <ul>
@@ -333,7 +333,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Simple feature collection with 1 feature and 9 fields
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
-## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77564
+## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77565
 ## Geodetic CRS:  WGS 84
 ##     nhood  pwhite   pblack   pasian    phisp pwhite17 pblack17 pasian17
 ## 1 Mission 32.5255 2.973325 11.01126 50.07308 41.09069 3.660031 14.46827
@@ -346,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Simple feature collection with 1 feature and 1 field
 ## Geometry type: MULTIPOLYGON
 ## Dimension:     XY
-## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77564
+## Bounding box:  xmin: -122.4269 ymin: 37.74783 xmax: -122.403 ymax: 37.77565
 ## Geodetic CRS:  WGS 84
 ##    pwhite                       geometry
 ## 1 32.5255 MULTIPOLYGON (((-122.411 37...</code></pre>
@@ -393,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>THINK AND SHARE</strong></p>
 <p>Below, you see two maps, each representing Chicago ans Seattle.</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example.png" alt="" />
+<img src="images/map-example.png" alt="" />
 <p class="caption">Source: Hwang (2015).doi: 10.1177/0002716215579823</p>
 </div>
 <ul>
@@ -403,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Compare this map to the other map of Chicago below:</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png" alt="" />
+<img src="images/map-example2.png" alt="" />
 <p class="caption">Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x</p>
 </div>
 <p>Explore <a href="https://opendata.paris.fr/pages/home/">Open Data website for City of Paris</a>.</p>
@@ -418,14 +418,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.3</span> Data visualization<a href="emplacing-demographic-data.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>By joining attributes with spatial boundaries, now we can map demographic patterns. But, first of all, what is a map? A map is a simplified and codified image of geographical space, representing its characteristics and/or its organization. It is the result of a creative action and of the choices made by its author (Lambert and Zanin, 2000; p.4).</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/map-concept.png" alt="" />
+<img src="images/map-concept.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <p>Lambert and Zanin (2020) classify maps into two types: Topographic maps are maps that mainly show results of direct observation, such as water courses and human constructions. These maps represent concrete elements that are durably established on a portion of terrestrial space at a given time.</p>
 <p>Thematic maps are maps on which localizable qualitative or quantitative phenomena of all kinds are represented. Information is represented according to the rules of graphic semiology. These maps are designed, laid out, and “staged” to produce an intelligible image of the geographical phenomenon at hand.</p>
 <p>We will learn how to create <strong>thematic maps</strong>.</p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/thematic_map.png" alt="" />
+<img src="images/thematic_map.png" alt="" />
 <p class="caption">Source: Lambert and Zanin (2020)</p>
 </div>
 <p>When it comes to making thematic maps, it is important to consider what type of variable you intend to display (think of your attribute data). We will learn about two different types of maps: <strong>Choropleth map</strong> for quantitative variables and <strong>Typology map</strong> for qualitative variables.</p>

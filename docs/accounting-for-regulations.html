@@ -195,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb84-2"><a href="accounting-for-regulations.html#cb84-2" aria-hidden="true" tabindex="-1"></a>sfzone <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/bid_cbd.geojson&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb84-3"><a href="accounting-for-regulations.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(community_benefit_district, contract_duration, established, geometry)</span></code></pre></div>
 <pre><code>## Reading layer `bid_cbd&#39; from data source 
-##   `/Users/hesuyoon/Documents/ENSAE-CREST/2024/1 Fall/Teaching/Advanced_Method/soc-gis-tutorial/data/bid_cbd.geojson&#39; 
+##   `/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/data/bid_cbd.geojson&#39; 
 ##   using driver `GeoJSON&#39;
 ## Simple feature collection with 16 features and 12 fields
 ## Geometry type: MULTIPOLYGON
@@ -581,7 +581,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="accounting-for-regulations.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import historic district data</span></span>
 <span id="cb126-2"><a href="accounting-for-regulations.html#cb126-2" aria-hidden="true" tabindex="-1"></a>historic <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/historic_district.geojson&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `historic_district&#39; from data source 
-##   `/Users/hesuyoon/Documents/ENSAE-CREST/2024/1 Fall/Teaching/Advanced_Method/soc-gis-tutorial/data/historic_district.geojson&#39; 
+##   `/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/data/historic_district.geojson&#39; 
 ##   using driver `GeoJSON&#39;
 ## Simple feature collection with 191 features and 12 fields
 ## Geometry type: MULTIPOLYGON
@@ -610,7 +610,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="accounting-for-regulations.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import slow street data (lines)</span></span>
 <span id="cb129-2"><a href="accounting-for-regulations.html#cb129-2" aria-hidden="true" tabindex="-1"></a>slowst <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data/slow_st.geojson&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `slow_st&#39; from data source 
-##   `/Users/hesuyoon/Documents/ENSAE-CREST/2024/1 Fall/Teaching/Advanced_Method/soc-gis-tutorial/data/slow_st.geojson&#39; 
+##   `/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/data/slow_st.geojson&#39; 
 ##   using driver `GeoJSON&#39;
 ## Simple feature collection with 240 features and 22 fields
 ## Geometry type: LINESTRING
@@ -626,7 +626,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb131-7"><a href="accounting-for-regulations.html#cb131-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/import-street-1.png" width="672" /></p>
 <div class="figure">
-<img src="/Users/hesuyoon/Documents/ENSAE-CREST/2024/2%20Fall/Teaching/Advanced_Method/soc-gis-tutorial/images/sf-slow-st.png" alt="" />
+<img src="images/sf-slow-st.png" alt="" />
 <p class="caption">Source: SFMTA (Accessed 2024)</p>
 </div>
 <p><strong>THINK AND SHARE</strong></p>
