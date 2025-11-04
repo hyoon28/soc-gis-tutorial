@@ -56,7 +56,7 @@ sf_joined <- sf_joined %>%
 
 # Check
 sf_joined %>%
-  select(diversity)
+  dplyr::select(diversity)
 ```
 
 To create a choropleth map, we first have to check the statistical distribution of the variable. 

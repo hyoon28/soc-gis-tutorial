@@ -63,7 +63,7 @@ geocoded_sfbiz <- sfbiz %>%
 
 # Check the geocoded data
 geocoded_sfbiz %>%
-  select(lat, long)
+  dplyr::select(lat, long)
 ```
 
 ```{r import-geocoded}

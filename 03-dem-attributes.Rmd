@@ -31,11 +31,9 @@ sf_joined <- st_make_valid(sf_joined)
 Now, we can explore neighborhood-level characteristics.
 
 ```{r explore-joined, warning=FALSE, message=FALSE}
-library(tidyverse)
-
 # Display the share of white population of neighborhoods
 sf_joined %>%
-  select(nhood, pwhite)
+  dplyr::select(nhood, pwhite)
 
 # Display the neighborhood named "Mission"
 sf_joined %>% 
@@ -44,7 +42,7 @@ sf_joined %>%
 # Display the share of white population of "Mission"
 sf_joined %>%
   filter(nhood == "Mission") %>%
-  select(pwhite)
+  dplyr::select(pwhite)
 ```
 
 

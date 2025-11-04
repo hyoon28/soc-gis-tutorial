@@ -196,14 +196,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb44-2"><a href="from-people-to-built-environment.html#cb44-2" aria-hidden="true" tabindex="-1"></a>sfbnb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/sfbnb.csv&quot;</span>)</span>
 <span id="cb44-3"><a href="from-people-to-built-environment.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-4"><a href="from-people-to-built-environment.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sfbnb, <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##     id trt10       analysis latitude longitude property_type
-## 1  958 16700 haight ashbury 37.76931 -122.4339     Apartment
-## 2 5858 25300 bernal heights 37.74511 -122.4210     Apartment
-## 3 7918 17102 haight ashbury 37.76669 -122.4525     Apartment
-##   review_scores_rating review_scores_location number_of_reviews
-## 1                   97                     10               176
-## 2                   98                     10               111
-## 3                   85                      9                17</code></pre>
+<pre><code>##     id trt10       analysis latitude longitude property_type review_scores_rating
+## 1  958 16700 haight ashbury 37.76931 -122.4339     Apartment                   97
+## 2 5858 25300 bernal heights 37.74511 -122.4210     Apartment                   98
+## 3 7918 17102 haight ashbury 37.76669 -122.4525     Apartment                   85
+##   review_scores_location number_of_reviews
+## 1                     10               176
+## 2                     10               111
+## 3                      9                17</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="from-people-to-built-environment.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform lat/long into sf object</span></span>
 <span id="cb46-2"><a href="from-people-to-built-environment.html#cb46-2" aria-hidden="true" tabindex="-1"></a>sf_sfbnb <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(sfbnb, </span>
 <span id="cb46-3"><a href="from-people-to-built-environment.html#cb46-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), </span>
@@ -216,14 +216,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Dimension:     XY
 ## Bounding box:  xmin: -122.4525 ymin: 37.74511 xmax: -122.421 ymax: 37.76931
 ## Geodetic CRS:  WGS 84
-##     id trt10       analysis property_type review_scores_rating
-## 1  958 16700 haight ashbury     Apartment                   97
-## 2 5858 25300 bernal heights     Apartment                   98
-## 3 7918 17102 haight ashbury     Apartment                   85
-##   review_scores_location number_of_reviews                   geometry
-## 1                     10               176 POINT (-122.4339 37.76931)
-## 2                     10               111  POINT (-122.421 37.74511)
-## 3                      9                17 POINT (-122.4525 37.76669)</code></pre>
+##     id trt10       analysis property_type review_scores_rating review_scores_location
+## 1  958 16700 haight ashbury     Apartment                   97                     10
+## 2 5858 25300 bernal heights     Apartment                   98                     10
+## 3 7918 17102 haight ashbury     Apartment                   85                      9
+##   number_of_reviews                   geometry
+## 1               176 POINT (-122.4339 37.76931)
+## 2               111  POINT (-122.421 37.74511)
+## 3                17 POINT (-122.4525 37.76669)</code></pre>
 <p>You can see that geometry is points, rather than polygons. Each point represents an Airbnb property (id- unique identifier). It also indicates the census tract (trt10) and neighborhood name (analysis) in which the Airbnb property is located. The data also contains attributes of the Airbnb property, such as property type, review score ratings, and the number of reviews.</p>
 <p>You can save the converted file as geojson using the “st_write” command.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="from-people-to-built-environment.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the Airbnb data as a geojson file</span></span>
@@ -260,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-12"><a href="from-people-to-built-environment.html#cb51-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-13"><a href="from-people-to-built-environment.html#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the geocoded data</span></span>
 <span id="cb51-14"><a href="from-people-to-built-environment.html#cb51-14" aria-hidden="true" tabindex="-1"></a>geocoded_sfbiz <span class="sc">%&gt;%</span></span>
-<span id="cb51-15"><a href="from-people-to-built-environment.html#cb51-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(lat, long)</span></code></pre></div>
+<span id="cb51-15"><a href="from-people-to-built-environment.html#cb51-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(lat, long)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 2
 ##     lat  long
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -447,22 +447,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Dimension:     XY
 ## Bounding box:  xmin: -122.4428 ymin: 37.77644 xmax: -122.4202 ymax: 37.79037
 ## Geodetic CRS:  WGS 84
-##                nhood                      company       address_line_1
-## 1   Western Addition                 HINATA SUSHI     810 VAN NESS AVE
-## 1.1 Western Addition                  BURGER KING     819 VAN NESS AVE
-## 1.2 Western Addition ISTITUTO ITALIANO DI CULTURA 601 VAN NESS AVE # F
-##              city zipcode      naics8_descriptions employee_size_location
-## 1   SAN FRANCISCO   94109 FULL-SERVICE RESTAURANTS                      6
-## 1.1 SAN FRANCISCO   94109 FULL-SERVICE RESTAURANTS                     58
-## 1.2 SAN FRANCISCO   94102 FULL-SERVICE RESTAURANTS                      6
-##     sales_volume_location state                                       full_add
-## 1                     427    CA     810 VAN NESS AVE, SAN FRANCISCO, CA, 94109
-## 1.1                  2447    CA     819 VAN NESS AVE, SAN FRANCISCO, CA, 94109
-## 1.2                   427    CA 601 VAN NESS AVE # F, SAN FRANCISCO, CA, 94102
-##         small                       geometry
-## 1   non-small MULTIPOLYGON (((-122.4214 3...
-## 1.1 non-small MULTIPOLYGON (((-122.4214 3...
-## 1.2 non-small MULTIPOLYGON (((-122.4214 3...</code></pre>
+##                nhood                      company       address_line_1          city zipcode
+## 1   Western Addition                 HINATA SUSHI     810 VAN NESS AVE SAN FRANCISCO   94109
+## 1.1 Western Addition                  BURGER KING     819 VAN NESS AVE SAN FRANCISCO   94109
+## 1.2 Western Addition ISTITUTO ITALIANO DI CULTURA 601 VAN NESS AVE # F SAN FRANCISCO   94102
+##          naics8_descriptions employee_size_location sales_volume_location state
+## 1   FULL-SERVICE RESTAURANTS                      6                   427    CA
+## 1.1 FULL-SERVICE RESTAURANTS                     58                  2447    CA
+## 1.2 FULL-SERVICE RESTAURANTS                      6                   427    CA
+##                                           full_add     small                       geometry
+## 1       810 VAN NESS AVE, SAN FRANCISCO, CA, 94109 non-small MULTIPOLYGON (((-122.4214 3...
+## 1.1     819 VAN NESS AVE, SAN FRANCISCO, CA, 94109 non-small MULTIPOLYGON (((-122.4214 3...
+## 1.2 601 VAN NESS AVE # F, SAN FRANCISCO, CA, 94102 non-small MULTIPOLYGON (((-122.4214 3...</code></pre>
 <p>In the joined data, we can see that restaurants (company) are nested within neighborhoods (nhood). We can aggregate this data to the neighborhood level and get the number of restaurants per neighborhood. Some neighborhoods may not any have restaurants, so you want to preserve that as 0 and not count as 1.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="from-people-to-built-environment.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count restaurants per neighborhood</span></span>
 <span id="cb66-2"><a href="from-people-to-built-environment.html#cb66-2" aria-hidden="true" tabindex="-1"></a>restaurant_counts <span class="ot">&lt;-</span> nh_joined <span class="sc">%&gt;%</span></span>
