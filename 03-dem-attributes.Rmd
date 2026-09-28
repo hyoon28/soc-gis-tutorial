@@ -6,6 +6,9 @@ Geographic boundaries alone don't tell us much about what is social about them. 
 We can merge a sf object with a data frame containing demographic attributes using the merge() function. 
 
 ```{r import-dem}
+# Set up
+library(tidyverse)
+
 # Import demographic attributes
 sfdem <- read.csv("data/sfnh_dem.csv")
 
