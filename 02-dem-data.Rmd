@@ -18,7 +18,7 @@ Let's demonstrate the importance of defining neighborhood boundaries using the c
 
 
 
-In this tutorial, we will learn how to visualize San Francisco neighborhoods based on census tracts as well as the "Analysis Neighborhood" created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco's [DataSF](https://datasf.org/opendata/). Open their website and then click the "Geographic Locations & Boundaries" tab. 
+In this tutorial, we will learn how to visualize San Francisco neighborhoods based on census tracts as well as the "Analysis Neighborhood" created by the city officials. Many US city governments provide their local data through Open Data websites, including San Francisco's [DataSF](https://data.sfgov.org/). Open their website and then click the "Geographic Locations & Boundaries" tab. 
 
 
 

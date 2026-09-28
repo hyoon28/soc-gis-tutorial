@@ -46,7 +46,7 @@ While there are multiple tools to carry out spatial analysis, we will use R in t
 
 
 
-![Tools for Spatial Analysis. Source: CARTO)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/spatial-analysis.png)
+![Tools for Spatial Analysis. (Source: CARTO)](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/spatial-analysis.png)
 
 
 

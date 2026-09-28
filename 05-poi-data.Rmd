@@ -101,7 +101,7 @@ ggplot() +
   geom_sf(data = sf_sfbiz, 
           color = "red",    
           size = 0.5,       
-          alpha = 0.8       # set transparency
+          alpha = 0.5       # set transparency
           ) +  
   theme_void() +
   labs(title = "Restaurants in San Francisco")
@@ -116,28 +116,25 @@ In our data, we have "employee size" and "sales volume" of restaurants as attrib
 
 ```{r point-attribute-map}
 # Create a new column based on employee size
-sf_sfbiz$small <- ifelse(sf_sfbiz$employee_size_location < 5, "small", "non-small")
+sf_sfbiz$small <- ifelse(sf_sfbiz$employee_size_location < 5,
+                         "small", "non-small")
 
 # Plot with ggplot
-ggplot() +
-  # display neighborhood boundaries as a layer
-  geom_sf(data = sfnh,
-          fill = "lightgray",
-          size = 0.02,
-          color = "white"
-          ) +
-  # add restaurants as another layer
-  geom_sf(data = sf_sfbiz,
-          aes(color = small), # specify the color based on "small" variable
-          size = 0.5, alpha = 0.8
-          ) +
-  scale_color_manual(values = c("small" = "red", "non-small" = "black"), # specify colors 
-                     labels = c("small" = "less than 5", 
-                                "non-small" = "5 or more")
-                                ) +           # set labels
-  theme_void() +
-  labs(title = "Restaurants by Employee Size in San Francisco",
+ggplot() + # display neighborhood boundaries as a layer 
+  geom_sf(data = sfnh, fill = "lightgray", size = 0.02, color = "white" ) + 
+  # add restaurants as another layer 
+  geom_sf(data = sf_sfbiz, 
+          aes(color = small), # specify the color based on "small" variable 
+          size = 0.5, alpha = 0.5 ) + 
+  scale_color_manual(values = c("small" = "red",
+                                "non-small" = "darkgreen"), # specify colors 
+                     labels = c("small" = "less than 5",
+                                "non-small" = "5 or more") # set labels
+                     ) +  
+  theme_void() + 
+  labs(title = "Restaurants by Employee Size in San Francisco", 
        color = "Employee Size")
+
 ```
 
 ```{r add-symbology}
@@ -152,20 +149,24 @@ ggplot() +
   # add restaurants as another layer
   geom_sf(data = sf_sfbiz,
           aes(color = small,
+              fill = small,
               shape = small,
               size = small), 
-          alpha = 0.8) +
-  scale_color_manual(values = c("small" = "red", "non-small" = "black")) +  
-  scale_shape_manual(values = c("small" = 23, "non-small" = 16),
+          alpha = 0.5) +
+  scale_color_manual(values = c("small" = "red", "non-small" = "darkgreen")) + 
+  scale_fill_manual(values = c("small" = "red", "non-small" = NA)) + 
+  scale_size_manual(values = c("small" = 0.5, "non-small" = 2.5)) + 
+  scale_shape_manual(values = c("small" = 21, "non-small" = 1),
                      labels = c("small" = "less than 5", 
-                                "non-small" = "5 or more")) + 
-  scale_size_manual(values = c("small" = 1.5, "non-small" = 0.5)) + 
+                               "non-small" = "5 or more")) + 
   guides(color = "none",
+         fill = "none",
          size = "none",
          shape = guide_legend(override.aes = list(
-           color = c("red", "black"), 
-           size = c(1.5, 0.5), 
-           shape = c(23, 16)
+           color = c("darkgreen", "red"),
+           fill = c(NA, "darkgreen"),
+           size = c(2.5, 0.5), 
+           shape = c(1, 21)
            ))) +
   theme_void() +
   labs(title = "Restaurants by Employee Size in San Francisco",

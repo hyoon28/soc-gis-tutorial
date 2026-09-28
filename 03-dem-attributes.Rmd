@@ -104,10 +104,10 @@ Compare this map to the other map of Chicago below:
 
 ![Source: Bader (2011). doi: 10.1111/j.1540-6040.2011.01368.x](/Users/hesuyoon/Documents/ENSAE-CREST/Teaching/Advanced_Method/soc-gis-tutorial/images/map-example2.png)
 
-Explore [Open Data website for City of Paris](https://opendata.paris.fr/pages/home/). 
+Explore Open Data website for [City of Paris](https://opendata.paris.fr/pages/home/) and [Il-de-France](https://data.iledefrance.fr/pages/home2026/). 
 
  - Can you find boundaries data? 
- - What kind of data do you find interesting? Demographic? Cultural?
+ - What kind of data do you find interesting? 
  - What potential research questions could you ask?
 
 
